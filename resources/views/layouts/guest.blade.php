@@ -17,7 +17,7 @@
 </head>
 
 <body class="relative font-sans antialiased text-gray-900">
-    <img src="{{ asset('/images/image1.jpg') }}" class="fixed top-0 bottom-0 left-0 w-full h-screen -z-10"
+    <img src="{{ asset('/images/image4.jpg') }}" class="fixed top-0 bottom-0 left-0 w-full h-screen -z-10"
         alt="">
     <div class="flex flex-col items-center min-h-screen pt-6 bg-gray-100 sm:justify-center sm:pt-0">
 
