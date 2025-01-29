@@ -10,8 +10,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 
     <!-- Styles / Scripts -->
@@ -49,10 +49,10 @@
     </header>
     <p class="my-8 text-5xl font-black text-center text-white">Découvrez les fonctionnalités de <span
             class="text-yellow-500">Laundgram</span></p>
-    <div class="container px-2 pt-6 mx-auto">
+    <div class="container flex flex-col gap-2 px-2 pt-6 mx-auto">
 
         <!-- Div 1: Accueil et Réception des Commandes -->
-        <div class="grid gap-8 mb-2 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-4 mb-2 md:grid-cols-2 lg:grid-cols-4">
             <div class="flex flex-col items-center p-6 text-center rounded-lg shadow-lg bg-yellow-200/15">
                 <div class="mb-4 text-4xl text-yellow-500">
                     <i class="fas fa-phone-alt"></i>
@@ -85,7 +85,7 @@
             <!-- Div 4: Gestion Efficace des Commandes -->
             <div class="flex flex-col items-center p-6 text-center rounded-lg shadow-lg bg-yellow-200/15">
                 <div class="mb-4 text-4xl text-yellow-500">
-                    <i class="fas fa-list-check"></i>
+                    <i class="fas fa-tasks"></i>
                 </div>
                 <h2 class="mb-4 text-xl font-semibold text-yellow-500">Gestion des Commandes</h2>
                 <p class="text-white">Suivez l'état de chaque commande en temps réel et mettez à jour les
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Div 5: Suivi en Temps Réel -->
-        <div class="grid gap-8 mb-12 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-4 my-2 md:grid-cols-2 lg:grid-cols-4">
             <div class="flex flex-col items-center p-6 text-center rounded-lg shadow-lg bg-yellow-200/15">
                 <div class="mb-4 text-4xl text-yellow-500">
                     <i class="fas fa-clock"></i>
