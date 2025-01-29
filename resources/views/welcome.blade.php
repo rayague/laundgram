@@ -11,6 +11,16 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('images/image2.jpg') }}" type="image/x-icon">
+
+
+    <!-- Autres éléments dans le head -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+    <!-- Autres liens CSS si nécessaire -->
+
+
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
 
@@ -23,7 +33,11 @@
 
 <body class="p-4 font-sans antialiased lg:p-8 md:p-6 bg-gradient-to-r from-yellow-700 to-yellow-950">
 
-    <header class="w-full p-2 mx-auto mt-4 mb-10 font-extrabold rounded-md shadow-lg mx-auuto bg-white/10">
+    <header
+        class="flex flex-row justify-between w-full p-2 mx-auto mt-4 mb-10 font-extrabold rounded-md shadow-lg mx-auuto bg-white/10">
+        {{-- <img src="{{ asset('images/laundgram.png') }}" class="w-8" alt=""> --}}
+        <span class="text-2xl italic font-black text-yellow-300 "
+            style="font-family: 'Dancing Script', cursive;">Laundgram</span>
         @if (Route::has('login'))
             <nav class="flex justify-end space-x-4">
                 @auth
@@ -137,7 +151,8 @@
     </div>
 
     <footer class="pt-4 text-sm font-black text-center text-white ">
-        Copyrignt © <span class="text-yellow-500">Laundgram</span> Ray Ague.
+        Copyrignt © <span class="text-yellow-500" style="font-family: 'Dancing Script', cursive;">Laundgram</span> Ray
+        Ague.
 
     </footer>
 
