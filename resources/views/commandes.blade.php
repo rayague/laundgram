@@ -58,15 +58,15 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
-                        <i class="fas fa-fw fa-home"></i>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
 
                 <!-- Nav Item - Commandes -->
-                <li class="nav-item">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('commandes') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
@@ -142,7 +142,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Commandes </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -188,7 +188,70 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div class="p-6 my-4 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-xl font-bold">Validation de Commande</h2>
+                        <form>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Nom du client</label>
+                                <input type="text" class="w-full p-2 mt-1 border rounded-md"
+                                    placeholder="Entrez le nom">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Numéro WhatsApp</label>
+                                <input type="text" class="w-full p-2 mt-1 border rounded-md"
+                                    placeholder="Ex: 97000000">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Numéro de facture</label>
+                                <input type="text" class="w-full p-2 mt-1 bg-gray-200 border rounded-md"
+                                    value="ETS-NKPA-001" readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Date de dépôt</label>
+                                <input type="date" class="w-full p-2 mt-1 border rounded-md" value="2024-09-07"
+                                    readonly>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de retrait</label>
+                                    <input type="date" class="w-full p-2 mt-1 border rounded-md">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Heure de retrait</label>
+                                    <input type="time" class="w-full p-2 mt-1 border rounded-md">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Objets</label>
+                                <div id="objects-container">
+                                    <div class="flex gap-4 mb-2">
+                                        <select class="w-full p-2 mt-1 border rounded-md">
+                                            <option>Bazin</option>
+                                            <option>Lessi</option>
+                                            <option>Pagne simple</option>
+                                        </select>
+                                        <input type="number" class="w-20 p-2 mt-1 border rounded-md"
+                                            placeholder="Qté" min="1">
+                                    </div>
+                                </div>
+                                <button type="button" class="mt-2 text-blue-500" onclick="addObjectField()">+
+                                    Ajouter un objet</button>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Type de lavage</label>
+                                <select class="w-full p-2 mt-1 border rounded-md">
+                                    <option>Lavage simple</option>
+                                    <option>Pressing</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Emplacement de l'habit</label>
+                                <input type="text" class="w-full p-2 mt-1 border rounded-md" placeholder="Ex: C8">
+                            </div>
+                            <button class="w-full p-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Valider la
+                                commande</button>
+                        </form>
+                    </div>
 
 
 
@@ -246,6 +309,23 @@
     </a>
 
 
+
+    <script>
+        function addObjectField() {
+            const container = document.getElementById('objects-container');
+            const div = document.createElement('div');
+            div.classList.add('flex', 'gap-4', 'mb-2');
+            div.innerHTML = `
+            <select class="w-full p-2 mt-1 border rounded-md">
+              <option>Bazin</option>
+              <option>Lessi</option>
+              <option>Pagne simple</option>
+            </select>
+            <input type="number" class="w-20 p-2 mt-1 border rounded-md" placeholder="Qté" min="1">
+          `;
+            container.appendChild(div);
+        }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

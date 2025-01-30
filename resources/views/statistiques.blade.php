@@ -38,7 +38,6 @@
             <!-- Sidebar - Brand -->
             <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('acceuil') }}">
-
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
 
@@ -58,8 +57,8 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
                         <i class="fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
@@ -90,7 +89,7 @@
                 </li>
 
                 <!-- Nav Item - Statistiques -->
-                <li class="nav-item">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('statistiques') }}">
                         <i class="fas fa-fw fa-chart-bar"></i>
                         <span class="font-weight-bold">STATISTIQUES</span>
@@ -142,7 +141,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Statistiques </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -187,12 +186,75 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid px-4 py-6">
+                    <!-- Titre de la section -->
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Statistiques de la journée</h2>
 
+                    <!-- Tableau des statistiques -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Détails des commandes de la journée</h3>
 
+                        <!-- Tableau -->
+                        <table class="w-full table-auto border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Nom du client
+                                    </th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Date de commande
+                                    </th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Date de retrait
+                                    </th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Exemple de ligne de commande -->
+                                <tr>
+                                    <td class="px-4 py-2 text-sm text-gray-700">Jean Dupont</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">2025-01-29</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">2025-01-30</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">30,00 €</td>
+                                </tr>
+                                <!-- Ajoute d'autres lignes selon les données -->
+                                <tr>
+                                    <td class="px-4 py-2 text-sm text-gray-700">Marie Martin</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">2025-01-29</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">2025-01-31</td>
+                                    <td class="px-4 py-2 text-sm text-gray-700">45,00 €</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
+                        <!-- Résumé des statistiques -->
+                        <div class="mt-6">
+                            <div class="flex justify-between mb-4">
+                                <div class="text-sm text-gray-700 font-medium">Total des commandes</div>
+                                <div class="text-sm text-gray-700">75,00 €</div>
+                            </div>
+                            <div class="flex justify-between mb-4">
+                                <div class="text-sm text-gray-700 font-medium">Nombre de commandes</div>
+                                <div class="text-sm text-gray-700">2</div>
+                            </div>
+                            <div class="flex justify-between mb-4">
+                                <div class="text-sm text-gray-700 font-medium">Opérateur</div>
+                                <div class="text-sm text-gray-700">Alice Dupuis</div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Bouton WhatsApp pour envoyer les statistiques -->
+                    <div class="flex justify-end">
+                        <button id="whatsapp-btn"
+                            class="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200"
+                            onclick="sendWhatsApp()" disabled>
+                            Envoyer par WhatsApp
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Script pour désactiver le bouton après l'envoi -->
+
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -245,7 +307,16 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <script>
+        function sendWhatsApp() {
+            // Logique d'envoi de message par WhatsApp (remplir avec l'API ou lien que tu utilises)
+            alert("Les statistiques ont été envoyées par WhatsApp.");
 
+            // Désactiver le bouton après l'envoi
+            document.getElementById("whatsapp-btn").disabled = true;
+            document.getElementById("whatsapp-btn").innerText = "Envoyé";
+        }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

@@ -58,9 +58,9 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
-                        <i class="fas fa-fw fa-home"></i>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
@@ -74,7 +74,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="nav-item ">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -142,7 +142,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Création des objets et prix </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -187,12 +187,48 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="px-4 py-6 container-fluid">
+                    <div class="p-8 bg-white rounded-lg shadow-lg">
+                        <h2 class="mb-6 text-2xl font-bold text-gray-800">Créer un objet</h2>
+                        <form>
+                            <!-- Nom de l'objet -->
+                            <div class="mb-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-700">Nom de l'objet</label>
+                                <input type="text"
+                                    class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Ex: Bazin, Lessi, Pagne Simple">
+                            </div>
+                            <!-- Description -->
+                            <div class="mb-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-700">Description</label>
+                                <textarea
+                                    class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Entrez une description"></textarea>
+                            </div>
+                            <!-- Prix unitaire -->
+                            <div class="mb-6">
+                                <label class="block mb-2 text-sm font-medium text-gray-700">Prix unitaire</label>
+                                <input type="number"
+                                    class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Entrez le prix">
+                            </div>
 
-
-
-
+                            <!-- Bouton Créer -->
+                            <div class="flex items-center justify-between">
+                                <button type="submit"
+                                    class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    Créer
+                                </button>
+                                <!-- Bouton Voir la liste -->
+                                <a href="#"
+                                    class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    Voir la liste des objets
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+
                 <!-- /.container-fluid -->
 
             </div>

@@ -38,7 +38,6 @@
             <!-- Sidebar - Brand -->
             <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('acceuil') }}">
-
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
 
@@ -58,9 +57,9 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
-                        <i class="fas fa-fw fa-home"></i>
+                <li class=" nav-item">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
+                        <i class=" fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
@@ -82,7 +81,7 @@
                 </li>
 
                 <!-- Nav Item - Rappels -->
-                <li class="nav-item ">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('rappels') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RAPPELS</span>
@@ -142,7 +141,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Rappels </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 

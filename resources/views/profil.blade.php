@@ -58,8 +58,8 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
                         <i class="fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
@@ -98,7 +98,7 @@
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('profil') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
@@ -142,7 +142,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Profil </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -187,12 +187,104 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container flex flex-col gap-4 p-4 mx-auto">
+                    <!-- Card: Informations utilisateur -->
+                    <div class="overflow-hidden bg-white rounded-lg shadow-lg">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between px-6 py-4 bg-blue-500">
+                            <h2 class="flex items-center text-lg font-bold text-white">
+                                <i class="mr-2 fas fa-user fa-fw"></i>
 
+                                Informations de l'utilisateur
+                            </h2>
+                            <div class="space-x-2">
+                                <!-- Bouton Modifier -->
+                                <a href="/modifier-profil"
+                                    class="px-4 py-2 font-semibold text-white bg-yellow-400 rounded-md shadow hover:bg-yellow-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path
+                                            d="M17.414 2.586a2 2 0 00-2.828 0l-9.5 9.5a1 1 0 00-.263.475l-1 4a1 1 0 001.262 1.262l4-1a1 1 0 00.475-.263l9.5-9.5a2 2 0 000-2.828z" />
+                                    </svg>
+                                    Modifier
+                                </a>
+                                <!-- Bouton Supprimer -->
+                                <button onclick="confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')"
+                                    class="px-4 py-2 font-semibold text-white bg-red-500 rounded-md shadow hover:bg-red-600">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M9 3a1 1 0 011-1h.004a1 1 0 011 .998L11 3h3a1 1 0 011 1v1H5V4a1 1 0 011-1h3zm0 2H5v11a2 2 0 002 2h6a2 2 0 002-2V5H9zm4 3a1 1 0 10-2 0v4a1 1 0 102 0V8z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Body -->
+                        <div class="p-4">
+                            <div class="flex flex-col space-y-4">
+                                <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Nom
+                                        :</strong> {{ Auth::user()->name }}
+                                </p>
+                                <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Email
+                                        :</strong>
+                                    {{ Auth::user()->email }}</p>
+                                <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Date de
+                                        création
+                                        :</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Informations de l'entreprise -->
+                    <div class="container p-6 mx-auto bg-white rounded-lg shadow-lg">
+                        <div class="flex items-start justify-between pb-4 border-b">
 
+                            <!-- Informations de l'entreprise -->
+                            <div class="w-full">
+                                <div class="space-x-2">
+                                    <!-- Bouton Modifier -->
+                                    <a href="/modifier-profil"
+                                        class="px-4 py-2 font-semibold text-white bg-yellow-400 rounded-md shadow hover:bg-yellow-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path
+                                                d="M17.414 2.586a2 2 0 00-2.828 0l-9.5 9.5a1 1 0 00-.263.475l-1 4a1 1 0 001.262 1.262l4-1a1 1 0 00.475-.263l9.5-9.5a2 2 0 000-2.828z" />
+                                        </svg>
+                                        Modifier
+                                    </a>
 
+                                </div>
+                                <h1 class="flex items-center my-4 text-2xl font-bold text-yellow-500">
+                                    <i class="w-6 h-6 mr-2 text-yellow-500 fas fa-building"></i>
+
+                                    ETS N'KPA PRESSING LA NETTETE
+                                </h1>
+                                <p class="p-3 mb-2 text-sm text-gray-800 bg-gray-200 border rounded">SERVICE DE
+                                    NETTOYAGE ET
+                                    LAVAGE A SEC</p>
+                                <p class="p-3 mb-2 text-sm text-gray-700 bg-gray-200 border rounded">RCCM:
+                                    RB/COT/17A34380 |
+                                    IFU: 12012001555601</p>
+                                <p class="p-3 mb-2 text-sm text-gray-800 bg-gray-200 border rounded">
+                                    <span class="font-semibold">Tel:</span> 95784635 (Accueil) | 65588538 (Direction)
+                                </p>
+                                <p class="p-3 mb-2 text-sm font-semibold text-gray-900 bg-gray-200 border rounded">
+                                    AGENCE DE
+                                    AGLA</p>
+                                <p class="p-3 mb-2 text-sm text-gray-700 bg-gray-200 border rounded">AGLA NON LOIN DE
+                                    L'EGLISE
+                                    CATHOLIQUE ST PIERRE ET PAUL
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
+
+
+
+
                 <!-- /.container-fluid -->
 
             </div>

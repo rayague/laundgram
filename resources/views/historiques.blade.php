@@ -36,9 +36,10 @@
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
-                href="{{ route('acceuil') }}">
-
+            <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon">
+                    <img src="{{ asset('images/logo2.png') }}" class="img-thumbnail w-50" alt="">
+                </div>
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
 
@@ -60,7 +61,7 @@
                 <!-- Nav Item - Accueil -->
                 <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="accueil.html">
-                        <i class="fas fa-fw fa-home"></i>
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
@@ -142,7 +143,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Historiques</h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
