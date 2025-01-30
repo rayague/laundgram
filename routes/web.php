@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ViewsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ObjetController;
+use App\Http\Controllers\ViewsController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,6 +17,9 @@ route::get('/profil', [ViewsController::class, 'profil'])->name('profil');
 route::get('/statistiques', [ViewsController::class, 'statistiques'])->name('statistiques');
 route::get('/historiques', [ViewsController::class, 'historiques'])->name('historiques');
 route::get('/acceuil', [ViewsController::class, 'acceuil'])->name('acceuil');
+Route::get('/objets/create', [ObjetController::class, 'create'])->name('objets.create');
+Route::get('/objets/liste', [ObjetController::class, 'objetsList'])->name('objets.show');
+Route::post('/objets', [ObjetController::class, 'store'])->name('objets.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

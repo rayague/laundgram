@@ -36,10 +36,9 @@
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon">
-                    <img src="{{ asset('images/logo2.png') }}" class="img-thumbnail w-50" alt="">
-                </div>
+            <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
+                href="{{ route('acceuil') }}">
+
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
 
@@ -59,7 +58,7 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('acceuil') }}">
                         <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
@@ -75,7 +74,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="nav-item ">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -143,7 +142,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Historiques</h3>
+                    <h3 class="text-xl font-bold text-gray-800">Création des objets et prix </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -188,12 +187,54 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <a href="{{ url()->previous() }}"
+                    class="px-6 py-2 mb-4 ml-4 font-semibold text-white transition-all duration-200 rounded-lg shadow-md bg-sky-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    Retour
+                </a>
+                <div class="px-4 py-6 container-fluid">
 
+                    <div class="p-8 bg-white rounded-lg shadow-lg">
 
+                        <h2 class="mb-6 text-2xl font-bold text-gray-800">Liste des objets créés</h2>
 
+                        <!-- Vérifier si la liste d'objets est vide -->
+                        @if ($objets->isEmpty())
+                            <p>Aucun objet n'a été créé.</p>
+                        @else
+                            <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+                                <thead class="bg-gray-600">
+                                    <tr>
+                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Nom de
+                                            l'objet</th>
+                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Description
+                                        </th>
+                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Prix unitaire
+                                        </th>
+                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Date de
+                                            création</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($objets as $objet)
+                                        <tr>
+                                            <td class="px-4 py-2 border-b border-gray-200">{{ $objet->nom }}</td>
+                                            <td class="px-4 py-2 border-b border-gray-200">{{ $objet->description }}
+                                            </td>
+                                            <td class="px-4 py-2 border-b border-gray-200">
+                                                {{ number_format($objet->prix_unitaire, 2) }} Fcfa</td>
+                                            <td class="px-4 py-2 border-b border-gray-200">
+                                                {{ $objet->created_at->format('d/m/Y H:i') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
 
+                    </div>
                 </div>
+
+
+
                 <!-- /.container-fluid -->
 
             </div>

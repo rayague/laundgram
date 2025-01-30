@@ -190,27 +190,52 @@
                 <div class="px-4 py-6 container-fluid">
                     <div class="p-8 bg-white rounded-lg shadow-lg">
                         <h2 class="mb-6 text-2xl font-bold text-gray-800">Créer un objet</h2>
-                        <form>
+                        <!-- Message de succès -->
+                        @if (session('success'))
+                            <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <!-- Message d'erreur -->
+                        @if (session('error'))
+                            <div class="p-4 mb-4 text-red-700 bg-red-100 rounded">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('objets.store') }}" method="POST">
+                            @csrf
                             <!-- Nom de l'objet -->
                             <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-700">Nom de l'objet</label>
-                                <input type="text"
+                                <input type="text" name="nom"
                                     class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    placeholder="Ex: Bazin, Lessi, Pagne Simple">
+                                    placeholder="Ex: Bazin, Lessi, Pagne Simple" value="{{ old('nom') }}">
+                                @error('nom')
+                                    <div class="text-sm text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <!-- Description -->
                             <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-700">Description</label>
-                                <textarea
+                                <textarea name="description"
                                     class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    placeholder="Entrez une description"></textarea>
+                                    placeholder="Entrez une description">{{ old('description') }}</textarea>
+                                @error('description')
+                                    <div class="text-sm text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <!-- Prix unitaire -->
                             <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-700">Prix unitaire</label>
-                                <input type="number"
+                                <input type="number" name="prix_unitaire"
                                     class="w-full p-3 transition-all duration-200 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    placeholder="Entrez le prix">
+                                    placeholder="Entrez le prix" value="{{ old('prix_unitaire') }}">
+                                @error('prix_unitaire')
+                                    <div class="text-sm text-red-500">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <!-- Bouton Créer -->
@@ -219,8 +244,9 @@
                                     class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     Créer
                                 </button>
-                                <!-- Bouton Voir la liste -->
-                                <a href="#"
+                                <a href="
+                                {{ route('objets.show') }}
+                                "
                                     class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                                     Voir la liste des objets
                                 </a>
@@ -228,6 +254,7 @@
                         </form>
                     </div>
                 </div>
+
 
                 <!-- /.container-fluid -->
 

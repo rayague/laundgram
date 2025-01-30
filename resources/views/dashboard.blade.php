@@ -59,7 +59,7 @@
 
                 <!-- Nav Item - Accueil -->
                 <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="accueil.html">
+                    <a class="nav-link" href="{{ route('acceuil') }}">
                         <i class="fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
