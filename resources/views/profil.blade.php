@@ -191,7 +191,7 @@
                     <!-- Card: Informations utilisateur -->
                     <div class="overflow-hidden bg-white rounded-lg shadow-lg">
                         <!-- Header -->
-                        <div class="flex items-center justify-between px-6 py-4 bg-blue-500">
+                        <div class="flex items-center justify-between px-6 py-4 bg-gray-500">
                             <h2 class="flex items-center text-lg font-bold text-white">
                                 <i class="mr-2 fas fa-user fa-fw"></i>
 
@@ -199,7 +199,7 @@
                             </h2>
                             <div class="space-x-2">
                                 <!-- Bouton Modifier -->
-                                <a href="/modifier-profil"
+                                <a href="{{ route('pageModificationProfil') }}"
                                     class="px-4 py-2 font-semibold text-white bg-yellow-400 rounded-md shadow hover:bg-yellow-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1"
                                         viewBox="0 0 20 20" fill="currentColor">
@@ -236,7 +236,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Informations de l'entreprise -->
                     <div class="container p-6 mx-auto bg-white rounded-lg shadow-lg">
                         <div class="flex items-start justify-between pb-4 border-b">
 
@@ -244,7 +243,7 @@
                             <div class="w-full">
                                 <div class="space-x-2">
                                     <!-- Bouton Modifier -->
-                                    <a href="/modifier-profil"
+                                    <a href= " {{ route('pageModificationAgence') }}"
                                         class="px-4 py-2 font-semibold text-white bg-yellow-400 rounded-md shadow hover:bg-yellow-500">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 mr-1"
                                             viewBox="0 0 20 20" fill="currentColor">
@@ -253,32 +252,30 @@
                                         </svg>
                                         Modifier
                                     </a>
-
                                 </div>
+
                                 <h1 class="flex items-center my-4 text-2xl font-bold text-yellow-500">
                                     <i class="w-6 h-6 mr-2 text-yellow-500 fas fa-building"></i>
-
                                     ETS N'KPA PRESSING LA NETTETE
                                 </h1>
                                 <p class="p-3 mb-2 text-sm text-gray-800 bg-gray-200 border rounded">SERVICE DE
-                                    NETTOYAGE ET
-                                    LAVAGE A SEC</p>
+                                    NETTOYAGE ET LAVAGE A SEC</p>
                                 <p class="p-3 mb-2 text-sm text-gray-700 bg-gray-200 border rounded">RCCM:
-                                    RB/COT/17A34380 |
-                                    IFU: 12012001555601</p>
+                                    RB/COT/17A34380 | IFU: 12012001555601</p>
                                 <p class="p-3 mb-2 text-sm text-gray-800 bg-gray-200 border rounded">
                                     <span class="font-semibold">Tel:</span> 95784635 (Accueil) | 65588538 (Direction)
                                 </p>
                                 <p class="p-3 mb-2 text-sm font-semibold text-gray-900 bg-gray-200 border rounded">
-                                    AGENCE DE
-                                    AGLA</p>
-                                <p class="p-3 mb-2 text-sm text-gray-700 bg-gray-200 border rounded">AGLA NON LOIN DE
-                                    L'EGLISE
-                                    CATHOLIQUE ST PIERRE ET PAUL
+                                    AGENCE DE AGLA
                                 </p>
+                                <p class="p-3 mb-2 text-sm text-gray-700 bg-gray-200 border rounded">AGLA NON LOIN DE
+                                    L'EGLISE CATHOLIQUE ST PIERRE ET PAUL</p>
                             </div>
+
+
                         </div>
                     </div>
+
 
                 </div>
 
@@ -336,6 +333,18 @@
     <a class="rounded scroll-to-top" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <script>
+        // Ouvrir le modal
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        // Fermer le modal
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    </script>
 
 
     <!-- Bootstrap core JavaScript-->

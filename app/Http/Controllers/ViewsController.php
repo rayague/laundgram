@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Objet;
+use App\Models\Commande;
 use Illuminate\Http\Request;
 
 class ViewsController extends Controller
@@ -13,8 +16,31 @@ class ViewsController extends Controller
     }
     public function commandes()
     {
-        // Logique spécifique pour la page des commandes (si nécessaire)
-        return view('commandes'); // Retourne la vue 'commandes.blade.php'
+       // Récupérer les objets disponibles
+       $objets = Objet::all();
+
+       // Générer un numéro de commande unique
+       $annee = Carbon::now()->year;
+       $prefixe = "ETS-NKPA-" . $annee . "-";
+
+       // Trouver le dernier numéro de commande
+       $dernierNumero = Commande::where('numero', 'like', $prefixe . '%')
+                               ->latest('created_at')
+                               ->first();
+
+       // Générer le prochain numéro de commande
+       if ($dernierNumero) {
+           $dernierNum = (int) substr($dernierNumero->numero, -3);
+           $nouveauNum = str_pad($dernierNum + 1, 3, '0', STR_PAD_LEFT);
+       } else {
+           $nouveauNum = '001';
+       }
+
+       // Combiné pour avoir le numéro complet de la commande
+       $numeroCommande = $prefixe . $nouveauNum;
+
+       // Passer la variable $numeroCommande et les objets à la vue
+       return view('commandes', compact('objets', 'numeroCommande'));
     }
 
     public function rappels()

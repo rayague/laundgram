@@ -187,7 +187,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                {{-- <div class="container-fluid">
                     <div class="p-6 my-4 bg-white rounded-lg shadow-md">
                         <h2 class="mb-4 text-xl font-bold">Validation de Commande</h2>
                         <form>
@@ -255,8 +255,130 @@
 
 
 
+                </div> --}}
+                <!-- /.container-fluid -->
+
+                <!-- Bouton pour voir la liste des commandes -->
+                <div class="mt-4 ml-3">
+                    <a href="
+                    {{ route('listeCommandes') }}
+                    "
+                        class="px-6 py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                        Voir la liste des commandes
+                    </a>
+                </div>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+
+                    <div class="p-6 my-4 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-xl font-bold">Validation de Commande</h2>
+                        <!-- Message de succès -->
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <!-- Message d'erreur -->
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('commandes.store') }}" method="POST">
+                            @csrf
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Nom du client</label>
+                                <input type="text" name="client" class="w-full p-2 mt-1 border rounded-md"
+                                    placeholder="Entrez le nom" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Numéro WhatsApp</label>
+                                <input type="text" name="numero_whatsapp"
+                                    class="w-full p-2 mt-1 border rounded-md" placeholder="Ex: 97000000" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Numéro de facture</label>
+                                <input type="text" name="numero"
+                                    class="w-full p-2 mt-1 bg-gray-200 border rounded-md"
+                                    value="{{ $numeroCommande }}" readonly>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Date de dépôt</label>
+                                <input type="date" name="date_depot" class="w-full p-2 mt-1 border rounded-md"
+                                    value="{{ \Carbon\Carbon::now()->toDateString() }}" readonly>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de retrait</label>
+                                    <input type="date" name="date_retrait"
+                                        class="w-full p-2 mt-1 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Heure de retrait</label>
+                                    <select name="heure_retrait" class="w-full p-2 mt-1 border rounded-md" required>
+                                        @foreach (range(8, 20) as $hour)
+                                            <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:00">
+                                                {{ $hour }}:00</option>
+                                            <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:30">
+                                                {{ $hour }}:30</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Objets</label>
+                                <div id="objects-container">
+                                    <div class="flex gap-4 mb-2">
+                                        <select name="objets[0][id]" class="w-full p-2 mt-1 border rounded-md"
+                                            required>
+                                            @foreach ($objets as $objet)
+                                                <option value="{{ $objet->id }}">{{ $objet->nom }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="number" name="objets[0][quantite]"
+                                            class="w-20 p-2 mt-1 border rounded-md" placeholder="Qté" min="1"
+                                            required>
+                                    </div>
+                                </div>
+                                <button type="button" class="mt-2 text-blue-500" onclick="addObjectField()">+
+                                    Ajouter un objet</button>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Type de lavage</label>
+                                <select name="type_lavage" class="w-full p-2 mt-1 border rounded-md" required>
+                                    <option>Lavage simple</option>
+                                    <option>Pressing</option>
+                                    <option>Lavage express</option>
+                                    <option>Lavage délicat</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700">Emplacement de l'habit</label>
+                                <input type="text" name="emplacement" class="w-full p-2 mt-1 border rounded-md"
+                                    placeholder="Ex: C8" required>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full p-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                Valider la commande
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
+
+
 
             </div>
             <!-- End of Main Content -->
@@ -316,13 +438,13 @@
             const div = document.createElement('div');
             div.classList.add('flex', 'gap-4', 'mb-2');
             div.innerHTML = `
-            <select class="w-full p-2 mt-1 border rounded-md">
-              <option>Bazin</option>
-              <option>Lessi</option>
-              <option>Pagne simple</option>
-            </select>
-            <input type="number" class="w-20 p-2 mt-1 border rounded-md" placeholder="Qté" min="1">
-          `;
+         <select name="objets[${container.children.length}][id]" class="w-full p-2 mt-1 border rounded-md" required>
+            @foreach ($objets as $objet)
+                <option value="{{ $objet->id }}">{{ $objet->nom }}</option>
+            @endforeach
+        </select>
+        <input type="number" name="objets[${container.children.length}][quantite]" class="w-20 p-2 mt-1 border rounded-md" placeholder="Qté" min="1" required>
+    `;
             container.appendChild(div);
         }
     </script>

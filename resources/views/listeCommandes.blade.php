@@ -23,8 +23,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard-assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-
 
 
 </head>
@@ -60,15 +58,15 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('acceuil') }}">
-                        <i class="fas fa-fw fa-home"></i>
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
 
                 <!-- Nav Item - Commandes -->
-                <li class="nav-item">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('commandes') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
@@ -144,7 +142,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Acceuil </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Commandes </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -189,156 +187,53 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <h2 class="mb-4 text-xl font-bold">Liste des Commandes</h2>
 
+                    <table class="w-full border border-collapse border-gray-200 table-auto">
+                        <thead class="text-white bg-gray-800">
+                            <tr>
+                                <th class="px-4 py-2 border border-gray-300">Numéro de Commande</th>
+                                <th class="px-4 py-2 border border-gray-300">Client</th>
+                                <th class="px-4 py-2 border border-gray-300">Date de Dépôt</th>
+                                <th class="px-4 py-2 border border-gray-300">Date de Retrait</th>
+                                <th class="px-4 py-2 border border-gray-300">Voir Détails</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($commandes as $commande)
+                                <tr>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->numero }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->client }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->date_depot }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->date_retrait }}</td>
+                                    <td class="px-4 py-2 border border-gray-300">
+                                        <a href="
+                                        {{-- {{ route('commandes.show', $commande->id) }} --}}
+                                            "
+                                            class="text-blue-500 hover:underline">
+                                            Voir
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-
-
+                    <div class="mt-4">
+                        <a href="{{ route('commandes.create') }}"
+                            class="px-6 py-2 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600">
+                            Créer une nouvelle commande
+                        </a>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
-                <div class="container py-8 mx-auto">
-                    <div class="flex items-center justify-between p-6 bg-white rounded-lg shadow-md">
-                        <!-- Affichage des horaires -->
-                        <div>
-                            <h3 class="text-xl font-semibold text-gray-800">Horaires d'ouverture</h3>
-                            <p class="text-gray-600">Lundi - Vendredi : 08:00 - 18:00</p>
-                            <p class="text-gray-600">Samedi : 09:00 - 14:00</p>
-                            <p class="text-gray-600">Dimanche : Fermé</p>
-                        </div>
 
-                        <!-- Bouton pour modifier les horaires -->
-                        <button class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                            x-data="" x-on:click.prevent="$dispatch('open-modal', 'edit-hours-modal')">
-                            Modifier les horaires
-                        </button>
-                    </div>
-                </div>
 
-                <div x-data="{ open: false }" x-on:open-modal.window="open = true"
-                    x-on:close-modal.window="open = false">
-                    <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                        <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-                            <h2 class="mb-4 text-2xl font-semibold text-center text-gray-800">Modifier les horaires
-                            </h2>
-                            <form>
-                                <!-- Lundi à Vendredi -->
-                                <div class="mb-4">
-                                    <label for="monday-to-friday" class="block text-gray-700">Lundi - Vendredi
-                                        :</label>
-                                    <div class="flex gap-4 mt-2">
-                                        <select id="monday-to-friday"
-                                            class="block w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="03:00">03:00</option>
-                                            <option value="04:00">04:00</option>
-                                            <option value="05:00">05:00</option>
-                                            <option value="06:00">06:00</option>
-                                            <option value="07:00">07:00</option>
-                                            <option value="08:00">08:00</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <!-- Ajoute d'autres options si nécessaire -->
-                                        </select>
-                                        <span class="text-gray-600">-</span>
-                                        <select id="monday-to-friday-end"
-                                            class="block w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="15:00">15:00</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="20:00">20:00</option>
-                                            <option value="21:00">21:00</option>
-                                            <option value="22:00">22:00</option>
-                                            <option value="23:00">23:00</option>
-                                            <option value="00:00">00:00</option>
-                                            <option value="01:00">01:00</option>
-                                            <option value="02:00">02:00</option>
-                                            <!-- Ajoute d'autres options si nécessaire -->
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Samedi -->
-                                <div class="mb-4">
-                                    <label for="saturday" class="block text-gray-700">Samedi :</label>
-                                    <div class="flex gap-4 mt-2">
-                                        <select id="saturday"
-                                            class="block w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="03:00">03:00</option>
-                                            <option value="04:00">04:00</option>
-                                            <option value="05:00">05:00</option>
-                                            <option value="06:00">06:00</option>
-                                            <option value="07:00">07:00</option>
-                                            <option value="08:00">08:00</option>
-                                            <option value="09:00">09:00</option>
-                                            <option value="10:00">10:00</option>
-                                            <option value="11:00">11:00</option>
-                                            <option value="12:00">12:00</option>
-                                            <option value="13:00">13:00</option>
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <!-- Ajoute d'autres options si nécessaire -->
-                                        </select>
-                                        <span class="text-gray-600">-</span>
-                                        <select id="saturday-end"
-                                            class="block w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                            <option value="14:00">14:00</option>
-                                            <option value="15:00">15:00</option>
-                                            <option value="16:00">16:00</option>
-                                            <option value="17:00">17:00</option>
-                                            <option value="18:00">18:00</option>
-                                            <option value="19:00">19:00</option>
-                                            <option value="20:00">20:00</option>
-                                            <option value="21:00">21:00</option>
-                                            <option value="22:00">22:00</option>
-                                            <option value="23:00">23:00</option>
-                                            <option value="00:00">00:00</option>
-                                            <option value="01:00">01:00</option>
-                                            <option value="02:00">02:00</option>
-                                            <!-- Ajoute d'autres options si nécessaire -->
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- Dimanche -->
-                                <div class="mb-4">
-                                    <label for="sunday" class="block text-gray-700">Dimanche :</label>
-                                    <select id="sunday"
-                                        class="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="Fermé">Fermé</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="11:00">11:00</option>
-                                        <!-- Ajoute d'autres options si nécessaire -->
-                                    </select>
-                                </div>
-
-                                <!-- Actions du formulaire -->
-                                <div class="flex justify-end gap-4 mt-6">
-                                    <button type="button"
-                                        class="px-4 py-2 text-white bg-gray-700 rounded-md hover:bg-gray-800"
-                                        x-on:click="$dispatch('close-modal')">
-                                        Annuler
-                                    </button>
-                                    <button type="submit"
-                                        class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                                        Enregistrer
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- End of Main Content -->
-
-
-
 
             <!-- Footer -->
             <footer class="bg-white sticky-footer">
@@ -388,6 +283,23 @@
     </a>
 
 
+
+    <script>
+        function addObjectField() {
+            const container = document.getElementById('objects-container');
+            const div = document.createElement('div');
+            div.classList.add('flex', 'gap-4', 'mb-2');
+            div.innerHTML = `
+            <select name="objets[0][id]" class="w-full p-2 mt-1 border rounded-md">
+@foreach ($objets as $objet)
+                                                <option value="{{ $objet->id }}">{{ $objet->nom }}</option>
+                                            @endforeach
+            </select>
+            <input type="number" class="w-20 p-2 mt-1 border rounded-md" name="objets[0][quantite]" placeholder="Qté" min="1" required>
+          `;
+            container.appendChild(div);
+        }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

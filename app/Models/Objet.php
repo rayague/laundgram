@@ -16,4 +16,9 @@ class Objet extends Model
         'prix_unitaire',
     ];
 
+     // Relation entre l'objet et la commande (un objet peut être dans plusieurs commandes)
+     public function commandes()
+     {
+         return $this->belongsToMany(Commande::class)->withPivot('quantite')->withTimestamps();
+     }
 }

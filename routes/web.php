@@ -4,7 +4,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObjetController;
 use App\Http\Controllers\ViewsController;
+use App\Http\Controllers\AgenceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommandeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +22,24 @@ route::get('/acceuil', [ViewsController::class, 'acceuil'])->name('acceuil');
 Route::get('/objets/create', [ObjetController::class, 'create'])->name('objets.create');
 Route::get('/objets/liste', [ObjetController::class, 'objetsList'])->name('objets.show');
 Route::post('/objets', [ObjetController::class, 'store'])->name('objets.store');
+
+Route::get('/liste_des_commandes', [CommandeController::class, 'listeCommandes'])->name('listeCommandes');
+
+// Route::get('/agence/modifier', [AgenceController::class, 'edit'])->name('modifierAgence');
+// Route::get('/agence/modifier', [AgenceController::class, 'edit'])->name('modifierAgence');
+Route::get('/modification_agence', [AgenceController::class, 'modificationAgence'])->name('pageModificationAgence');
+Route::get('/modification_profil', [ProfileController::class, 'edit'])->name('pageModificationProfil');
+
+Route::prefix('commandes')->group(function() {
+    // Route pour afficher le formulaire de création de commande
+    Route::get('create', [CommandeController::class, 'create'])->name('commandes.create');
+
+    // Route pour stocker la commande
+    Route::post('store', [CommandeController::class, 'store'])->name('commandes.store');
+
+    // Route pour afficher la liste des commandes (si nécessaire)
+    Route::get('index', [CommandeController::class, 'index'])->name('commandes.index');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
