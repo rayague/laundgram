@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Objet;
+use App\Models\Horaire;
 use App\Models\Commande;
+use App\Models\OpeningHour;
 use Illuminate\Http\Request;
 
 class ViewsController extends Controller
 {
     public function acceuil()
     {
+        // Récupérer les horaires existants
+        $horaire = Horaire::first();
+        $hours = OpeningHour::all();
+
+
         // Logique spécifique pour la page des commandes (si nécessaire)
-        return view('dashboard'); // Retourne la vue 'commandes.blade.php'
+        return view('dashboard',compact('horaire', 'hours')); // Retourne la vue 'commandes.blade.php'
     }
     public function commandes()
     {

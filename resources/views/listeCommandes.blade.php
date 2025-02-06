@@ -97,6 +97,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
@@ -189,6 +197,16 @@
                 <!-- Begin Page Content -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h2 class="mb-4 text-xl font-bold">Liste des Commandes</h2>
 
                     <table class="w-full border border-collapse border-gray-200 table-auto">

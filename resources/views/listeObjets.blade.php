@@ -97,6 +97,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
@@ -192,6 +200,15 @@
                     Retour
                 </a>
                 <div class="px-4 py-6 container-fluid">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <div class="p-8 bg-white rounded-lg shadow-lg">
 

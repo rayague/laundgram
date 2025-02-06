@@ -60,7 +60,7 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('acceuil') }}">
                         <i class="fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
@@ -101,7 +101,7 @@
                 </li>
 
                 <!-- Nav Item - Horaires -->
-                <li class="nav-item ">
+                <li class="bg-yellow-500 nav-item ">
                     <a class="nav-link" href="{{ route('horaires') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">HORAIRES</span>
@@ -205,50 +205,121 @@
                 </div>
                 <!-- /.container-fluid -->
 
-
-
                 <!-- resources/views/opening_hours/index.blade.php -->
 
-
-
-                {{-- <div class="container py-8 mx-auto">
-
-
-                    <div class="flex flex-col p-6 mb-6 bg-white rounded-lg shadow-md">
-                        <h2 class="text-2xl font-semibold text-gray-800">Agence : <span class="text-blue-500">Agence
-                                Paris
-                                Centre</span></h2>
-
-                        <div class="flex items-center mt-4">
-                            <!-- Statut de l'agence -->
-                            <span class="px-4 py-2 text-lg font-semibold text-white bg-green-500 rounded-full">
-                                Active
-                            </span>
-                            <span class="ml-4 text-sm text-gray-600">Dernière mise à jour : 06 Février 2025</span>
+                <div class="container flex flex-col gap-4 py-8 mx-auto">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
+                    @endif
 
-                        <!-- Détails de l'agence -->
-                        <div class="mt-6 text-gray-700">
-                            <p><strong>Adresse :</strong> 12 Rue de Rivoli, 75001 Paris, France</p>
-                            <p><strong>Téléphone :</strong> +33 1 45 67 89 10</p>
-                            <p><strong>Email :</strong> <a href="mailto:contact@agencepariscentre.com"
-                                    class="text-blue-500">contact@agencepariscentre.com</a></p>
-                            <p><strong>Horaires d'ouverture :</strong> Lundi - Vendredi : 09:00 - 18:00, Samedi : 10:00
-                                -
-                                14:00, Dimanche : Fermé</p>
+                    <!-- Message d'erreur -->
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
                         </div>
+                    @endif
 
-                        <!-- Bouton pour modifier les horaires -->
-                        <div class="mt-6">
-                            <button class="px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                                onclick="window.location.href='/modifier-horaires'">
-                                Modifier les horaires
-                            </button>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                    </div>
+                    @endif
 
+                    {{-- <div class="flex flex-row items-center justify-between w-full p-6 bg-white rounded-lg shadow-md"> --}}
+                    {{-- @foreach ($hours as $hour)
+                        <div
+                            class="flex flex-row items-center w-full p-3 bg-gray-300 rounded-lg shadow justify-evenly">
+                            <p class="font-black text-gray-800">
+                                <span class="p-2 font-bold text-white bg-green-500 rounded">
+                                    {{ $hour->day }}: <!-- No need to parse the day -->
+                                </span>
+                                {{ \Carbon\Carbon::parse($hour->start_time)->locale('fr')->isoFormat('HH:mm') }} -
+                                {{ \Carbon\Carbon::parse($hour->end_time)->locale('fr')->isoFormat('HH:mm') }}
+                            </p>
+                            <form action="{{ route('opening-hours.update', $hour->id) }}" method="POST">
+                                @csrf
+                                <label for="start_time" class="block mb-2">Heure de début</label>
+                                <input type="time" name="start_time"
+                                    value="{{ \Carbon\Carbon::parse($hour->start_time)->format('H:i') }}"
+                                    class="w-full p-2 mb-4 border">
+
+                                <label for="end_time" class="block mb-2">Heure de fin</label>
+                                <input type="time" name="end_time"
+                                    value="{{ \Carbon\Carbon::parse($hour->end_time)->format('H:i') }}"
+                                    class="w-full p-2 mb-4 border">
+
+                                <label for="status" class="block mb-2">Statut</label>
+                                <select name="status" class="w-full p-2 mb-4 border">
+                                    <option value="open" {{ $hour->status == 'open' ? 'selected' : '' }}>Ouvert
+                                    </option>
+                                    <option value="closed" {{ $hour->status == 'closed' ? 'selected' : '' }}>Fermé
+                                    </option>
+                                </select>
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-500 rounded-md">Sauvegarder</button>
+                            </form>
+
+                        </div>
+                    @endforeach --}}
+
+                    @foreach ($hours as $hour)
+                        <div
+                            class="flex flex-row items-center w-full p-3 bg-gray-300 rounded-lg shadow justify-evenly">
+                            <p class="font-black text-gray-800">
+                                <span class="p-2 mr-3 font-bold text-white bg-green-500 rounded">
+                                    {{ $hour->day }}
+                                </span>
+                                :
+                                @if ($hour->status == 'closed')
+                                    <!-- Si le statut est "closed", afficher "Fermé pour aujourd'hui" en rouge -->
+                                    <span class="p-2 ml-3 text-white bg-red-500 rounded">Fermé pour aujourd'hui</span>
+                                @else
+                                    <!-- Sinon, afficher les horaires de début et de fin -->
+                                    <span class="p-2 ml-3 text-white bg-gray-600 rounded">
+                                        {{ \Carbon\Carbon::parse($hour->start_time)->locale('fr')->isoFormat('HH:mm') }}
+                                        -
+                                        {{ \Carbon\Carbon::parse($hour->end_time)->locale('fr')->isoFormat('HH:mm') }}</span>
+                                @endif
+                            </p>
+                            <form action="{{ route('opening-hours.update', $hour->id) }}"
+                                class="p-4 bg-gray-400 rounded-md" method="POST">
+                                @csrf
+                                <label for="start_time" class="block mb-2">Heure de début</label>
+                                <input type="time" name="start_time"
+                                    value="{{ \Carbon\Carbon::parse($hour->start_time)->format('H:i') }}"
+                                    class="w-full p-2 mb-4 border">
+
+                                <label for="end_time" class="block mb-2">Heure de fin</label>
+                                <input type="time" name="end_time"
+                                    value="{{ \Carbon\Carbon::parse($hour->end_time)->format('H:i') }}"
+                                    class="w-full p-2 mb-4 border">
+
+                                <label for="status" class="block mb-2">Statut</label>
+                                <select name="status" class="w-full p-2 mb-4 border">
+                                    <option value="open" {{ $hour->status == 'open' ? 'selected' : '' }}>Ouvert
+                                    </option>
+                                    <option value="closed" {{ $hour->status == 'closed' ? 'selected' : '' }}>Fermé
+                                    </option>
+                                </select>
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-500 rounded-md">Sauvegarder</button>
+                            </form>
+                        </div>
+                    @endforeach
+
+
+
+
+
+
+                    {{-- </div> --}}
                 </div>
- --}}
 
 
 
@@ -258,7 +329,7 @@
 
 
                 <!-- Footer -->
-                <footer class="mt-56 bg-white sticky-footer">
+                <footer class="bg-white sticky-footer">
                     <div class="container my-auto">
                         <div class="my-auto text-center copyright">
                             Copyrignt © <span class="text-yellow-500"

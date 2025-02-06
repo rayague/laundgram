@@ -105,6 +105,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -130,6 +138,7 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+
 
             <!-- Main Content -->
             <div id="content">
@@ -197,6 +206,15 @@
 
 
             <div class="px-4 py-6 container-fluid">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="p-8 bg-white rounded-lg shadow-lg">
                     <form action="{{ route('pageModificationAgence') }}" method="POST" class="space-y-4">

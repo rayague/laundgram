@@ -97,6 +97,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">

@@ -2,28 +2,28 @@
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
-        <!-- Password Reset Token -->
+        <!-- Token de réinitialisation du mot de passe -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Email Address -->
+        <!-- Adresse e-mail -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('E-mail')" />
             <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email', $request->email)" required
                 autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
+        <!-- Mot de passe -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Mot de passe')" />
             <x-text-input id="password" class="block w-full mt-1" type="password" name="password" required
                 autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
+        <!-- Confirmer le mot de passe -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirmer le mot de passe')" />
 
             <x-text-input id="password_confirmation" class="block w-full mt-1" type="password"
                 name="password_confirmation" required autocomplete="new-password" />
@@ -33,7 +33,7 @@
 
         <div class="flex items-center justify-end mt-4" style="background-color: #ffb700;">
             <x-primary-button>
-                {{ __('Reset Password') }}
+                {{ __('Réinitialiser le mot de passe') }}
             </x-primary-button>
         </div>
     </form>

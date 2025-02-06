@@ -105,6 +105,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -188,6 +196,15 @@
 
                 <!-- Begin Page Content -->
                 <div class="container flex flex-col gap-4 p-4 mx-auto">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- Card: Informations utilisateur -->
 
                     <div class="container p-6 mx-auto bg-white rounded-lg shadow-lg">

@@ -97,6 +97,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('profil') }}">
@@ -188,6 +196,15 @@
 
                 <!-- Begin Page Content -->
                 <div class="container flex flex-col gap-4 p-4 mx-auto">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- Card: Informations utilisateur -->
                     <div class="overflow-hidden bg-white rounded-lg shadow-lg">
                         <!-- Header -->

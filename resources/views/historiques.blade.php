@@ -97,6 +97,13 @@
                         <span class="font-weight-bold">STATISTIQUES</span>
                     </a>
                 </li>
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
@@ -189,6 +196,15 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
 

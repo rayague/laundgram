@@ -96,6 +96,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
@@ -103,6 +111,7 @@
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
                 </li>
+
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
@@ -186,25 +195,34 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid px-4 py-6">
+                <div class="px-4 py-6 container-fluid">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <!-- Titre de la section -->
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Statistiques de la journée</h2>
+                    <h2 class="mb-6 text-2xl font-bold text-gray-800">Statistiques de la journée</h2>
 
                     <!-- Tableau des statistiques -->
-                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Détails des commandes de la journée</h3>
+                    <div class="p-6 mb-6 bg-white rounded-lg shadow-lg">
+                        <h3 class="mb-4 text-xl font-semibold text-gray-700">Détails des commandes de la journée</h3>
 
                         <!-- Tableau -->
-                        <table class="w-full table-auto border-collapse">
+                        <table class="w-full border-collapse table-auto">
                             <thead>
                                 <tr>
-                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Nom du client
+                                    <th class="px-4 py-2 text-sm font-medium text-left text-gray-600">Nom du client
                                     </th>
-                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Date de commande
+                                    <th class="px-4 py-2 text-sm font-medium text-left text-gray-600">Date de commande
                                     </th>
-                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Date de retrait
+                                    <th class="px-4 py-2 text-sm font-medium text-left text-gray-600">Date de retrait
                                     </th>
-                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Montant</th>
+                                    <th class="px-4 py-2 text-sm font-medium text-left text-gray-600">Montant</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -228,15 +246,15 @@
                         <!-- Résumé des statistiques -->
                         <div class="mt-6">
                             <div class="flex justify-between mb-4">
-                                <div class="text-sm text-gray-700 font-medium">Total des commandes</div>
+                                <div class="text-sm font-medium text-gray-700">Total des commandes</div>
                                 <div class="text-sm text-gray-700">75,00 €</div>
                             </div>
                             <div class="flex justify-between mb-4">
-                                <div class="text-sm text-gray-700 font-medium">Nombre de commandes</div>
+                                <div class="text-sm font-medium text-gray-700">Nombre de commandes</div>
                                 <div class="text-sm text-gray-700">2</div>
                             </div>
                             <div class="flex justify-between mb-4">
-                                <div class="text-sm text-gray-700 font-medium">Opérateur</div>
+                                <div class="text-sm font-medium text-gray-700">Opérateur</div>
                                 <div class="text-sm text-gray-700">Alice Dupuis</div>
                             </div>
                         </div>
@@ -245,7 +263,7 @@
                     <!-- Bouton WhatsApp pour envoyer les statistiques -->
                     <div class="flex justify-end">
                         <button id="whatsapp-btn"
-                            class="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200"
+                            class="px-6 py-3 font-semibold text-white transition-all duration-200 bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                             onclick="sendWhatsApp()" disabled>
                             Envoyer par WhatsApp
                         </button>

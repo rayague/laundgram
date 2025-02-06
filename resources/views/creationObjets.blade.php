@@ -97,6 +97,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Horaires -->
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('horaires') }}">
+                        <i class="fas fa-fw fa-clock"></i>
+                        <span class="font-weight-bold">HORAIRES</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
@@ -191,6 +199,15 @@
                     <div class="p-8 bg-white rounded-lg shadow-lg">
                         <h2 class="mb-6 text-2xl font-bold text-gray-800">Créer un objet</h2>
                         <!-- Message de succès -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         @if (session('success'))
                             <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
                                 {{ session('success') }}

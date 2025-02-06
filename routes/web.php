@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObjetController;
 use App\Http\Controllers\ViewsController;
 use App\Http\Controllers\AgenceController;
+use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\OpeningHourController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +26,13 @@ Route::get('/objets/liste', [ObjetController::class, 'objetsList'])->name('objet
 Route::post('/objets', [ObjetController::class, 'store'])->name('objets.store');
 
 Route::get('/liste_des_commandes', [CommandeController::class, 'listeCommandes'])->name('listeCommandes');
+
+// Route::get('horaires', [HoraireController::class, 'index'])->name('horaires');
+// Route::post('horaires', [HoraireController::class, 'store'])->name('horaires.store');
+
+Route::get('/horaires', [OpeningHourController::class, 'index'])->name('horaires');
+Route::post('/horaires/{id}', [OpeningHourController::class, 'update'])->name('opening-hours.update');
+
 
 // Route::get('/agence/modifier', [AgenceController::class, 'edit'])->name('modifierAgence');
 // Route::get('/agence/modifier', [AgenceController::class, 'edit'])->name('modifierAgence');
