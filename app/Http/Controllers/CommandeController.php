@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Objet;
+use App\Models\Retrait;
 use App\Models\Commande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Twilio\Rest\Client;
 
 class CommandeController extends Controller
 {
@@ -111,4 +115,101 @@ class CommandeController extends Controller
     $objets = Objet::all();
     return view('listeCommandes', compact('commandes','objets'));
 }
+
+public function show($id)
+{
+    // Trouver la commande par son ID
+    // $commande = Commande::findOrFail($id);
+    $commande = Commande::with('objets')->findOrFail($id);
+
+
+    // Passer la commande à la vue
+    return view('commandesDetails', compact('commande'));
+}
+
+
+public function retirerObjet(Request $request, Commande $commande, Objet $objet)
+{
+    // Vérifier si l'objet est bien lié à la commande
+    $pivotRow = $commande->objets()->where('objet_id', $objet->id)->first();
+    if (!$pivotRow) {
+        return back()->with('error', 'L\'objet n\'est pas lié à cette commande.');
+    }
+
+    // Récupérer la quantité disponible via le pivot (en s'assurant d'utiliser withPivot('quantite') dans le modèle)
+    $quantiteDisponible = $pivotRow->pivot->quantite ?? 0;
+
+    // Validation de la quantité à retirer
+    $request->validate([
+        'quantite_retirer' => [
+            'required',
+            'integer',
+            'min:1',
+            'max:' . $quantiteDisponible,
+        ],
+    ]);
+
+    // Récupérer la quantité à retirer
+    $quantiteRetirer = $request->input('quantite_retirer');
+
+    // Calcul de la nouvelle quantité
+    $nouvelleQuantite = $quantiteDisponible - $quantiteRetirer;
+
+    // Si la nouvelle quantité est négative (par sécurité), on retourne une erreur
+    if ($nouvelleQuantite < 0) {
+        return back()->with('error', 'La quantité à retirer dépasse la quantité disponible.');
+    }
+
+    // Mise à jour dans la base de données : soit mise à jour du pivot, soit détachement si zéro
+    if ($nouvelleQuantite > 0) {
+        $commande->objets()->updateExistingPivot($objet->id, ['quantite' => $nouvelleQuantite]);
+    } else {
+        $commande->objets()->detach($objet->id);
+    }
+
+    // Enregistrer les détails du retrait dans la table 'retraits'
+    Retrait::create([
+        'commande_id'     => $commande->id,
+        'objet_id'        => $objet->id,
+        'user_id'         => Auth::user()->id, // Utilisation du Facade Auth
+        'quantite_retirer'=> $quantiteRetirer,
+        'retrait_at'      => now(),
+    ]);
+
+
+    // Retourner un message de succès
+    return redirect()->route('commandes.show', $commande->id)
+        ->with('success', 'Quantité retirée avec succès. ' . ($nouvelleQuantite == 0 ? 'Produit complètement retiré.' : ''));
+}
+
+public function sendWhatsapp($commandeId)
+{
+    $commande = Commande::findOrFail($commandeId);
+    $pdf = PDF::loadView('commandes.facture', compact('commande'))->output();
+
+    $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+
+    $message = $twilio->messages->create(
+        'whatsapp:' . $commande->numero_whatsapp, // Le numéro WhatsApp du client
+        [
+            'from' => 'whatsapp:+14155238886', // Numéro WhatsApp Twilio
+            'body' => 'Voici votre facture de commande #'.$commande->numero,
+            'mediaUrl' => [env('PDF_UPLOAD_URL') . '/facture_commande_'.$commande->numero.'.pdf'],
+        ]
+    );
+
+    return back()->with('success', 'Facture envoyée avec succès !');
+}
+
+public function sendFacturePdf($commandeId)
+{
+    $commande = Commande::with('retraits')->findOrFail($commandeId);
+
+    $pdf = PDF::loadView('commandes.facture', compact('commande'));
+
+    return $pdf->download('facture_commande_'.$commande->numero.'.pdf');
+}
+
+
+
 }

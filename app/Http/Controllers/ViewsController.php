@@ -52,6 +52,8 @@ class ViewsController extends Controller
 
     public function rappels()
     {
+
+        // $commande = Commande::with('retraits')->findOrFail($id);
         // Logique spécifique pour la page des rappels (si nécessaire)
         return view('rappels'); // Retourne la vue 'rappels.blade.php'
     }

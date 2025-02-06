@@ -197,6 +197,11 @@
                 <!-- Begin Page Content -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -209,35 +214,118 @@
                     @endif
                     <h2 class="mb-4 text-xl font-bold">Liste des Commandes</h2>
 
-                    <table class="w-full border border-collapse border-gray-200 table-auto">
-                        <thead class="text-white bg-gray-800">
-                            <tr>
-                                <th class="px-4 py-2 border border-gray-300">Numéro de Commande</th>
-                                <th class="px-4 py-2 border border-gray-300">Client</th>
-                                <th class="px-4 py-2 border border-gray-300">Date de Dépôt</th>
-                                <th class="px-4 py-2 border border-gray-300">Date de Retrait</th>
-                                <th class="px-4 py-2 border border-gray-300">Voir Détails</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($commandes as $commande)
-                                <tr>
-                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->numero }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->client }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->date_depot }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">{{ $commande->date_retrait }}</td>
-                                    <td class="px-4 py-2 border border-gray-300">
-                                        <a href="{{ route('commandes.show', $commande->id) }}"
-                                            class="text-blue-500 hover:underline">
-                                            Voir
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="container py-8 mx-auto">
+                        <div class="p-6 bg-white rounded-lg shadow-md">
+                            <h2 class="mb-4 text-2xl font-bold">Détails de la commande</h2>
 
-                    <div class="mt-4">
+                            <div class="flex flex-col gap-4">
+                                <!-- Informations générales sur la commande -->
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Numéro de Commande :</span>
+                                    <span>{{ $commande->numero }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Client :</span>
+                                    <span>{{ $commande->client }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Numéro WhatsApp :</span>
+                                    <span>{{ $commande->numero_whatsapp }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Date de Dépôt :</span>
+                                    <span>{{ \Carbon\Carbon::parse($commande->date_depot)->locale('fr')->isoFormat('LL') }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Date de Retrait :</span>
+                                    <span>{{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Heure de Retrait :</span>
+                                    <span>{{ \Carbon\Carbon::parse($commande->heure_retrait)->locale('fr')->isoFormat('HH:mm') }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Type de Lavage :</span>
+                                    <span>{{ $commande->type_lavage }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Emplacement :</span>
+                                    <span>{{ $commande->emplacement }}</span>
+                                </div>
+
+                                <div class="mt-6">
+                                    <h3 class="mb-4 text-xl font-semibold">Objets Commandés :</h3>
+                                    <table class="w-full border border-collapse border-gray-200 table-auto">
+                                        <thead class="text-white bg-gray-800">
+                                            <tr>
+                                                <th class="px-4 py-2 border border-gray-300">Objet</th>
+                                                <th class="px-4 py-2 border border-gray-300">Quantité</th>
+                                                <th class="px-4 py-2 border border-gray-300">Quantité à retirer</th>
+                                                <!-- Nouvelle colonne -->
+                                                <th class="px-4 py-2 border border-gray-300">Action</th>
+                                                <!-- Colonne pour le bouton -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- dd($pivot->quantite, $request->input('quantite_retirer')); --}}
+
+                                            @foreach ($commande->objets as $objet)
+                                                <tr>
+                                                    <td class="px-4 py-2 border border-gray-300">
+                                                        {{ $objet->nom }}
+                                                    </td>
+                                                    <td class="px-4 py-2 border border-gray-300">
+                                                        {{ $objet->pivot->quantite }}
+                                                    </td>
+                                                    <td class="px-4 py-2 border border-gray-300">
+                                                        <!-- Input pour spécifier la quantité à retirer -->
+                                                        <form
+                                                            action="{{ route('commande.retirer', ['commande' => $commande->id, 'objet' => $objet->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <input type="number" name="quantite_retirer"
+                                                                min="1" max="{{ $objet->pivot->quantite }}"
+                                                                value="1" class="w-full p-2 border">
+                                                    </td>
+                                                    <td class="px-4 py-2 border border-gray-300">
+                                                        <!-- Bouton pour soumettre la quantité à retirer -->
+                                                        <button type="submit"
+                                                            class="px-4 py-2 text-white bg-red-500 rounded-md">Retirer</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+
+                                                @if ($objet->pivot->quantite == 0)
+                                                    <tr>
+                                                        <td colspan="4"
+                                                            class="px-4 py-2 text-center text-green-500">Produit
+                                                            complètement retiré.</td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Statut de la commande -->
+                                <div class="flex justify-between mt-4">
+                                    <span class="font-bold">Statut :</span>
+                                    <span
+                                        class="{{ $commande->status === 'completed' ? 'text-green-500' : 'text-red-500' }}">
+                                        {{ ucfirst($commande->status) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ajouter ce lien au début ou à la fin de la page de détails -->
+
+                    <div class="flex gap-2 my-4">
+                        <a href="{{ route('listeCommandes') }}"
+                            class="p-2 text-white rounded-md hover:underline bg-sky-500 hover:bg-sky-600">
+                            Retour à la liste des commandes
+                        </a>
                         <a href="{{ route('commandes.create') }}"
                             class="px-6 py-2 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600">
                             Créer une nouvelle commande
@@ -300,7 +388,7 @@
 
 
 
-    <script>
+    {{-- <script>
         function addObjectField() {
             const container = document.getElementById('objects-container');
             const div = document.createElement('div');
@@ -315,7 +403,7 @@
           `;
             container.appendChild(div);
         }
-    </script>
+    </script> --}}
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

@@ -26,6 +26,10 @@ Route::get('/objets/liste', [ObjetController::class, 'objetsList'])->name('objet
 Route::post('/objets', [ObjetController::class, 'store'])->name('objets.store');
 
 Route::get('/liste_des_commandes', [CommandeController::class, 'listeCommandes'])->name('listeCommandes');
+Route::get('/commandes/{id}', [CommandeController::class, 'show'])->name('commandes.show');
+Route::post('/commande/{commande}/objet/{objet}/retirer', [CommandeController::class, 'retirerObjet'])->name('commande.retirer');
+
+
 
 // Route::get('horaires', [HoraireController::class, 'index'])->name('horaires');
 // Route::post('horaires', [HoraireController::class, 'store'])->name('horaires.store');
