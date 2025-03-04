@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commande;
+use App\Models\Note;
 // use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
+use App\Models\Commande;
 // use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class FactureController extends Controller
 {
@@ -68,6 +70,39 @@ class FactureController extends Controller
     //     $commande = Commande::findOrFail($id);
     //     return view('factures.preview', compact('commande'));
     // }
+
+    public function storeNote(Request $request, $commande_id)
+    {
+        // Validation du champ note
+        $request->validate([
+            'note' => 'required|string',
+        ]);
+
+        // Récupérer la commande avec ses informations
+        $commande = Commande::with('objets')->findOrFail($commande_id);
+        $user = Auth::user();
+
+        // Préparer un tableau avec des détails importants de la commande
+        $commandeDetails = [
+            'numero'            => $commande->numero,
+            'client'            => $commande->client,
+            'numero_whatsapp'   => $commande->numero_whatsapp,
+            'date_depot'        => $commande->date_depot,
+            'date_retrait'      => $commande->date_retrait,
+            'total'             => $commande->total,
+            // Vous pouvez ajouter d'autres informations si nécessaire
+        ];
+
+        // Enregistrer la note dans la table 'notes'
+        $note = Note::create([
+            'commande_id'       => $commande->id,
+            'user_id'           => $user->id,
+            'note'              => $request->input('note'),
+            'commande_details'  => $commandeDetails, // Grâce au cast, l'array sera converti en JSON
+        ]);
+
+        return redirect()->route('commandes.show', $commande->id)->with('note', $note);
+    }
 
 
 

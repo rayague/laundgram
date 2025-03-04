@@ -253,6 +253,39 @@
                         </div>
                     </div>
 
+                    <!-- Tableau des notes (retraits) -->
+                    <div class="mt-8">
+                        <h3 class="mb-4 text-xl font-semibold">Historique des Retraits / Notes</h3>
+                        @if ($notes->isNotEmpty())
+                            <table class="w-full border border-collapse table-auto">
+                                <thead class="text-white bg-yellow-500">
+                                    <tr>
+                                        <th class="px-4 py-2 border border-yellow-400">Numéro de Facture</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Utilisateur</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Note</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($notes as $note)
+                                        <tr class="hover:bg-blue-50">
+                                            <td class="px-4 py-2 border border-yellow-300">{{ $commande->numero }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ $note->user->name ?? $note->user_id }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->note }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>Aucune note enregistrée pour cette commande.</p>
+                        @endif
+                    </div>
+
                     <div class="p-4 mt-8 bg-gray-200 rounded">
                         <h3 class="mb-4 text-xl font-semibold">Bilan Financier</h3>
                         <div class="flex justify-between mb-2">
@@ -345,34 +378,46 @@
                         </form>
                     </div>
 
+
+
+
+
+
                     <!-- Boutons de navigation -->
                     <div class="flex items-center justify-between gap-4 my-8 ml-4">
-                        <a href="{{ route('listeCommandes') }}"
+                        <a href="{{ route('faireRetrait', ['commande' => $commande->id]) }}"
                             class="p-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                            Faire un retrait
+                            <i class="mr-2 fas fa-hand-holding-usd"></i> Faire un retrait
                         </a>
                         <a href="{{ route('factures.print', ['commande' => $commande->id]) }}"
-                            class="p-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
-                            Imprimer
+                            class="p-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600" target="_blank">
+                            <i class="mr-2 fas fa-print"></i> Imprimer
                         </a>
+
                         <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('factures.download', ['id' => $commande->id])) }}"
-                            class="p-2 text-white bg-green-500 rounded-md hover:bg-green-600">
+                            class="p-2 text-white bg-green-500 rounded-md hover:bg-green-600" target="_blank">
                             <i class="fab fa-whatsapp"></i> Envoyer par WhatsApp
                         </a>
+
                     </div>
 
 
                 </div>
                 <!-- Boutons de navigation -->
-                <div class="flex gap-4 mt-8 ml-4">
+                <div class="flex flex-row items-center justify-between gap-4 mx-4 my-10">
                     <a href="{{ route('listeCommandes') }}"
                         class="p-2 text-white rounded-md bg-sky-500 hover:bg-sky-600">
                         Retour à la liste des commandes
                     </a>
-                    {{-- <a href="{{ route('commandes.create') }}"
-                        class="p-3 text-white bg-green-500 rounded-md hover:bg-green-600">
-                        Créer une nouvelle commande
-                    </a> --}}
+                    <form action="{{ route('commandes.valider', $commande->id) }}" method="POST"
+                        onsubmit="return confirm('Voulez-vous vraiment valider cette facture ?');">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="p-2 text-white bg-green-500 rounded-md hover:bg-green-600">
+                            Valider la facture
+                        </button>
+                    </form>
+
                 </div>
 
             </div>

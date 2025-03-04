@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Note;
 use App\Models\Objets;
 use App\Models\Objects;
 use App\Models\Commande;
@@ -200,6 +201,11 @@ public function show($id)
     // Récupérer la commande avec ses objets associés
     $commande = Commande::with('objets')->findOrFail($id);
 
+    // Récupérer la note relative à la commande
+    $notes = Note::where('commande_id', $commande->id)
+                 ->with('user')
+                 ->orderBy('created_at', 'desc')
+                 ->get();
     // Calcul du total initial sans réduction
     $originalTotal = 0;
     foreach ($commande->objets as $objet) {
@@ -219,12 +225,14 @@ public function show($id)
 
     return view('utilisateurs.commandesDetails', compact(
         'commande',
+        'notes',
         'originalTotal',
         'discountAmount',
         'remiseReduction',
         'finalTotal'
     ));
 }
+
 
 
 
@@ -288,6 +296,21 @@ public function completerPaiement(Request $request, Commande $commande)
      // Retourner la vue avec les commandes filtrées
      return view('utilisateurs.commandesJournalieres', compact('commandes', 'date'));
  }
+
+ public function valider($id)
+{
+    // Récupérer la commande
+    $commande = Commande::findOrFail($id);
+
+    // Mettre à jour le statut de la commande
+    $commande->update([
+        'statut' => 'Validée', // Vous pouvez changer cette valeur selon vos besoins
+    ]);
+
+    // Rediriger vers la page précédente avec un message de succès
+    return redirect()->back()->with('success', 'La facture a été validée avec succès.');
+}
+
 
 
 

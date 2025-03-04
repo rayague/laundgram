@@ -216,10 +216,10 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container flex flex-col gap-4 p-4 mx-auto rounded-lg ">
+                <div class="container p-6 mx-auto">
                     <!-- Affichage des erreurs -->
                     @if ($errors->any())
-                        <div class="p-4 text-red-700 bg-red-100 border-l-4 border-red-500 rounded alert alert-danger">
+                        <div class="p-4 mb-6 text-red-700 bg-red-100 border-l-4 border-red-500 rounded shadow">
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -228,8 +228,48 @@
                         </div>
                     @endif
 
+                    <h1 class="mb-6 text-3xl font-bold text-gray-800">Commandes en attente pour aujourd'hui</h1>
 
+                    @if ($commandes->isEmpty())
+                        <div class="p-6 text-gray-600 bg-gray-100 rounded-lg shadow">
+                            <p>Aucune commande en attente pour aujourd'hui.</p>
+                        </div>
+                    @else
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            @foreach ($commandes as $commande)
+                                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-lg">
+                                    <h2 class="mb-2 text-xl font-semibold text-gray-700">Commande
+                                        #{{ $commande->numero }}</h2>
+                                    <p class="text-gray-600"><strong>Client :</strong> {{ $commande->client }}</p>
+                                    <p class="text-gray-600"><strong>Date de retrait :</strong>
+                                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
+                                    </p>
+                                    <p class="text-gray-600"><strong>Total :</strong>
+                                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                    </p>
+
+                                    <!-- Affichage du statut de la commande -->
+                                    <div class="mt-2">
+                                        <strong>Status :</strong>
+                                        <span
+                                            class="inline-block px-3 py-1 text-white rounded
+                                            {{ $commande->statut === 'Validée' ? 'bg-green-500' : ($commande->statut === 'Non retirée' ? 'bg-red-500' : 'bg-gray-500') }}">
+                                            {{ $commande->statut }}
+                                        </span>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <a href="{{ route('commandes.show', $commande->id) }}"
+                                            class="inline-block px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                            Voir les détails
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
+
 
 
             </div>

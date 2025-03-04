@@ -39,7 +39,14 @@ Route::get('/objets/liste', [ObjectController::class, 'objetsList'])->name('obje
 Route::post('/objets', [ObjectController::class, 'store'])->name('objets.store');
 Route::get('/en_attente', [ViewsController::class, 'enAttente'])->name('pending');
 Route::get('/comptabilite', [ViewsController::class, 'comptabilite'])->name('comptabilite');
+Route::get('/retrait/{commande}', [ViewsController::class, 'pageRetrait'])->name('faireRetrait');
 
+
+
+
+
+Route::post('/retirer', [FactureController::class, 'submit'])->name('retirers.submit');
+Route::post('/facture/{commande}/notes', [FactureController::class, 'storeNote'])->name('notes.store');
 
 
 
@@ -53,6 +60,7 @@ Route::get('/factures/{id}/download', [FactureController::class, 'download'])->n
 
 
 
+Route::put('/commandes/{id}/valider', [CommandeController::class, 'valider'])->name('commandes.valider');
 
 
 

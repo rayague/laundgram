@@ -130,7 +130,7 @@
             <div class="invoice-info">
                 <h2>Facture #{{ $commande->numero }}</h2>
                 <p>{{ \Carbon\Carbon::parse($commande->date_depot)->locale('fr')->isoFormat('LL') }}</p>
-                <p>Agent: [Utilisateur]</p>
+                <p>Agent: {{ $commande->user_id }}</p>
             </div>
         </div>
 
@@ -195,7 +195,9 @@
                 <span class="text-green">{{ number_format($commande->solde_restant, 2, ',', ' ') }} FCFA</span>
             </div>
             <div class="text-right" style="margin-top: 10px;">
-                <span class="badge badge-success">{{ $commande->statut }}</span>
+                <span>Status:</span>
+
+                <span class="badge badge-success" style="color: red;">{{ $commande->statut }}</span>
             </div>
         </div>
 

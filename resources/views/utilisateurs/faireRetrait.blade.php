@@ -19,6 +19,8 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard-assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -38,6 +40,7 @@
             <!-- Sidebar - Brand -->
             <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
                 href="{{ route('acceuil') }}">
+
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
 
@@ -57,15 +60,15 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class=" nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('acceuil') }}">
-                        <i class=" fas fa-fw fa-home"></i>
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
 
                 <!-- Nav Item - Commandes -->
-                <li class="nav-item">
+                <li class="bg-yellow-500 nav-item">
                     <a class="nav-link" href="{{ route('commandes') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
@@ -97,8 +100,10 @@
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
                 </li>
+
+
                 <!-- Nav Item - Rappels -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item ">
                     <a class="nav-link" href="{{ route('rappels') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RETRAITS</span>
@@ -139,8 +144,6 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-
-
             <!-- Main Content -->
             <div id="content">
 
@@ -152,7 +155,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Rappels </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Commandes </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -197,83 +200,84 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container p-6 mx-auto">
-                    <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
-                        Commandes en attente pour aujourd'hui
-                    </h1>
-
-                    @if ($commandes->isEmpty())
-                        <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">
-                            <p>Aucune commande en attente pour aujourd'hui.</p>
-                        </div>
-                    @else
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            @foreach ($commandes as $commande)
-                                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-xl">
-                                    <h2 class="mb-3 text-xl font-semibold text-gray-700">
-                                        Commande #{{ $commande->numero }}
-                                    </h2>
-                                    <p class="mb-1 text-gray-600">
-                                        <span class="font-medium">Client :</span> {{ $commande->client }}
-                                    </p>
-                                    <p class="mb-1 text-gray-600">
-                                        <span class="font-medium">Date de retrait :</span>
-                                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
-                                    </p>
-                                    <p class="mb-4 text-gray-600">
-                                        <span class="font-medium">Total :</span>
-                                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
-                                    </p>
-                                    <div class="text-center">
-                                        <a href="{{ route('commandes.show', $commande->id) }}"
-                                            class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
-                                            Voir les détails
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
+                <!-- Détails de la commande -->
+                <div class="p-6 mx-4 mb-6 bg-white rounded-lg shadow-md">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
                     @endif
-                </div>
-                <!-- /.container-fluid -->
-                <div class="container p-6 mx-auto">
-                    <h2 class="mb-6 text-2xl font-bold text-gray-800">Historique des Notes</h2>
 
-                    @if ($notes->isEmpty())
-                        <div class="p-4 text-gray-600 bg-gray-100 rounded-lg shadow">
-                            <p>Aucune note enregistrée pour cette commande.</p>
-                        </div>
-                    @else
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-collapse">
-                                <thead class="text-white bg-blue-600">
-                                    <tr>
-                                        <th class="px-4 py-2 border">Numéro de Facture</th>
-                                        <th class="px-4 py-2 border">Utilisateur</th>
-                                        <th class="px-4 py-2 border">Note</th>
-                                        <th class="px-4 py-2 border">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($notes as $note)
-                                        <tr class="hover:bg-blue-50">
-                                            <td class="px-4 py-2 text-center border">{{ $note->commande_id }}</td>
-                                            <td class="px-4 py-2 border">{{ $note->user->name ?? 'N/A' }}</td>
-                                            <td class="px-4 py-2 border">{{ $note->note }}</td>
-                                            <td class="px-4 py-2 border">
-                                                {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     @endif
+                    <h2 class="mb-6 text-2xl font-semibold text-gray-800">Faire un retrait</h2>
+
+                    <!-- Affichage du numéro de la facture et du nom -->
+                    <form action="{{ route('notes.store', ['commande' => $commande->id]) }}" method="POST">
+                        @csrf
+                        <!-- Affichage du numéro de la facture et du nom -->
+                        <div class="mb-4">
+                            <label for="facture_id" class="block text-sm font-medium text-gray-700">Numéro de la
+                                facture</label>
+                            <input type="text" id="facture_id" name="facture_id" value="{{ $commande->numero }}"
+                                disabled
+                                class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="client_name" class="block text-sm font-medium text-gray-700">Nom du
+                                client</label>
+                            <input type="text" id="client_name" name="client_name"
+                                value="{{ $commande->client }}" disabled
+                                class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                        </div>
+
+                        <!-- Champ de saisie pour l'utilisateur -->
+                        <div class="mb-4">
+                            <label for="note" class="block text-sm font-medium text-gray-700">Montant à
+                                retirer</label>
+                            <textarea rows="4" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required name="note"
+                                id="note"></textarea>
+
+                        </div>
+
+                        <!-- Bouton de validation -->
+                        <div>
+                            <button type="submit"
+                                class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                Valider le retrait
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
+
+                <!-- Boutons de navigation -->
+                <div class="flex gap-4 mt-8 ml-4">
+                    <a href="{{ route('listeCommandes') }}"
+                        class="p-2 text-white rounded-md bg-sky-500 hover:bg-sky-600">
+                        Retour à la liste des commandes
+                    </a>
+                    {{-- <a href="{{ route('commandes.create') }}"
+                        class="p-3 text-white bg-green-500 rounded-md hover:bg-green-600">
+                        Créer une nouvelle commande
+                    </a> --}}
+                </div>
 
             </div>
+            <!-- /.container-fluid -->
+
+
+
             <!-- End of Main Content -->
+
 
             <!-- Footer -->
             <footer class="bg-white sticky-footer">
@@ -321,7 +325,6 @@
     <a class="rounded scroll-to-top" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>

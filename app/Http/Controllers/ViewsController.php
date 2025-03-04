@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Note;
 use App\Models\Objets;
 use App\Models\Objects;
 use App\Models\Commande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ViewsController extends Controller
 {
@@ -52,15 +54,15 @@ class ViewsController extends Controller
 
 
 
-    public function rappels()
-    {
-        $today = Carbon::today()->toDateString();
-        $commandes = Commande::whereDate('date_retrait', $today)
-                        ->with(['objets', 'user']) // charger les relations si nécessaire
-                        ->get();
+    // public function rappels()
+    // {
+    //     $today = Carbon::today()->toDateString();
+    //     $commandes = Commande::whereDate('date_retrait', $today)
+    //                     ->with(['objets', 'user']) // charger les relations si nécessaire
+    //                     ->get();
 
-        return view('utilisateurs.rappels', compact('commandes'));
-    }
+    //     return view('utilisateurs.rappels', compact('commandes'));
+    // }
 
 
     public function creations()
@@ -92,13 +94,49 @@ class ViewsController extends Controller
 
 public function enAttente()
 {
-    return view('utilisateurs.pending'); // Retourne la vue 'statistiques.blade.php'
+    // Récupérer l'utilisateur connecté
+    $user = Auth::user();
+
+    // Définir la date d'aujourd'hui au format 'YYYY-MM-DD'
+    $today = Carbon::today()->toDateString();
+
+    // Récupérer toutes les commandes de l'utilisateur dont la date de retrait est aujourd'hui
+    $commandes = Commande::where('user_id', $user->id)
+                         ->whereDate('date_retrait', $today)
+                         ->get();
+
+    // Passer les commandes à la vue 'utilisateurs.pending'
+    return view('utilisateurs.pending', compact('commandes'));
 }
 
 public function comptabilite()
 {
     return view('utilisateurs.comptabilite'); // Retourne la vue 'statistiques.blade.php'
 }
+
+public function rappels($commandeId = null)
+{
+    if ($commandeId) {
+        // Récupérer la commande avec ses objets associés
+        $commandes = Commande::with('objets')->findOrFail($commandeId);
+
+        // Récupérer toutes les notes associées à cette commande, avec la relation 'user'
+        $notes = Note::where('commande_id', $commandeId)
+                     ->with('user')
+                     ->orderBy('created_at', 'desc')
+                     ->get();
+    } else {
+        // Par exemple, vous pouvez définir $commande et $notes comme null, ou rediriger ailleurs
+        $commandes = null;
+        $notes = collect();
+    }
+
+    // Passez les variables à votre vue (vous pouvez adapter selon votre logique)
+    return view('utilisateurs.rappels', compact('commandes', 'notes'));
+}
+
+
+
 
 
 }

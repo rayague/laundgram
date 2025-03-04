@@ -130,7 +130,7 @@
             <div class="invoice-info">
                 <h2>Facture #{{ $commande->numero }}</h2>
                 <p>{{ \Carbon\Carbon::parse($commande->date_depot)->locale('fr')->isoFormat('LL') }}</p>
-                <p>Agent: [Utilisateur]</p>
+                <p>Agent: {{ $commande->user_id }}</p>
             </div>
         </div>
 
