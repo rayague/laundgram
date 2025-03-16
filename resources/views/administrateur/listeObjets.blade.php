@@ -82,7 +82,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="
 
-                    {{ route('commandes') }}
+                    {{ route('commandesAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-shopping-cart"></i>
@@ -92,7 +92,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandes') }}">
+                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -100,7 +100,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pending') }}">
+                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -110,7 +110,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="{{ route('comptabilite') }}">
+                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -119,7 +119,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('rappels') }}
+                    {{ route('rappelsAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-bell"></i>
@@ -128,7 +128,7 @@
                 </li>
                 <!-- Nav Item - Statistiques -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('utilisateurs') }}">
+                    <a class="nav-link" href="{{ route('utilisateursAdmin') }}">
                         <i class="fas fa-fw fa-users"></i>
                         <span class="font-weight-bold">UTILISATEURS</span>
                     </a>
@@ -136,7 +136,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('profil') }}">
+                    <a class="nav-link" href="{{ route('profilAdmin') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>

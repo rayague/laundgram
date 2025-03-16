@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('commande_id')->constrained()->onDelete('cascade'); // Clé étrangère vers 'commandes'
             $table->foreignId('objet_id')->constrained()->onDelete('cascade'); // Clé étrangère vers 'objets'
             $table->integer('quantite'); // Quantité de l'objet dans la commande
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps(); // Timestamps (created_at, updated_at)
         });
     }

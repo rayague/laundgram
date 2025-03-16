@@ -127,8 +127,8 @@
         {{-- </div> --}}
     </div>
 
-    <footer class="pt-8 text-sm font-black text-center text-white ">
-        Copyrignt © <span class="text-yellow-500" style="font-family: 'Dancing Script', cursive;">Laundgram</span> Ray
+    <footer class="absolute bottom-3 mx-auto flex justify-center w-full pt-8 text-sm font-black text-center text-white ">
+        Copyrignt © <span class="text-yellow-500 italic">Laundgram</span> Ray
         Ague.
 
     </footer>

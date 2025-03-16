@@ -210,7 +210,7 @@
                     <!-- Card: Informations utilisateur -->
                     <div class="overflow-hidden bg-white rounded-lg shadow-lg">
                         <!-- Header -->
-                        <div class="flex items-center justify-between px-6 py-4 bg-gray-500">
+                        <div class="flex items-center justify-between px-6 py-4 bg-blue-500">
                             <h2 class="flex items-center text-lg font-bold text-white">
                                 <i class="mr-2 fas fa-user fa-fw"></i>
 

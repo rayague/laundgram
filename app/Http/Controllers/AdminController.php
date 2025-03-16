@@ -55,4 +55,14 @@ public function store(Request $request)
         return redirect()->route('utilisateurs')->with('success', 'Utilisateur créé avec succès.');
     }
 
+
+
+
+
+
+
+
+    // Traitements des données
+
+
 }

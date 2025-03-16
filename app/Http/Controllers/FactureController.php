@@ -17,6 +17,7 @@ class FactureController extends Controller
     {
         // Récupérer la commande avec ses objets associés
         $commande = Commande::with('objets')->findOrFail($id);
+        $notes = Note::where('commande_id', $commande->id)->with('user')->get(); // Vérifie bien la relation avec la table des notes
 
         // Calculer le total sans réduction
         $originalTotal = $commande->objets->sum(function($objet) {
@@ -29,8 +30,10 @@ class FactureController extends Controller
         // Calculer le montant de la réduction
         $discountAmount = ($originalTotal * $remiseReduction) / 100;
 
+
+
         // Générer le PDF en utilisant la vue 'utilisateurs.factures'
-        $pdf = Pdf::loadView('utilisateurs.preview', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount'));
+        $pdf = Pdf::loadView('utilisateurs.preview', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount', 'notes'));
 
         // Retourner le PDF pour affichage inline
         return $pdf->stream('facture_' . $commande->numero . '.pdf');

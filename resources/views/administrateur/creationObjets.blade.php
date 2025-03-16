@@ -132,7 +132,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('profil') }}">
+                    <a class="nav-link" href="{{ route('profilAdmin') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>

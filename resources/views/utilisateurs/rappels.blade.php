@@ -195,81 +195,48 @@
 
                 </nav>
                 <!-- End of Topbar -->
+<!-- Begin Page Content -->
+<div class="container p-6 mx-auto">
+    <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
+        Commandes validées pour aujourd'hui
+    </h1>
 
-                <!-- Begin Page Content -->
-                <div class="container p-6 mx-auto">
-                    <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
-                        Commandes en attente pour aujourd'hui
-                    </h1>
-
-                    @if ($commandes->isEmpty())
-                        <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">
-                            <p>Aucune commande en attente pour aujourd'hui.</p>
-                        </div>
-                    @else
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            @foreach ($commandes as $commande)
-                                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-xl">
-                                    <h2 class="mb-3 text-xl font-semibold text-gray-700">
-                                        Commande #{{ $commande->numero }}
-                                    </h2>
-                                    <p class="mb-1 text-gray-600">
-                                        <span class="font-medium">Client :</span> {{ $commande->client }}
-                                    </p>
-                                    <p class="mb-1 text-gray-600">
-                                        <span class="font-medium">Date de retrait :</span>
-                                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
-                                    </p>
-                                    <p class="mb-4 text-gray-600">
-                                        <span class="font-medium">Total :</span>
-                                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
-                                    </p>
-                                    <div class="text-center">
-                                        <a href="{{ route('commandes.show', $commande->id) }}"
-                                            class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
-                                            Voir les détails
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+    @if ($commandes->isEmpty())
+        <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">
+            <p>Aucune commande validée pour aujourd'hui.</p>
+        </div>
+    @else
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($commandes as $commande)
+                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-xl">
+                    <h2 class="mb-3 text-xl font-semibold text-gray-700">
+                        Commande #{{ $commande->numero }}
+                    </h2>
+                    <p class="mb-1 text-gray-600">
+                        <span class="font-medium">Client :</span> {{ $commande->client }}
+                    </p>
+                    <p class="mb-1 text-gray-600">
+                        <span class="font-medium">Date de retrait :</span>
+                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
+                    </p>
+                    <p class="mb-4 text-gray-600">
+                        <span class="font-medium">Total :</span>
+                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                    </p>
+                    <div class="text-center">
+                        <a href="{{ route('commandes.show', $commande->id) }}"
+                           class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
+                            Voir les détails
+                        </a>
+                    </div>
                 </div>
-                <!-- /.container-fluid -->
-                <div class="container p-6 mx-auto">
-                    <h2 class="mb-6 text-2xl font-bold text-gray-800">Historique des Notes</h2>
+            @endforeach
+        </div>
+    @endif
+</div>
+<!-- /.container-fluid -->
 
-                    @if ($notes->isEmpty())
-                        <div class="p-4 text-gray-600 bg-gray-100 rounded-lg shadow">
-                            <p>Aucune note enregistrée pour cette commande.</p>
-                        </div>
-                    @else
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-collapse">
-                                <thead class="text-white bg-blue-600">
-                                    <tr>
-                                        <th class="px-4 py-2 border">Numéro de Facture</th>
-                                        <th class="px-4 py-2 border">Utilisateur</th>
-                                        <th class="px-4 py-2 border">Note</th>
-                                        <th class="px-4 py-2 border">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($notes as $note)
-                                        <tr class="hover:bg-blue-50">
-                                            <td class="px-4 py-2 text-center border">{{ $note->commande_id }}</td>
-                                            <td class="px-4 py-2 border">{{ $note->user->name ?? 'N/A' }}</td>
-                                            <td class="px-4 py-2 border">{{ $note->note }}</td>
-                                            <td class="px-4 py-2 border">
-                                                {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
+
 
 
             </div>

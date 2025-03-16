@@ -121,7 +121,7 @@
 
 
                 <!-- Nav Item - Profil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('comptabilite') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>

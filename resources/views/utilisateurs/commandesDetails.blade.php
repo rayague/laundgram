@@ -203,6 +203,21 @@
                 <!-- Détails de la commande -->
                 <div class="p-6 mx-4 mb-6 bg-white rounded-lg shadow-md">
                     <h2 class="mb-6 text-2xl font-semibold text-gray-800">Détails de la commande</h2>
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                     <div class="space-y-6">
                         <!-- Informations générales -->
@@ -282,11 +297,11 @@
                                 </tbody>
                             </table>
                         @else
-                            <p>Aucune note enregistrée pour cette commande.</p>
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note enregistrée pour cette commande.</p>
                         @endif
                     </div>
 
-                    <div class="p-4 mt-8 bg-gray-200 rounded">
+                    {{-- <div class="p-4 mt-8 bg-gray-200 rounded">
                         <h3 class="mb-4 text-xl font-semibold">Bilan Financier</h3>
                         <div class="flex justify-between mb-2">
                             <span>
@@ -353,7 +368,91 @@
                                 {{ $commande->statut }}
                             </span>
                         </div>
+                    </div> --}}
+
+
+                    <div class="p-4 mt-8 bg-gray-200 rounded">
+                        <h3 class="mb-4 text-xl font-semibold">Bilan Financier</h3>
+                        <div class="flex justify-between mb-2">
+                            <span>
+                                <span class="status-indicator bg-green"></span>
+                                <strong>Total sans réduction :</strong>
+                            </span>
+                            <span>{{ number_format($originalTotal, 2, ',', ' ') }} FCFA</span>
+                        </div>
+
+                        @if ($remiseReduction > 0)
+                            <div class="flex justify-between mb-2">
+                                <span>
+                                    <span class="status-indicator bg-yellow"></span>
+                                    <strong>Réduction appliquée ({{ $remiseReduction }}%) :</strong>
+                                </span>
+                                <span>{{ number_format($discountAmount, 2, ',', ' ') }} FCFA</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span><strong>Calcul :</strong></span>
+                                <span class="p-1 text-white bg-green-500 rounded">
+                                    {{ number_format($originalTotal, 2, ',', ' ') }} FCFA x {{ $remiseReduction }}% = {{ number_format($discountAmount, 2, ',', ' ') }} FCFA
+                                </span>
+                            </div>
+                        @else
+                            <div class="flex justify-between mb-2">
+                                <span>
+                                    <span class="status-indicator bg-gray"></span>
+                                    <strong>Réduction :</strong>
+                                </span>
+                                <span class="p-1 text-white bg-green-500 rounded">Aucune réduction appliquée</span>
+                            </div>
+                        @endif
+
+                        <div class="flex justify-between mb-2">
+                            <span>
+                                <span class="status-indicator bg-green"></span>
+                                <strong>Total final :</strong>
+                            </span>
+                            <span>{{ number_format($commande->total, 2, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>
+                                <span class="status-indicator bg-yellow"></span>
+                                <strong>Avances cumulées :</strong>
+                            </span>
+                            <span>{{ number_format($commande->avance_client, 2, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>
+                                <span class="status-indicator bg-red"></span>
+                                <strong>Solde restant :</strong>
+                            </span>
+                            <span>{{ number_format($commande->solde_restant, 2, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>
+                                <span class="status-indicator {{ $commande->statut == 'Payé' ? 'bg-green' : 'bg-gray' }}"></span>
+                                <strong>Statut :</strong>
+                            </span>
+                            <span class="{{ $commande->statut === 'Non retirée' ? 'bg-red-500 rounded p-2 text-white' : 'bg-green-500 rounded p-2 text-white' }}">
+                                {{ $commande->statut }}
+                            </span>
+                        </div>
+
+                        <!-- Détails des avances individuelles -->
+                        <div class="mt-4">
+                            <h4 class="text-lg font-semibold">Détails des Avances :</h4>
+                            <ul>
+                                @foreach ($commande->payments as $index => $payment)
+                                    <li class="flex items-center justify-between p-2 my-3 text-white bg-blue-500 rounded">
+                                        <span class="text-lg font-extrabold"> Avance {{ $index + 1 }} : </span> {{ number_format($payment->amount, 2, ',', ' ') }} FCFA
+                                        @if($payment->payment_method)
+                                            ({{ $payment->payment_method }})
+                                        @endif
+                                        le {{ $payment->created_at->format('d/m/Y H:i') }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
+
 
 
 
@@ -361,22 +460,31 @@
 
 
                     <!-- Formulaire de mise à jour des entrées d'argent -->
-                    <div class="p-4 mt-8 bg-gray-200 rounded">
-                        <h3 class="mb-4 text-xl font-semibold">Mettre à jour les entrées d'argent</h3>
-                        <form action="{{ route('commande.updateFinancial', $commande->id) }}" method="POST"
-                            class="flex items-center gap-4">
-                            @csrf
-                            @method('PUT')
-                            <label for="avance_client" class="block text-sm font-medium text-gray-700">Nouvelle avance
-                                :</label>
-                            <input type="number" name="avance_client" id="avance_client" step="0.01"
-                                min="0" value="{{ $commande->avance_client }}"
-                                class="w-32 p-2 border rounded-md" required>
-                            <button type="submit"
-                                class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Mettre à
-                                jour</button>
-                        </form>
-                    </div>
+<div class="p-4 mt-8 bg-gray-200 rounded">
+    <h3 class="mb-4 text-xl font-semibold">Mettre à jour les entrées d'argent</h3>
+    <form action="{{ route('commande.updateFinancial', $commande->id) }}" method="POST"
+          class="flex items-center gap-4">
+        @csrf
+        @method('PUT')
+        <label for="montant_paye" class="block text-sm font-medium text-gray-700">
+            Nouvelle avance :
+        </label>
+        <input type="number" name="montant_paye" id="montant_paye" step="0.01" min="0"
+               value="0.00" class="w-32 p-2 border rounded-md" required>
+        <!-- Optionnel : Champ pour la méthode de paiement -->
+               <select name="payment_method" id="payment_method" class="w-48 p-2 bg-white border rounded-md">
+                <option value="">Choisir</option>
+                <option value="Momo">Momo</option>
+                <option value="Espèce">Espèce</option>
+               </select>
+        <button type="submit"
+                class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+            Mettre à jour
+        </button>
+    </form>
+</div>
+
+
 
 
 
@@ -384,18 +492,18 @@
 
 
                     <!-- Boutons de navigation -->
-                    <div class="flex items-center justify-between gap-4 my-8 ml-4">
+                    <div class="flex flex-col items-center justify-between gap-4 my-8 ml-4">
                         <a href="{{ route('faireRetrait', ['commande' => $commande->id]) }}"
-                            class="p-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                            class="flex items-center justify-center w-full p-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-600">
                             <i class="mr-2 fas fa-hand-holding-usd"></i> Faire un retrait
                         </a>
                         <a href="{{ route('factures.print', ['commande' => $commande->id]) }}"
-                            class="p-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600" target="_blank">
+                            class="flex items-center justify-center w-full p-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600" target="_blank">
                             <i class="mr-2 fas fa-print"></i> Imprimer
                         </a>
 
                         <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('factures.download', ['id' => $commande->id])) }}"
-                            class="p-2 text-white bg-green-500 rounded-md hover:bg-green-600" target="_blank">
+                            class="flex items-center justify-center w-full p-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600" target="_blank">
                             <i class="fab fa-whatsapp"></i> Envoyer par WhatsApp
                         </a>
 

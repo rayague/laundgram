@@ -106,10 +106,8 @@
                     </a>
                 </li>
 
-
-
                 <!-- Nav Item - Profil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('comptabilite') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
@@ -137,7 +135,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="{{ route('profil') }}">
+                    <a class="nav-link" href="{{ route('profilAdmin') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
