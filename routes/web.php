@@ -15,20 +15,20 @@ Route::get('/', function () {
 
 
 // Admin routes
-route::get('/commandes_administration', [AdminController::class, 'commandesAdmin'])->name('commandesAdmin');
-route::get('/rappels_administration', [AdminController::class, 'rappelsAdmin'])->name('rappelsAdmin');
-Route::get('/utilisateurs_administration', [AdminController::class, 'index'])->name('utilisateurs');
-Route::get('/profil_administrateur', [AdminController::class, 'profilAdmin'])->name('profilAdmin');
-Route::get('/en_attente_administration', [AdminController::class, 'enAttenteAdmin'])->name('pendingAdmin');
-Route::get('/comptabilite_administration', [AdminController::class, 'comptabiliteAdmin'])->name('comptabiliteAdmin');
+route::get('/commandes_administration', [AdminController::class, 'commandes'])->name('commandesAdmin');
+route::get('/rappels_administration', [AdminController::class, 'rappels'])->name('rappelsAdmin');
+Route::get('/utilisateurs_administration', [AdminController::class, 'index'])->name('utilisateursAdmin');
+Route::get('/profil_administrateur', [AdminController::class, 'profil'])->name('profilAdmin');
+Route::get('/en_attente_administration', [AdminController::class, 'enAttente'])->name('pendingAdmin');
+Route::get('/comptabilite_administration', [AdminController::class, 'comptabilite'])->name('comptabiliteAdmin');
 
-// Route::get('/liste_des_commandes_administration', [AdminController::class, 'listeCommandes'])->name('listeCommandesAdmin');
-// Route::get('/commandes/{id}_administration', [AdminController::class, 'show'])->name('commandes.show');
-// Route::post('/commande/{commande}/objet/{objet}/retirer_administration', [AdminController::class, 'retirerObjet'])->name('commande.retirer');
-// Route::post('/commandes/{commande}/retirer-plusieurs_administration', [AdminController::class, 'retirerPlusieursObjets'])->name('commande.retirerPlusieurs');
-// Route::get('/journalieres_administration', [AdminController::class, 'journalieres'])->name('commandes.journalieres');
-// Route::get('/factures/{commande}/imprimer_administration', [AdminController::class, 'print'])->name('factures.print');
-// Route::put('/commande/{id}/update-financial_administration', [AdminController::class, 'updateFinancial'])->name('commande.updateFinancial');
+Route::get('/liste_des_commandes_administration', [AdminController::class, 'listeCommandes'])->name('listeCommandesAdmin');
+Route::get('/commandes/{id}_administration', [AdminController::class, 'show'])->name('commandes.showAdmin');
+Route::post('/commande/{commande}/objet/{objet}/retirer_administration', [AdminController::class, 'retirerObjet'])->name('commande.retirer');
+Route::post('/commandes/{commande}/retirer-plusieurs_administration', [AdminController::class, 'retirerPlusieursObjets'])->name('commande.retirerPlusieursAdmin');
+Route::get('/journalieres_administration', [AdminController::class, 'journalieres'])->name('commandes.journalieresAdmin');
+Route::get('/factures/{commande}/imprimer_administration', [AdminController::class, 'print'])->name('factures.printAdmin');
+Route::put('/commande/{id}/update-financial_administration', [AdminController::class, 'updateFinancial'])->name('commande.updateFinancialAdmin');
 
 
 // Route::get('/agence/modifier', [AgenceController::class, 'edit'])->name('modifierAgence');

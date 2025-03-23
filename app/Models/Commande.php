@@ -42,7 +42,10 @@ class Commande extends Model
         'solde_restant',
         'statut',
         'cout_total_commande',
-        'reste_a_payer'
+        'reste_a_payer',
+        'original_total',
+        'discount_amount',
+        'remise_reduction'
     ];
 
     // // Relation many-to-many avec Objets

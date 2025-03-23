@@ -246,6 +246,9 @@
                             </p>
                             <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded "><strong>Email :</strong>
                                 {{ auth()->user()->email }}</p>
+                                <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Date de
+                                    création
+                                    :</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
                         </div>
                     @else
                         <p class="p-2 mt-4 text-lg text-gray-600 bg-gray-200 rounded ">Utilisateur non connecté.</p>

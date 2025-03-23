@@ -93,7 +93,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="
 
-                    {{ route('commandes') }}
+                    {{ route('commandesAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-shopping-cart"></i>
@@ -103,7 +103,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandes') }}">
+                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -111,7 +111,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pending') }}">
+                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -120,8 +120,8 @@
 
 
                 <!-- Nav Item - Profil -->
-                <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="{{ route('comptabilite') }}">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -130,7 +130,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('rappels') }}
+                    {{ route('rappelsAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-bell"></i>
@@ -142,7 +142,7 @@
                 <li class="bg-yellow-500 nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('utilisateurs') }}
+                    {{ route('utilisateursAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-users"></i>
@@ -290,6 +290,7 @@
 
 
                 </div>
+            </div>
 
 
 

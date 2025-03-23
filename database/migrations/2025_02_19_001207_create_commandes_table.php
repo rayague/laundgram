@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,7 +13,7 @@ return new class extends Migration
         // Créer la table 'commandes'
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Lien avec l'utilisateur
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('client');
             $table->string('numero_whatsapp');
             $table->string('numero')->unique();
@@ -22,10 +21,15 @@ return new class extends Migration
             $table->date('date_retrait');
             $table->time('heure_retrait');
             $table->string('statut')->default('Non retirée');
-            $table->decimal('avance_client', 10, 2)->nullable();
+
+            // Ajout des colonnes nécessaires pour les calculs financiers
+            $table->decimal('avance_client', 10, 2)->default(0);
             $table->decimal('total', 10, 2)->default(0);
             $table->decimal('solde_restant', 10, 2)->default(0);
-            $table->decimal('remise_reduction', 5, 2)->nullable(0);
+            $table->unsignedTinyInteger('remise_reduction')->default(0); // Pourcentage entier (0-100)
+            $table->decimal('original_total', 10, 2)->default(0); // Nouveau
+            $table->decimal('discount_amount', 10, 2)->default(0); // Nouveau
+
             $table->string('type_lavage');
             $table->timestamps();
         });
@@ -42,5 +46,6 @@ return new class extends Migration
 
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('commandes');
-        Schema::enableForeignKeyConstraints();    }
+        Schema::enableForeignKeyConstraints();
+    }
 };

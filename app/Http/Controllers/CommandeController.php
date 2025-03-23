@@ -63,7 +63,7 @@ class CommandeController extends Controller
             'objets.*.quantite' => 'required|integer|min:1',
             'objets.*.description' => 'required|string',
             'avance_client' => 'nullable|numeric|min:0',
-            'remise_reduction' => 'nullable|in:0,10,15,20,25,30,35,40,50',
+            'remise_reduction' => 'nullable|in:0,5,10,15,20,25,30',
         ]);
 
         // Générer automatiquement le numéro de facture
@@ -121,6 +121,9 @@ class CommandeController extends Controller
         $commande->update([
             'total' => $totalCommande,
             'solde_restant' => $soldeRestant,
+            'original_total' => $originalTotal,
+            'discount_amount' => $discountAmount,
+            'remise_reduction' => $remiseReduction,
         ]);
 
         // Redirection vers la page de détail de la commande en passant les données de réduction

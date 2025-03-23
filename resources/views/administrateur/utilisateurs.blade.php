@@ -94,7 +94,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="
 
-                    {{ route('commandes') }}
+                    {{ route('commandesAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-shopping-cart"></i>
@@ -104,7 +104,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandes') }}">
+                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -112,7 +112,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pending') }}">
+                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -122,7 +122,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('comptabilite') }}">
+                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -131,7 +131,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('rappels') }}
+                    {{ route('rappelsAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-bell"></i>
@@ -143,7 +143,7 @@
                 <li class="bg-yellow-500 nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('utilisateurs') }}
+                    {{ route('utilisateursAdmin') }}
 
                     ">
                         <i class="fas fa-fw fa-users"></i>
@@ -258,14 +258,14 @@
                         <h1 class="mb-4 text-center">Liste des utilisateurs</h1>
 
                         <!-- Bouton d'ajout d'un utilisateur -->
-                        <a href="{{ route('admin.users.create') }}" class="mb-3 btn btn-success">
+                        <a href="{{ route('admin.users.create') }}" class="mb-3 font-bold btn btn-success">
                             <i class="bi bi-person-plus"></i> Ajouter un utilisateur
                         </a>
 
                         <!-- Tableau des utilisateurs -->
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-bordered">
-                                <thead class="table-light">
+                                <thead class="text-white bg-blue-500 table-light">
                                     <tr>
                                         <th>#</th>
                                         <th>Nom</th>
@@ -306,6 +306,7 @@
 
 
                 </div>
+            </div>
 
 
 

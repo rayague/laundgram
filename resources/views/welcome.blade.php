@@ -31,10 +31,10 @@
     @endif
 </head>
 
-<body class="p-4 font-sans antialiased lg:p-8 md:p-6 bg-gradient-to-r from-yellow-700 to-yellow-950">
+<body class="w-full overflow-x-hidden font-sans bg-gradient-to-r from-yellow-700 to-yellow-950">
 
     <header
-        class="flex flex-row justify-between w-full p-2 mx-auto mt-4 mb-10 font-extrabold rounded-md shadow-lg mx-auuto bg-white/10">
+        class="flex flex-row justify-between w-11/12 p-2 mx-auto mt-4 mb-10 font-extrabold rounded-md shadow-lg bg-white/10">
         {{-- <img src="{{ asset('images/laundgram.png') }}" class="w-8" alt=""> --}}
         <span class="text-2xl italic font-black text-yellow-300 "
             style="font-family: 'Dancing Script', cursive;">Laundgram</span>
@@ -127,8 +127,8 @@
         {{-- </div> --}}
     </div>
 
-    <footer class="absolute bottom-3 mx-auto flex justify-center w-full pt-8 text-sm font-black text-center text-white ">
-        Copyrignt © <span class="text-yellow-500 italic">Laundgram</span> Ray
+    <footer class="absolute flex justify-center w-full pt-8 mx-auto text-sm font-black text-center text-white bottom-3 ">
+        Copyrignt © <span class="italic text-yellow-500">Laundgram</span> Ray
         Ague.
 
     </footer>

@@ -20,6 +20,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
     <!-- Custom styles for this template-->
@@ -484,7 +485,61 @@
     </form>
 </div>
 
+  <!-- Modal pour faire le retrait  -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Faire un retrait</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+                        <!-- Détails de la commande -->
+                        <div class="p-6 mx-4 mb-6 rounded-lg shadow-md">
 
+
+                            <!-- Affichage du numéro de la facture et du nom -->
+                            <form action="{{ route('notes.store', ['commande' => $commande->id]) }}" method="POST">
+                                @csrf
+                                <!-- Affichage du numéro de la facture et du nom -->
+                                <div class="mb-4">
+                                    <label for="facture_id" class="block text-sm font-medium text-gray-700">Numéro de la
+                                        facture</label>
+                                    <input type="text" id="facture_id" name="facture_id" value="{{ $commande->numero }}"
+                                        disabled
+                                        class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="client_name" class="block text-sm font-medium text-gray-700">Nom du
+                                        client</label>
+                                    <input type="text" id="client_name" name="client_name"
+                                        value="{{ $commande->client }}" disabled
+                                        class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                                </div>
+
+                                <!-- Champ de saisie pour l'utilisateur -->
+                                <div class="mb-4">
+                                    <label for="note" class="block text-sm font-medium text-gray-700">Montant à
+                                        retirer</label>
+                                    <textarea rows="4" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required name="note"
+                                        id="note"></textarea>
+
+                                </div>
+
+                                <!-- Bouton de validation -->
+                                <div>
+                                    <button type="submit"
+                                        class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                        Valider le retrait
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -493,10 +548,10 @@
 
                     <!-- Boutons de navigation -->
                     <div class="flex flex-col items-center justify-between gap-4 my-8 ml-4">
-                        <a href="{{ route('faireRetrait', ['commande' => $commande->id]) }}"
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-600">
                             <i class="mr-2 fas fa-hand-holding-usd"></i> Faire un retrait
-                        </a>
+                        </button>
                         <a href="{{ route('factures.print', ['commande' => $commande->id]) }}"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600" target="_blank">
                             <i class="mr-2 fas fa-print"></i> Imprimer
@@ -504,10 +559,13 @@
 
                         <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('factures.download', ['id' => $commande->id])) }}"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Envoyer par WhatsApp
+                            <i class="mr-2 fab fa-whatsapp"></i> Envoyer par WhatsApp
                         </a>
 
                     </div>
+
+                    <!-- Button trigger modal -->
+
 
 
                 </div>
@@ -617,6 +675,7 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard-assets/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 

@@ -68,7 +68,7 @@
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
-                *
+
 
                 <!-- Nav Item - Création d'Objets -->
                 <li class="bg-yellow-500 nav-item">
@@ -109,7 +109,7 @@
 
 
                 <!-- Nav Item - Profil -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
@@ -224,7 +224,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <a href="{{ url()->previous() }}"
+                <a href="{{ route('creationObjets') }}"
                     class="px-6 py-2 mb-4 ml-4 font-semibold text-white transition-all duration-200 rounded-lg shadow-md bg-sky-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
                     Retour
                 </a>
@@ -247,26 +247,32 @@
                         @if ($objets->isEmpty())
                             <p>Aucun objet n'a été créé.</p>
                         @else
-                            <table class="min-w-full bg-white border border-gray-300 rounded-lg">
-                                <thead class="bg-gray-600">
+                            <table class="min-w-full bg-white border border-gray-300 rounded-lg table-auto">
+                                <thead class="bg-blue-500">
                                     <tr>
-                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Nom de
+                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Nom de
                                             l'objet</th>
 
-                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Prix unitaire
+                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Prix unitaire
                                         </th>
-                                        <th class="px-4 py-2 text-sm font-medium text-left text-gray-100">Date de
+                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Date de
                                             création</th>
+                                            <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($objets as $objet)
                                         <tr>
-                                            <td class="px-4 py-2 border-b border-gray-200">{{ $objet->nom }}</td>
-                                            <td class="px-4 py-2 border-b border-gray-200">
+                                            <td class="px-4 py-2 border border-gray-800 border-1">{{ $objet->nom }}</td>
+                                            <td class="px-4 py-2 border border-gray-800 border-1">
                                                 {{ number_format($objet->prix_unitaire, 2) }} Fcfa</td>
-                                            <td class="px-4 py-2 border-b border-gray-200">
+                                            <td class="px-4 py-2 border border-gray-800 border-1">
                                                 {{ $objet->created_at->format('d/m/Y H:i') }}</td>
+                                            <td class="flex flex-col gap-4 px-4 py-2 border border-gray-800 border-1">
+                                                <a class="btn btn-warning" href="">Modifier</a>
+                                                <button class="btn btn-danger">Supprimer</button>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
