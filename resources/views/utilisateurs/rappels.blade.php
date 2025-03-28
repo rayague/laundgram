@@ -195,46 +195,69 @@
 
                 </nav>
                 <!-- End of Topbar -->
-<!-- Begin Page Content -->
-<div class="container p-6 mx-auto">
-    <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
-        Commandes validées pour aujourd'hui
-    </h1>
+                <!-- Begin Page Content -->
+                <div class="container p-6 mx-auto">
+                    <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
+                        Commandes validées pour aujourd'hui
+                    </h1>
+                    <!-- Formulaire de filtre -->
+                    <form method="GET" action="{{ route('commandes.filtrerRetrait') }}"
+                        class="p-4 mb-6 bg-white rounded-lg shadow">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                    class="px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <input type="date" name="date_fin"
+                                    value="{{ request('date_fin', today()->toDateString()) }}"
+                                    class="px-3 py-2 border rounded-lg">
+                            </div>
+                            <div class="self-end">
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Filtrer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
-    @if ($commandes->isEmpty())
-        <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">
-            <p>Aucune commande validée pour aujourd'hui.</p>
-        </div>
-    @else
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            @foreach ($commandes as $commande)
-                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-xl">
-                    <h2 class="mb-3 text-xl font-semibold text-gray-700">
-                        Commande #{{ $commande->numero }}
-                    </h2>
-                    <p class="mb-1 text-gray-600">
-                        <span class="font-medium">Client :</span> {{ $commande->client }}
-                    </p>
-                    <p class="mb-1 text-gray-600">
-                        <span class="font-medium">Date de retrait :</span>
-                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
-                    </p>
-                    <p class="mb-4 text-gray-600">
-                        <span class="font-medium">Total :</span>
-                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
-                    </p>
-                    <div class="text-center">
-                        <a href="{{ route('commandes.show', $commande->id) }}"
-                           class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
-                            Voir les détails
-                        </a>
-                    </div>
+                    @if ($commandes->isEmpty())
+                        <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">
+                            <p>Aucune commande validée pour aujourd'hui.</p>
+                        </div>
+                    @else
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            @foreach ($commandes as $commande)
+                                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-xl">
+                                    <h2 class="mb-3 text-xl font-semibold text-gray-700">
+                                        Commande #{{ $commande->numero }}
+                                    </h2>
+                                    <p class="mb-1 text-gray-600">
+                                        <span class="font-medium">Client :</span> {{ $commande->client }}
+                                    </p>
+                                    <p class="mb-1 text-gray-600">
+                                        <span class="font-medium">Date de retrait :</span>
+                                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
+                                    </p>
+                                    <p class="mb-4 text-gray-600">
+                                        <span class="font-medium">Total :</span>
+                                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                    </p>
+                                    <div class="text-center">
+                                        <a href="{{ route('commandes.show', $commande->id) }}"
+                                            class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
+                                            Voir les détails
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
-            @endforeach
-        </div>
-    @endif
-</div>
-<!-- /.container-fluid -->
+                <!-- /.container-fluid -->
 
 
 

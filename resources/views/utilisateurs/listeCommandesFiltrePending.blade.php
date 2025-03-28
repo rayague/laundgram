@@ -66,7 +66,7 @@
                 </li>
 
                 <!-- Nav Item - Commandes -->
-                <li class="nav-item">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('commandes') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
@@ -74,8 +74,8 @@
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
-                    <a class="bg-yellow-500 nav-link" href="{{ route('listeCommandes') }}">
+                <li class=" nav-item">
+                    <a class="nav-link" href="{{ route('listeCommandes') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -83,7 +83,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pending') }}">
+                    <a class="bg-yellow-500 nav-link" href="{{ route('pending') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -198,8 +198,13 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -211,127 +216,75 @@
                         </div>
                     @endif
 
+                    <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures En Attente</h2>
 
-                    <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures Journalières</h2>
+                    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+                        <table class="w-full border border-collapse table-auto">
+                            <thead class="text-white bg-blue-600">
+                                <tr>
+                                    <th class="px-4 py-3 text-left border border-blue-400">N° Commande</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Nom du Client</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Numéro de Téléphone</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Date de Retrait</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Heure de Retrait</th>
+                                    <!-- Nouvelle colonne -->
+                                    <th class="px-4 py-3 text-left border border-blue-400">Montant de la Facture</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Statut</th>
+                                    <!-- Nouvelle colonne -->
+                                    <th class="px-4 py-3 text-left border border-blue-400">Utilisateur</th>
+                                    <th class="px-4 py-3 text-center border border-blue-400">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $total = 0; @endphp
+                                @foreach ($commandes as $commande)
+                                    @php $total += $commande->total; @endphp
+                                    <tr class="hover:bg-blue-50">
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->numero }}</td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->client }}</td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->numero_whatsapp }}
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->date_retrait }}
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->heure_retrait }}
+                                        </td> <!-- Nouvelle colonne -->
+                                        <td class="px-4 py-3 border border-blue-300">
+                                            {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->statut }}</td>
+                                        <!-- Nouvelle colonne -->
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->user->name }}</td>
+                                        <td class="px-4 py-3 text-center border border-blue-300">
+                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                                class="p-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">
+                                                Voir
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <!-- Ligne Total -->
+                                <tr class="font-bold bg-gray-100">
+                                    <td colspan="5" class="px-4 py-3 text-right border border-blue-400">Total :
+                                    </td>
+                                    <td class="px-4 py-3 border border-blue-400">
+                                        {{ number_format($total, 2, ',', ' ') }} FCFA</td>
+                                    <td colspan="3" class="border border-blue-400"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-
-                    @if ($commandes->isEmpty())
-                        <div class="p-6 mx-auto text-center rounded-lg shadow-sm bg-red-50">
-                            <p class="text-lg font-semibold text-red-600">
-                                @if (isset($start_date) && isset($end_date))
-                                    Aucune commande trouvée du
-                                    {{ \Carbon\Carbon::parse($start_date)->translatedFormat('d F Y') }}
-                                    au {{ \Carbon\Carbon::parse($end_date)->translatedFormat('d F Y') }}
-                                @else
-                                    Aucune commande trouvée pour cette période
-                                @endif
-                            </p>
-                            <p class="mt-2 text-gray-600">Veuillez essayer une autre plage de dates</p>
-                        </div>
-                    @else
-                        <div class="space-y-6">
-                            @if (isset($start_date) && isset($end_date))
-                                <div class="p-4 rounded-lg bg-blue-50">
-                                    <h3 class="text-lg font-semibold text-blue-800">
-                                        Période du {{ \Carbon\Carbon::parse($start_date)->translatedFormat('d F Y') }}
-                                        au {{ \Carbon\Carbon::parse($end_date)->translatedFormat('d F Y') }}
-                                    </h3>
-                                    <p class="mt-1 text-sm text-blue-600">
-                                        {{ $commandes->count() }} commande(s) trouvée(s)
-                                    </p>
-                                </div>
-                            @endif
-
-                            <div class="overflow-hidden bg-white rounded-lg shadow-md ring-1 ring-gray-200">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-blue-600">
-                                        <tr>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Facture</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Client</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Téléphone</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Date Retrait</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Montant</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                                Créée par</th>
-                                            <th
-                                                class="px-6 py-3 text-xs font-medium tracking-wider text-center text-white uppercase">
-                                                Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
-                                        @foreach ($commandes as $commande)
-                                            <tr class="transition-colors hover:bg-gray-50">
-                                                <td
-                                                    class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                    {{ $commande->numero }}
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                    {{ $commande->client }}
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                    {{ $commande->numero_whatsapp }}
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                    {{ \Carbon\Carbon::parse($commande->date_retrait)->translatedFormat('d/m/Y H:i') }}
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 text-sm font-semibold text-blue-600 whitespace-nowrap">
-                                                    {{ number_format($commande->total, 2, ',', ' ') }} FCFA
-                                                </td>
-                                                <td class="px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <span class="mr-2">👤</span>
-                                                        {{ $commande->user->name ?? 'N/A' }}
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-                                                    <a href="{{ route('commandes.show', $commande->id) }}"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors">
-                                                        <svg class="w-4 h-4 mr-1" fill="none"
-                                                            stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                        </svg>
-                                                        Détails
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    @endif
-                    {{-- </div> --}}
-
-                    <div class="flex items-center justify-between w-full my-6">
-                        <a href="{{ route('listeCommandes') }}"
-                            class="w-full max-w-md px-4 py-2 font-semibold text-center text-white bg-green-600 rounded-md hover:bg-green-700">
+                    <div class="flex items-center justify-between my-6">
+                        <a href="{{ route('pending') }}"
+                            class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-green-700">
                             Retour
                         </a>
-
 
                         <div class="text-gray-600">
                             <p><strong>{{ $commandes->count() }}</strong> factures affichées</p>
                         </div>
 
-                        <a href="{{ route('listeCommandes.print') }}?start_date={{ request('start_date') }}&end_date={{ request('end_date') }}"
+                        <a href="{{ route('listeCommandesPending.print') }}?date_debut={{ request('date_debut') }}&date_fin={{ request('date_fin') }}"
                             target="_blank"
                             class="px-4 py-2 m-6 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
                             🖨️ Imprimer la liste
@@ -339,6 +292,9 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
+
+
+
 
 
 
@@ -395,7 +351,7 @@
 
 
 
-    {{-- <script>
+    <script>
         function addObjectField() {
             const container = document.getElementById('objects-container');
             const div = document.createElement('div');
@@ -410,7 +366,7 @@
           `;
             container.appendChild(div);
         }
-    </script> --}}
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

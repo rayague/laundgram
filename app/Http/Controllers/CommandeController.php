@@ -8,8 +8,9 @@ use App\Models\Objets;
 use App\Models\Objects;
 use App\Models\Commande;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\CommandePayment;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 class CommandeController extends Controller
 {
@@ -346,16 +347,24 @@ class CommandeController extends Controller
     // Méthode pour afficher les commandes journalières
     public function journalieres(Request $request)
     {
-        // Récupérer la date envoyée dans la requête, ou la date du jour par défaut
-        $date = $request->input('date', now()->toDateString());
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date'
+        ]);
 
-        // Filtrer les commandes selon la date de dépôt ou de retrait
-        $commandes = Commande::whereDate('date_depot', $date)
-            ->orWhereDate('date_retrait', $date)
+        $commandes = Commande::whereBetween('date_depot', [
+            $validated['start_date'],
+            $validated['end_date']
+        ])
+            ->orderBy('date_depot')
             ->get();
 
         // Retourner la vue avec les commandes filtrées
-        return view('utilisateurs.commandesJournalieres', compact('commandes', 'date'));
+        return view('utilisateurs.commandesJournalieres', [
+            'commandes' => $commandes,
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date']
+        ]);
     }
 
     public function valider($id)
@@ -371,6 +380,116 @@ class CommandeController extends Controller
         // Rediriger vers la page précédente avec un message de succès
         return redirect()->back()->with('success', 'La facture a été validée avec succès.');
     }
+
+
+
+    // Assurez-vous que la méthode printListeCommandes récupère bien les dates
+    // public function printListeCommandes(Request $request)
+    // {
+    //     $start_date = $request->input('start_date');
+    //     $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
+
+    //     $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
+    //         ->orderBy('date_retrait')
+    //         ->get();
+
+    //     return view('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+    // }
+
+    public function printListeCommandes(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
+
+        $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
+            ->orderBy('date_retrait')
+            ->get();
+
+        // Générer le PDF
+        $pdf = Pdf::loadView('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+
+        // Télécharger ou afficher dans le navigateur
+        return $pdf->download('liste_commandes.pdf'); // Pour télécharger
+        // return $pdf->stream('liste_commandes.pdf'); // Pour afficher directement
+    }
+
+
+
+    public function printListeCommandesPending(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
+
+        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'non retirée')
+            ->orderBy('date_retrait')
+            ->get();
+
+        // Générer le PDF
+        $pdf = Pdf::loadView('utilisateurs.previewListePending', compact('commandes', 'date_debut', 'date_fin'));
+
+        // Télécharger ou afficher dans le navigateur
+        return $pdf->stream('liste_commandes_pending.pdf'); // Pour afficher directement
+        // return $pdf->download('liste_commandes_pending.pdf'); // Pour télécharger
+    }
+
+
+
+
+
+
+
+
+
+
+    public function filtrerPending(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])->get();
+        $montant_total = $commandes->sum('total');
+
+        // Si $objets est nécessaire, ajoute-le ici (remplace par la bonne requête)
+        $objets = Objets::all();
+
+        return view('utilisateurs.listeCommandesFiltrePending', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
+    }
+
+    public function retraitsFiltrer(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'retirée')
+            ->get();
+        $montant_total = $commandes->sum('total');
+
+        // Si $objets est nécessaire, ajoute-le ici (remplace par la bonne requête)
+        $objets = Objets::all();
+
+        return view('utilisateurs.listeCommandesFiltreRetraits', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
+    }
+
+    public function printListeCommandesRetraits(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
+
+        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'non retirée')
+            ->orderBy('date_retrait')
+            ->get();
+
+        // Générer le PDF
+        $pdf = Pdf::loadView('utilisateurs.previewListeRetraits', compact('commandes', 'date_debut', 'date_fin'));
+
+        // Télécharger ou afficher dans le navigateur
+        return $pdf->stream('liste_commandes_retraits.pdf'); // Pour afficher directement
+        // return $pdf->download('liste_commandes_pending.pdf'); // Pour télécharger
+    }
+
 
 
 

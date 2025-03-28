@@ -222,19 +222,29 @@
                     <!-- Filtre par date -->
                     <div class="mb-6">
                         <form action="{{ route('commandes.journalieres') }}" method="GET"
-                            class="flex items-center space-x-4">
-                            <label for="date" class="font-semibold text-gray-600">Sélectionner une date :</label>
-                            <input type="date" name="date" id="date"
-                                value="{{ old('date', now()->toDateString()) }}"
-                                class="px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            class="flex flex-col gap-4 md:flex-row md:items-center md:space-x-4">
+                            <div class="flex flex-col gap-2 md:flex-row md:items-center">
+                                <label for="start_date" class="font-semibold text-gray-600">Du :</label>
+                                <input type="date" name="start_date" id="start_date"
+                                    value="{{ old('start_date', request('start_date')) }}" required
+                                    class="px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    max="{{ now()->toDateString() }}">
+                            </div>
+
+                            <div class="flex flex-col gap-2 md:flex-row md:items-center">
+                                <label for="end_date" class="font-semibold text-gray-600">Au :</label>
+                                <input type="date" name="end_date" id="end_date"
+                                    value="{{ old('end_date', request('end_date') ?? now()->toDateString()) }}"
+                                    class="px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    max="{{ now()->toDateString() }}">
+                            </div>
+
                             <button type="submit"
-                                class="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                class="self-start px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
                                 Filtrer
                             </button>
                         </form>
-
                     </div>
-
                     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
                         <table class="w-full border border-collapse table-auto">
                             <thead class="text-white bg-blue-600">
@@ -275,15 +285,19 @@
 
                     </div>
 
+
+
                     <div class="flex items-center justify-between my-6">
+                        <!-- Bouton d'impression -->
                         <a href="{{ route('commandes') }}"
-                            class="px-4 py-2 font-semibold text-white bg-green-600 rounded-md hover:bg-green-700">
+                            class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-green-700">
                             Créer une nouvelle commande
                         </a>
 
                         <div class="text-gray-600">
                             <p><strong>{{ $commandes->count() }}</strong> factures affichées</p>
                         </div>
+
                     </div>
                 </div>
                 <!-- /.container-fluid -->

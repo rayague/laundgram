@@ -228,46 +228,127 @@
                         </div>
                     @endif
 
+
+
                     <h1 class="mb-6 text-3xl font-bold text-gray-800">Commandes en attente pour aujourd'hui</h1>
-
-                    @if ($commandes->isEmpty())
-                        <div class="p-6 text-gray-600 bg-gray-100 rounded-lg shadow">
-                            <p>Aucune commande en attente pour aujourd'hui.</p>
-                        </div>
-                    @else
-                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            @foreach ($commandes as $commande)
-                                <div class="p-6 transition duration-200 bg-white rounded-lg shadow-md hover:shadow-lg">
-                                    <h2 class="mb-2 text-xl font-semibold text-gray-700">Commande
-                                        #{{ $commande->numero }}</h2>
-                                    <p class="text-gray-600"><strong>Client :</strong> {{ $commande->client }}</p>
-                                    <p class="text-gray-600"><strong>Date de retrait :</strong>
-                                        {{ \Carbon\Carbon::parse($commande->date_retrait)->locale('fr')->isoFormat('LL') }}
-                                    </p>
-                                    <p class="text-gray-600"><strong>Total :</strong>
-                                        {{ number_format($commande->total, 2, ',', ' ') }} FCFA
-                                    </p>
-
-                                    <!-- Affichage du statut de la commande -->
-                                    <div class="mt-2">
-                                        <strong>Status :</strong>
-                                        <span
-                                            class="inline-block px-3 py-1 text-white rounded
-                                            {{ $commande->statut === 'Validée' ? 'bg-green-500' : ($commande->statut === 'Non retirée' ? 'bg-red-500' : 'bg-gray-500') }}">
-                                            {{ $commande->statut }}
-                                        </span>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <a href="{{ route('commandes.show', $commande->id) }}"
-                                            class="inline-block px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                                            Voir les détails
-                                        </a>
-                                    </div>
+                    <div class="space-y-8">
+                        <!-- Formulaire de filtre -->
+                        <form method="GET" action="{{ route('commandes.filtrerPending') }}"
+                            class="p-4 mb-6 bg-white rounded-lg shadow">
+                            <div class="flex items-center space-x-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                    <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                        class="px-3 py-2 border rounded-lg">
                                 </div>
-                            @endforeach
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                    <input type="date" name="date_fin"
+                                        value="{{ request('date_fin', today()->toDateString()) }}"
+                                        class="px-3 py-2 border rounded-lg">
+                                </div>
+                                <div class="self-end">
+                                    <button type="submit"
+                                        class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                        Filtrer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="space-y-8">
+                            <!-- Tableau des retraits d'aujourd'hui -->
+                            <div class="p-6 rounded-lg shadow-sm bg-blue-50">
+                                <h2 class="pb-2 mb-4 text-2xl font-bold text-blue-800 border-b-2 border-blue-300">
+                                    📅 Retraits prévus aujourd'hui
+                                    <span
+                                        class="text-lg text-blue-600">({{ now()->translatedFormat('d F Y') }})</span>
+                                </h2>
+
+                                @if ($commandes->where('date_retrait', today()->toDateString())->isEmpty())
+                                    <div class="p-4 text-center bg-white rounded-md">
+                                        <p class="text-gray-600">Aucun retrait prévu pour aujourd'hui</p>
+                                    </div>
+                                @else
+                                    <div class="overflow-x-auto rounded-lg shadow">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-blue-600">
+                                                <tr>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-left text-white uppercase">
+                                                        N° Commande</th>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-left text-white uppercase">
+                                                        Client</th>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-left text-white uppercase">
+                                                        Heure retrait</th>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-left text-white uppercase">
+                                                        Montant</th>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-left text-white uppercase">
+                                                        Statut</th>
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-center text-white uppercase">
+                                                        Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                @foreach ($commandes->where('date_retrait', today()->toDateString()) as $commande)
+                                                    <tr class="transition-colors hover:bg-blue-50">
+                                                        <td class="px-4 py-3 text-sm font-medium text-gray-900">
+                                                            {{ $commande->numero }}</td>
+                                                        <td class="px-4 py-3 text-sm text-gray-600">
+                                                            {{ $commande->client }}</td>
+                                                        <td class="px-4 py-3 text-sm text-gray-600">
+                                                            {{ \Carbon\Carbon::parse($commande->heure_retrait)->format('H:i') }}
+                                                        </td>
+                                                        <td class="px-4 py-3 text-sm font-semibold text-blue-600">
+                                                            {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                                        </td>
+                                                        <td class="px-4 py-3">
+                                                            <span
+                                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                                            {{ $commande->statut === 'Validée'
+                                                                ? 'bg-green-100 text-green-800'
+                                                                : ($commande->statut === 'Non retirée'
+                                                                    ? 'bg-red-100 text-red-800'
+                                                                    : 'bg-gray-100 text-gray-800') }}">
+                                                                {{ $commande->statut }}
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-4 py-3 text-center">
+                                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                                                class="text-blue-600 transition-colors hover:text-blue-900">
+                                                                <svg class="inline w-5 h-5" fill="none"
+                                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round"
+                                                                        stroke-linejoin="round" stroke-width="2"
+                                                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                </svg>
+                                                                Voir Plus
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+                            </div>
+
+
+                            <!-- Bouton "Retrait" -->
+                            {{-- <div class="flex justify-end mt-4">
+                                <a href="{{ route('commandes.retraitPending') }}"
+                                    class="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">
+                                    ➕ Effectuer un Retrait
+                                </a>
+                            </div> --}}
                         </div>
-                    @endif
+
+                    </div>
                 </div>
 
 

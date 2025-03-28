@@ -229,7 +229,8 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('commandes.store') }}" method="POST" id="orderForm" class="space-y-6">
+                        <form action="{{ route('commandes.store') }}" method="POST" id="orderForm"
+                            class="space-y-6">
                             @csrf
 
                             <!-- En-tête de section -->
@@ -248,27 +249,32 @@
                                         <!-- Nom du client -->
                                         <div>
                                             <label class="flex items-center mb-1 text-sm font-medium text-gray-700">
-                                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                 </svg>
                                                 Nom complet
                                             </label>
                                             <input type="text" name="client"
-                                                   class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                   placeholder="Jean Dupont" required>
+                                                class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="Jean Dupont" required>
                                         </div>
 
                                         <!-- Numéro WhatsApp -->
                                         <div>
                                             <label class="flex items-center mb-1 text-sm font-medium text-gray-700">
-                                                <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/>
+                                                <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884" />
                                                 </svg>
                                                 WhatsApp
                                             </label>
                                             <input type="tel" name="numero_whatsapp"
-                                                   class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                   placeholder="97000000" pattern="[0-9]{8}" required>
+                                                class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                placeholder="97000000" pattern="[0-9]{8}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -283,10 +289,14 @@
                                             <label class="text-sm font-medium text-gray-700">N° Facture</label>
                                             <div class="relative mt-1">
                                                 <input type="text" name="numero"
-                                                       class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed"
-                                                       value="{{ $numeroCommande ?? 'Généré automatiquement' }}" readonly>
-                                                <svg class="absolute w-5 h-5 text-gray-400 right-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed"
+                                                    value="{{ $numeroCommande ?? 'Généré automatiquement' }}"
+                                                    readonly>
+                                                <svg class="absolute w-5 h-5 text-gray-400 right-3 top-3"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                                 </svg>
                                             </div>
                                         </div>
@@ -296,29 +306,29 @@
                                             <div>
                                                 <label class="text-sm font-medium text-gray-700">Dépôt</label>
                                                 <input type="date" name="date_depot"
-                                                       class="w-full px-4 py-2.5 mt-1 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed"
-                                                       value="{{ \Carbon\Carbon::now()->toDateString() }}" readonly>
+                                                    class="w-full px-4 py-2.5 mt-1 bg-gray-50 border border-gray-300 rounded-lg cursor-not-allowed"
+                                                    value="{{ \Carbon\Carbon::now()->toDateString() }}" readonly>
                                             </div>
                                             <div>
                                                 <label class="text-sm font-medium text-gray-700">Retrait</label>
                                                 <input type="date" name="date_retrait"
-                                                       class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                       min="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                                                    class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                    min="{{ \Carbon\Carbon::now()->toDateString() }}" required>
                                             </div>
                                         </div>
 
-                                       <!-- Heure de retrait -->
+                                        <!-- Heure de retrait -->
                                         <div>
                                             <label class="text-sm font-medium text-gray-700">Heure de retrait</label>
                                             <select name="heure_retrait"
-                                                    class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[center_right_1rem]">
+                                                class="w-full px-4 py-2.5 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-[center_right_1rem]">
                                                 @foreach (range(8, 20) as $hour)
                                                     <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:00"
-                                                            @if($hour == 18) selected @endif>
+                                                        @if ($hour == 18) selected @endif>
                                                         {{ $hour }}:00
                                                     </option>
                                                     <option value="{{ str_pad($hour, 2, '0', STR_PAD_LEFT) }}:30"
-                                                            @if($hour == 18) selected @endif>
+                                                        @if ($hour == 18) selected @endif>
                                                         {{ $hour }}:00
                                                     </option>
                                                 @endforeach
@@ -337,36 +347,39 @@
                                     <!-- Premier objet -->
                                     <div class="flex items-start gap-3" id="objets-container-0">
                                         <select name="objets[0][id]"
-                                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                onchange="updatePrice(this)">
+                                            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                            onchange="updatePrice(this)">
                                             @foreach ($objets as $objet)
-                                                <option value="{{ $objet->id }}" data-price="{{ $objet->prix_unitaire }}">
+                                                <option value="{{ $objet->id }}"
+                                                    data-price="{{ $objet->prix_unitaire }}">
                                                     {{ $objet->nom }}
                                                 </option>
                                             @endforeach
                                         </select>
 
                                         <input type="number" name="objets[0][quantite]"
-                                               class="w-20 px-3 py-2.5 border border-gray-300 rounded-lg text-center"
-                                               placeholder="Qté" min="1" required>
+                                            class="w-20 px-3 py-2.5 border border-gray-300 rounded-lg text-center"
+                                            placeholder="Qté" min="1" required>
 
                                         <input type="text" name="objets[0][description]"
-                                               class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg"
-                                               placeholder="Description détaillée">
+                                            class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg"
+                                            placeholder="Description détaillée">
 
                                         <button type="button"
-                                                class="p-2 text-red-500 transition-colors rounded-lg hover:bg-red-50"
-                                                onclick="removeObjectField(this)">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            class="p-2 text-red-500 transition-colors rounded-lg hover:bg-red-50"
+                                            onclick="removeObjectField(this)">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
                                         </button>
                                     </div>
                                 </div>
 
                                 <button type="button"
-                                        class="px-4 py-2 mt-4 font-medium text-white transition-colors bg-blue-600 rounded-lg b hover:bg-blue-700"
-                                        onclick="addObjectField()">
+                                    class="px-4 py-2 mt-4 font-medium text-white transition-colors bg-blue-600 rounded-lg b hover:bg-blue-700"
+                                    onclick="addObjectField()">
                                     + Ajouter un article
                                 </button>
                             </div>
@@ -377,11 +390,11 @@
                                     <h3 class="mb-4 text-lg font-medium text-gray-800">Options de lavage</h3>
 
                                     <select name="type_lavage"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                                         <option value="simple">Lavage simple</option>
-                                        <option value="pressing" >Pressing</option>
-                                        <option value="lavage express" >Lavage express</option>
-                                        <option value="délicat" >Lavage délicat</option>
+                                        <option value="pressing">Pressing</option>
+                                        <option value="lavage express">Lavage express</option>
+                                        <option value="délicat">Lavage délicat</option>
                                     </select>
                                 </div>
 
@@ -393,8 +406,8 @@
                                             <label class="text-sm font-medium text-gray-700">Avance client</label>
                                             <div class="relative mt-1">
                                                 <input type="number" name="avance_client"
-                                                       class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                       placeholder="1500.00" step="0.01">
+                                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                    placeholder="1500.00" step="0.01">
                                                 <span class="absolute text-gray-500 right-3 top-3">TND</span>
                                             </div>
                                         </div>
@@ -402,7 +415,7 @@
                                         <div>
                                             <label class="text-sm font-medium text-gray-700">Remise</label>
                                             <select name="remise_reduction"
-                                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                                                 <option value="0">Aucune remise</option>
                                                 <option value="5">Réduction 5%</option>
                                                 <option value="10">Réduction 10%</option>
@@ -418,7 +431,7 @@
 
                             <!-- Bouton de soumission -->
                             <button type="button" id="submitButton"
-                                    class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-sm transition-all transform hover:scale-[1.01]">
+                                class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-sm transition-all transform hover:scale-[1.01]">
                                 Confirmer la commande
                             </button>
                         </form>
@@ -574,6 +587,60 @@
             document.getElementById('orderForm').submit();
         };
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('orderForm');
+            const submitButton = document.getElementById('submitButton');
+            const requiredFields = form.querySelectorAll('[required]');
+
+            // Fonction de vérification globale
+            function checkFormValidity() {
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim() ||
+                        (field.type === 'number' && field.value < 1) ||
+                        (field.tagName === 'SELECT' && field.value === '')) {
+                        isValid = false;
+                    }
+                });
+
+                // Vérification supplémentaire pour les articles dynamiques
+                const quantityInputs = document.querySelectorAll('input[name^="objets["][name$="[quantite]"]');
+                quantityInputs.forEach(input => {
+                    if (input.value < 1) isValid = false;
+                });
+
+                submitButton.style.display = isValid ? 'block' : 'none';
+            }
+
+            // Écouteurs d'événements
+            requiredFields.forEach(field => {
+                field.addEventListener('input', checkFormValidity);
+                field.addEventListener('change', checkFormValidity);
+            });
+
+            // Vérification initiale
+            checkFormValidity();
+        });
+
+        // Modification des fonctions dynamiques pour déclencher la vérification
+        function addObjectField() {
+            // ... votre code existant ...
+            checkFormValidity(); // Ajouter cette ligne à la fin
+        }
+
+        function removeObjectField(button) {
+            // ... votre code existant ...
+            checkFormValidity(); // Ajouter cette ligne à la fin
+        }
+    </script>
+
+    <!-- Modifiez le bouton de soumission comme suit -->
+    {{-- <button type="submit" id="submitButton"
+                class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-sm transition-all transform hover:scale-[1.01] hidden">
+            Confirmer la commande
+        </button> --}}
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

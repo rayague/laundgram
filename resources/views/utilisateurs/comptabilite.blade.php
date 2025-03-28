@@ -244,17 +244,24 @@
                                 <tbody>
                                     @foreach ($payments as $payment)
                                         <tr class="hover:bg-green-50">
-                                            <td class="px-4 py-2 border border-green-300">{{ $payment->commande_id }}</td>
-                                            <td class="px-4 py-2 border border-green-300">{{ $payment->user->name ?? 'Utilisateur Inconnu' }}</td>
-                                            <td class="px-4 py-2 border border-green-300">{{ number_format($payment->amount, 2, ',', ' ') }} F</td>
-                                            <td class="px-4 py-2 border border-green-300">{{ $payment->payment_method ?? 'Non spécifié' }}</td>
-                                            <td class="px-4 py-2 border border-green-300">{{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y H:i') }}</td>
+                                            <td class="px-4 py-2 border border-green-300">{{ $payment->commande_id }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ $payment->user->name ?? 'Utilisateur Inconnu' }}</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ number_format($payment->amount, 2, ',', ' ') }} F</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ $payment->payment_method ?? 'Non spécifié' }}</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y H:i') }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucun paiement enregistré pour cet utilisateur.</p>
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucun
+                                paiement enregistré pour cet utilisateur.</p>
                         @endif
                     </div>
 
@@ -274,16 +281,21 @@
                                 <tbody>
                                     @foreach ($notes as $note)
                                         <tr class="hover:bg-yellow-50">
-                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->commande_id }}</td>
-                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->user->name ?? 'Utilisateur Inconnu' }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->commande_id }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ $note->user->name ?? 'Utilisateur Inconnu' }}</td>
                                             <td class="px-4 py-2 border border-yellow-300">{{ $note->note }}</td>
-                                            <td class="px-4 py-2 border border-yellow-300">{{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note enregistrée pour cet utilisateur.</p>
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note
+                                enregistrée pour cet utilisateur.</p>
                         @endif
                     </div>
                 </div>

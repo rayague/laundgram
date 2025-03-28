@@ -37,6 +37,9 @@ Route::get('/modification_agence', [AgenceController::class, 'modificationAgence
 Route::get('/modification_profil', [ProfileController::class, 'edit'])->name('pageModificationProfil');
 Route::get('/journalieres', [CommandeController::class, 'journalieres'])->name('commandes.journalieres');
 Route::get('/factures/{commande}/imprimer', [FactureController::class, 'print'])->name('factures.print');
+Route::get('/impression_liste_commandes', [CommandeController::class, 'printListeCommandes'])->name('listeCommandes.print');
+Route::get('/impression_liste_commandes_en_attente', [CommandeController::class, 'printListeCommandesPending'])->name('listeCommandesPending.print');
+Route::get('/impression_liste_commandes_retiree', [CommandeController::class, 'printListeCommandesRetraits'])->name('listeCommandesRetraits.print');
 
 
 
@@ -61,6 +64,13 @@ Route::post('/objets', [ObjectController::class, 'store'])->name('objets.store')
 Route::get('/en_attente', [ViewsController::class, 'enAttente'])->name('pending');
 Route::get('/comptabilite', [ViewsController::class, 'comptabilite'])->name('comptabilite');
 Route::get('/retrait/{commande}', [ViewsController::class, 'pageRetrait'])->name('faireRetrait');
+
+// Liste des commandes en attente
+
+Route::get('/commandes_en_attente/filtrer', [CommandeController::class, 'filtrerPending'])->name('commandes.filtrerPending');
+Route::get('/retrait/commandes/filtrer', [CommandeController::class, 'RetraitsFiltrer'])->name('commandes.filtrerRetrait');
+Route::get('/commandes/retrait', [CommandeController::class, 'retraitPending'])->name('commandes.retraitPending');
+
 
 
 
