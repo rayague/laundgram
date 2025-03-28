@@ -106,12 +106,12 @@
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">

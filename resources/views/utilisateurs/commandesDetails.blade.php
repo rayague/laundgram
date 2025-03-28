@@ -20,7 +20,8 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 
     <!-- Custom styles for this template-->
@@ -112,12 +113,12 @@
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profil') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
@@ -205,20 +206,20 @@
                 <div class="p-6 mx-4 mb-6 bg-white rounded-lg shadow-md">
                     <h2 class="mb-6 text-2xl font-semibold text-gray-800">Détails de la commande</h2>
                     @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     <div class="space-y-6">
                         <!-- Informations générales -->
@@ -298,7 +299,8 @@
                                 </tbody>
                             </table>
                         @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note enregistrée pour cette commande.</p>
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note
+                                enregistrée pour cette commande.</p>
                         @endif
                     </div>
 
@@ -393,7 +395,8 @@
                             <div class="flex justify-between mb-2">
                                 <span><strong>Calcul :</strong></span>
                                 <span class="p-1 text-white bg-green-500 rounded">
-                                    {{ number_format($originalTotal, 2, ',', ' ') }} FCFA x {{ $remiseReduction }}% = {{ number_format($discountAmount, 2, ',', ' ') }} FCFA
+                                    {{ number_format($originalTotal, 2, ',', ' ') }} FCFA x {{ $remiseReduction }}% =
+                                    {{ number_format($discountAmount, 2, ',', ' ') }} FCFA
                                 </span>
                             </div>
                         @else
@@ -429,10 +432,12 @@
                         </div>
                         <div class="flex justify-between mb-2">
                             <span>
-                                <span class="status-indicator {{ $commande->statut == 'Payé' ? 'bg-green' : 'bg-gray' }}"></span>
+                                <span
+                                    class="status-indicator {{ $commande->statut == 'Payé' ? 'bg-green' : 'bg-gray' }}"></span>
                                 <strong>Statut :</strong>
                             </span>
-                            <span class="{{ $commande->statut === 'Non retirée' ? 'bg-red-500 rounded p-2 text-white' : 'bg-green-500 rounded p-2 text-white' }}">
+                            <span
+                                class="{{ $commande->statut === 'Non retirée' ? 'bg-red-500 rounded p-2 text-white' : 'bg-green-500 rounded p-2 text-white' }}">
                                 {{ $commande->statut }}
                             </span>
                         </div>
@@ -442,9 +447,11 @@
                             <h4 class="text-lg font-semibold">Détails des Avances :</h4>
                             <ul>
                                 @foreach ($commande->payments as $index => $payment)
-                                    <li class="flex items-center justify-between p-2 my-3 text-white bg-blue-500 rounded">
-                                        <span class="text-lg font-extrabold"> Avance {{ $index + 1 }} : </span> {{ number_format($payment->amount, 2, ',', ' ') }} FCFA
-                                        @if($payment->payment_method)
+                                    <li
+                                        class="flex items-center justify-between p-2 my-3 text-white bg-blue-500 rounded">
+                                        <span class="text-lg font-extrabold"> Avance {{ $index + 1 }} : </span>
+                                        {{ number_format($payment->amount, 2, ',', ' ') }} FCFA
+                                        @if ($payment->payment_method)
                                             ({{ $payment->payment_method }})
                                         @endif
                                         le {{ $payment->created_at->format('d/m/Y H:i') }}
@@ -461,85 +468,92 @@
 
 
                     <!-- Formulaire de mise à jour des entrées d'argent -->
-<div class="p-4 mt-8 bg-gray-200 rounded">
-    <h3 class="mb-4 text-xl font-semibold">Mettre à jour les entrées d'argent</h3>
-    <form action="{{ route('commande.updateFinancial', $commande->id) }}" method="POST"
-          class="flex items-center gap-4">
-        @csrf
-        @method('PUT')
-        <label for="montant_paye" class="block text-sm font-medium text-gray-700">
-            Nouvelle avance :
-        </label>
-        <input type="number" name="montant_paye" id="montant_paye" step="0.01" min="0"
-               value="0.00" class="w-32 p-2 border rounded-md" required>
-        <!-- Optionnel : Champ pour la méthode de paiement -->
-               <select name="payment_method" id="payment_method" class="w-48 p-2 bg-white border rounded-md">
-                <option value="">Choisir</option>
-                <option value="Momo">Momo</option>
-                <option value="Espèce">Espèce</option>
-               </select>
-        <button type="submit"
-                class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
-            Mettre à jour
-        </button>
-    </form>
-</div>
+                    <div class="p-4 mt-8 bg-gray-200 rounded">
+                        <h3 class="mb-4 text-xl font-semibold">Mettre à jour les entrées d'argent</h3>
+                        <form action="{{ route('commande.updateFinancial', $commande->id) }}" method="POST"
+                            class="flex items-center gap-4">
+                            @csrf
+                            @method('PUT')
+                            <label for="montant_paye" class="block text-sm font-medium text-gray-700">
+                                Nouvelle avance :
+                            </label>
+                            <input type="number" name="montant_paye" id="montant_paye" step="0.01"
+                                min="0" value="0.00" class="w-32 p-2 border rounded-md" required>
+                            <!-- Optionnel : Champ pour la méthode de paiement -->
+                            <select name="payment_method" id="payment_method"
+                                class="w-48 p-2 bg-white border rounded-md">
+                                <option value="">Choisir</option>
+                                <option value="Momo">Momo</option>
+                                <option value="Espèce">Espèce</option>
+                            </select>
+                            <button type="submit"
+                                class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                Mettre à jour
+                            </button>
+                        </form>
+                    </div>
 
-  <!-- Modal pour faire le retrait  -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Faire un retrait</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-                        <!-- Détails de la commande -->
-                        <div class="p-6 mx-4 mb-6 rounded-lg shadow-md">
-
-
-                            <!-- Affichage du numéro de la facture et du nom -->
-                            <form action="{{ route('notes.store', ['commande' => $commande->id]) }}" method="POST">
-                                @csrf
-                                <!-- Affichage du numéro de la facture et du nom -->
-                                <div class="mb-4">
-                                    <label for="facture_id" class="block text-sm font-medium text-gray-700">Numéro de la
-                                        facture</label>
-                                    <input type="text" id="facture_id" name="facture_id" value="{{ $commande->numero }}"
-                                        disabled
-                                        class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                    <!-- Modal pour faire le retrait  -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Faire un retrait</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
+                                <div class="modal-body">
+                                    <!-- Détails de la commande -->
+                                    <div class="p-6 mx-4 mb-6 rounded-lg shadow-md">
 
-                                <div class="mb-4">
-                                    <label for="client_name" class="block text-sm font-medium text-gray-700">Nom du
-                                        client</label>
-                                    <input type="text" id="client_name" name="client_name"
-                                        value="{{ $commande->client }}" disabled
-                                        class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+
+                                        <!-- Affichage du numéro de la facture et du nom -->
+                                        <form action="{{ route('notes.store', ['commande' => $commande->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            <!-- Affichage du numéro de la facture et du nom -->
+                                            <div class="mb-4">
+                                                <label for="facture_id"
+                                                    class="block text-sm font-medium text-gray-700">Numéro de la
+                                                    facture</label>
+                                                <input type="text" id="facture_id" name="facture_id"
+                                                    value="{{ $commande->numero }}" disabled
+                                                    class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label for="client_name"
+                                                    class="block text-sm font-medium text-gray-700">Nom du
+                                                    client</label>
+                                                <input type="text" id="client_name" name="client_name"
+                                                    value="{{ $commande->client }}" disabled
+                                                    class="w-full p-2 mt-1 bg-gray-100 border border-gray-300 rounded-md cursor-not-allowed" />
+                                            </div>
+
+                                            <!-- Champ de saisie pour l'utilisateur -->
+                                            <div class="mb-4">
+                                                <label for="note"
+                                                    class="block text-sm font-medium text-gray-700">Montant à
+                                                    retirer</label>
+                                                <textarea rows="4" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required name="note"
+                                                    id="note"></textarea>
+
+                                            </div>
+
+                                            <!-- Bouton de validation -->
+                                            <div>
+                                                <button type="submit"
+                                                    class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                                    Valider le retrait
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-
-                                <!-- Champ de saisie pour l'utilisateur -->
-                                <div class="mb-4">
-                                    <label for="note" class="block text-sm font-medium text-gray-700">Montant à
-                                        retirer</label>
-                                    <textarea rows="4" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required name="note"
-                                        id="note"></textarea>
-
-                                </div>
-
-                                <!-- Bouton de validation -->
-                                <div>
-                                    <button type="submit"
-                                        class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                                        Valider le retrait
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                    </div>
 
 
 
@@ -548,17 +562,20 @@
 
                     <!-- Boutons de navigation -->
                     <div class="flex flex-col items-center justify-between gap-4 my-8 ml-4">
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-600">
                             <i class="mr-2 fas fa-hand-holding-usd"></i> Faire un retrait
                         </button>
                         <a href="{{ route('factures.print', ['commande' => $commande->id]) }}"
-                            class="flex items-center justify-center w-full p-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600" target="_blank">
+                            class="flex items-center justify-center w-full p-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
+                            target="_blank">
                             <i class="mr-2 fas fa-print"></i> Imprimer
                         </a>
 
                         <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('factures.download', ['id' => $commande->id])) }}"
-                            class="flex items-center justify-center w-full p-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600" target="_blank">
+                            class="flex items-center justify-center w-full p-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600"
+                            target="_blank">
                             <i class="mr-2 fab fa-whatsapp"></i> Envoyer par WhatsApp
                         </a>
 
@@ -675,7 +692,9 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard-assets/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('dashboard-assets/js/demo/chart-pie-demo.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
 </body>
 

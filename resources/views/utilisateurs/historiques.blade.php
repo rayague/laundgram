@@ -102,12 +102,12 @@
 
 
                 <!-- Nav Item - Rappels -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="{{ route('rappels') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RETRAITS</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">

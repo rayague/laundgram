@@ -123,9 +123,12 @@
     <div class="container">
         <div class="header">
             <div class="brand-section">
-                <h1>ETS N'KPA PRESSING</h1>
-                <p>AGLA - Église St Pierre et Paul</p>
-                <p>Téléphone : 95784635 | 65588538</p>
+                <h1>CICA NOBLESSE PRESSING</h1>
+                <p>Bureau situé à côté du dépôt de ciment Zogbo (annexe Godomey).</p>
+                <p>0272 BP 81</p>
+                <p>Tél. (+229) 97 89 36 99 / 99 10 73 96 / 44 67 50</p>
+                <p>Zogbo - Rép. Bénin</p>
+                <p>RC 13-A-17728 | IFU : 2201300990000</p>
             </div>
             <div class="invoice-info">
                 <h2>Facture #{{ $commande->numero }}</h2>
@@ -138,7 +141,7 @@
             <div class="detail-block">
                 <strong class="text-green">CLIENT</strong><br>
                 {{ $commande->client }}<br>
-                Numéro whatsApp : {{ $commande->numero_whatsapp }}
+                Numéro WhatsApp : {{ $commande->numero_whatsapp }}
             </div>
             <div class="detail-block">
                 <strong class="text-green">DATES</strong><br>
@@ -146,6 +149,7 @@
                 Retrait: {{ \Carbon\Carbon::parse($commande->date_retrait)->isoFormat('LL') }}
             </div>
         </div>
+
 
         <table class="items-table">
             <thead>
@@ -199,12 +203,26 @@
             </div>
         </div>
 
-        <div class="agence-info">
-            <strong class="text-green">INFORMATIONS LÉGALES</strong><br>
-            ETS N'KPA PRESSING LA NETTETÉ<br>
-            RCCM: RB/COT/17A34380 | IFU: 12012001555601<br>
-            Service: Nettoyage professionnel<br>
-            📍 AGLA - Église St Pierre et Paul
+
+        <div class="container">
+            <h2>Conditions Générales de Pressing</h2>
+            <ul>
+                <li><strong>1.</strong> 10 Frs par jour pour frais de magasinage seront perçus à partir du
+                    10<sup>ème</sup> jour après dépôt.</li>
+                <li><strong>2.</strong> Après deux (02) mois, la maison n'est plus responsable des pertes ou avaries
+                    (<strong>60 jours</strong>).</li>
+                <li><strong>3.</strong> En cas de dommages causés aux effets, la responsabilité du pressing est limitée
+                    à :
+                    <ul class="sub-list">
+                        <li>Huit (8) fois le prix du blanchissage pour tout effet non griffé.</li>
+                        <li>Dix (10) fois pour les linges griffés.</li>
+                        <li>Une (1) fois le prix du blanchissage pour les draps.</li>
+                    </ul>
+                </li>
+                <li><strong>4.</strong> Les synthétiques, boucles, boutons, fermetures, broderies de fil sur Bazin ne
+                    sont pas pris en compte.</li>
+                <li><strong>5.</strong> Les effets dépourvus d'étiquetage d'entretien ne sont pas garantis.</li>
+            </ul>
         </div>
     </div>
 </body>

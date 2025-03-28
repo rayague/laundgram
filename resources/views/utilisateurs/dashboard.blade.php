@@ -125,14 +125,14 @@
                     </a>
                 </li>
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="
                     {{ route('profil') }}
                     ">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
@@ -246,7 +246,7 @@
                             </p>
                             <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded "><strong>Email :</strong>
                                 {{ auth()->user()->email }}</p>
-                                <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Date de
+                            <p class="p-2 font-medium text-gray-700 bg-gray-200 border rounded"><strong>Date de
                                     création
                                     :</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
                         </div>
