@@ -149,7 +149,6 @@
         </tbody>
     </table>
 
-
     <div class="container">
         <h2>Conditions Générales de Pressing</h2>
         <ul>
