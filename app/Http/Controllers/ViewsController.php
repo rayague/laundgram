@@ -66,11 +66,11 @@ class ViewsController extends Controller
     // }
 
 
-    public function creations()
-    {
-        // Logique spécifique pour la page des créations (si nécessaire)
-        return view('administrateur.creationObjets '); // Retourne la vue 'creations.blade.php'
-    }
+    // public function creations()
+    // {
+    //     // Logique spécifique pour la page des créations (si nécessaire)
+    //     return view('administrateur.creationObjets '); // Retourne la vue 'creations.blade.php'
+    // }
 
     public function profil()
     {
@@ -120,7 +120,7 @@ class ViewsController extends Controller
 
         // Si la commande n'existe pas pour cet utilisateur, on redirige ou on renvoie une erreur
         if ($commande->isEmpty()) {
-            return redirect()->route('home')->with('error', 'Aucune commande trouvée pour cet utilisateur.');
+            return redirect()->route('dashboard')->with('error', 'Aucune commande trouvée pour cet utilisateur.');
         }
 
         // Récupérer les paiements associés à cet utilisateur

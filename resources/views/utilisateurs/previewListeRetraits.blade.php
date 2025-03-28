@@ -114,7 +114,7 @@
 
     </div>
 
-    <h2>Liste des Commandes retirées</h2>
+    <h2>Liste des Commandes non retirées</h2>
     <p><strong>Période :</strong> {{ $date_debut }} au {{ $date_fin }}</p>
 
     <table>
@@ -130,14 +130,16 @@
         <tbody>
             @php $total = 0; @endphp
             @foreach ($commandes as $commande)
-                @php $total += $commande->total; @endphp
-                <tr>
-                    <td>{{ $commande->numero }}</td>
-                    <td>{{ $commande->client }}</td>
-                    <td>{{ $commande->heure_retrait }}</td>
-                    <td>{{ number_format($commande->total, 2, ',', ' ') }} FCFA</td>
-                    <td>{{ $commande->statut }}</td>
-                </tr>
+                @if ($commande->statut === 'non retirée')
+                    @php $total += $commande->total; @endphp
+                    <tr>
+                        <td>{{ $commande->numero }}</td>
+                        <td>{{ $commande->client }}</td>
+                        <td>{{ $commande->heure_retrait }}</td>
+                        <td>{{ number_format($commande->total, 2, ',', ' ') }} FCFA</td>
+                        <td>{{ $commande->statut }}</td>
+                    </tr>
+                @endif
             @endforeach
             <tr class="total">
                 <td colspan="3">Total :</td>
@@ -146,6 +148,7 @@
             </tr>
         </tbody>
     </table>
+
 
     <div class="container">
         <h2>Conditions Générales de Pressing</h2>
