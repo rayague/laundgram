@@ -227,6 +227,30 @@
                         </div>
                     @endif
 
+                    <!-- Formulaire de filtre -->
+                    <form method="GET" action="{{ route('commandes.filtrerComptabilite') }}"
+                        class="p-4 mb-6 bg-white rounded-lg shadow">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                    class="px-3 py-2 border rounded-lg" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <input type="date" name="date_fin"
+                                    value="{{ request('date_fin', today()->toDateString()) }}"
+                                    class="px-3 py-2 border rounded-lg">
+                            </div>
+                            <div class="self-end">
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Filtrer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
                     <!-- Section des paiements -->
                     <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
                         <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Paiements</h2>
@@ -237,7 +261,7 @@
                                         <th class="px-4 py-2 border border-green-400">Numéro de Facture</th>
                                         <th class="px-4 py-2 border border-green-400">Utilisateur</th>
                                         <th class="px-4 py-2 border border-green-400">Montant</th>
-                                        <th class="px-4 py-2 border border-green-400">Méthode de Paiement</th>
+                                        <th class="px-4 py-2 border border-green-400">Action</th>
                                         <th class="px-4 py-2 border border-green-400">Date</th>
                                     </tr>
                                 </thead>

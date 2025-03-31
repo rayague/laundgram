@@ -64,38 +64,30 @@
                 <hr class="sidebar-divider">
 
                 <!-- Nav Item - Accueil -->
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="
-
-                    {{ route('administration') }}
-
-                    ">
-                        <i class="fas fa-fw fa-home"></i>
-                        <span class="font-weight-bold">ACCUEIL</span>
-                    </a>
-                </li>
-
-                <!-- Nav Item - Création d'Objets -->
-                <li class="nav-item ">
-                    <a class="nav-link"
-                        href="
-
-                    {{ route('creationObjets') }}
-
-                    ">
+                <li class=" nav-item"> <!-- Nav Item - Création d'Objets -->
+                <li class="bg-yellow-500 nav-item">
+                    <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
                     </a>
                 </li>
 
+                <a class="nav-link" href="
+
+                    {{ route('administration') }}
+
+                    ">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span class="font-weight-bold">ACCUEIL</span>
+                </a>
+                </li>
+
 
                 <!-- Nav Item - Commandes -->
                 <li class="nav-item">
-                    <a class="nav-link"
-                        href="
+                    <a class="nav-link" href="
 
-                    {{ route('commandesAdmin') }}
+                    {{ route('commandes') }}
 
                     ">
                         <i class="fas fa-fw fa-shopping-cart"></i>
@@ -103,9 +95,18 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Création d'Objets -->
+                <li class=" nav-item">
+                    <a class="nav-link" href="{{ route('creationObjets') }}">
+                        <i class="fas fa-fw fa-plus-square"></i>
+                        <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
+                    </a>
+                </li>
+
+
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
+                    <a class="nav-link" href="{{ route('listeCommandes') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -113,7 +114,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
+                    <a class="nav-link" href="{{ route('pending') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -123,7 +124,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
+                    <a class="nav-link" href="{{ route('comptabilite') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -132,7 +133,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="
 
-                    {{ route('rappelsAdmin') }}
+                    {{ route('rappels') }}
 
                     ">
                         <i class="fas fa-fw fa-bell"></i>
@@ -140,23 +141,23 @@
                     </a>
                 </li>
 
+
                 <!-- Nav Item - Utilisateurs -->
-                <li class="bg-yellow-500 nav-item ">
+                <li class="nav-item ">
                     <a class="nav-link"
                         href="
 
-                    {{ route('utilisateursAdmin') }}
+                                    {{ route('utilisateursAdmin') }}
 
-                    ">
+                                    ">
                         <i class="fas fa-fw fa-users"></i>
                         <span class="font-weight-bold">UTILISATEURS</span>
                     </a>
                 </li>
-
                 <!-- Nav Item - Profil -->
                 {{-- <li class="nav-item ">
                     <a class="nav-link" href="
-                    {{ route('profilAdmin') }}
+                    {{ route('profil') }}
                     ">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
@@ -200,7 +201,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Administration </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Comptabilité </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -244,10 +245,10 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="flex flex-col gap-3 container-fluid">
+                <div class="container p-6 mx-auto">
+                    <!-- Affichage des erreurs -->
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="p-4 text-red-700 bg-red-100 border-l-4 border-red-500 rounded alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -256,59 +257,154 @@
                         </div>
                     @endif
 
-                    <div class="container mt-4">
-                        <h1 class="mb-4 text-center">Liste des utilisateurs</h1>
+                    <!-- Section du filtre de la période -->
+                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Filtrer par Période</h2>
+                        <form method="GET" action="{{ route('commandes.filtrerComptabilite') }}">
+                            <div class="flex space-x-4">
+                                <div>
+                                    <label for="date_debut" class="block text-gray-700">Date de Début</label>
+                                    <input type="date" name="date_debut" id="date_debut"
+                                        value="{{ $date_debut ?? '' }}" class="p-2 border border-gray-300 rounded"
+                                        required>
+                                </div>
+                                <div>
+                                    <label for="date_fin" class="block text-gray-700">Date de Fin</label>
+                                    <input type="date" name="date_fin" id="date_fin"
+                                        value="{{ $date_fin ?? '' }}" class="p-2 border border-gray-300 rounded">
+                                </div>
+                                <button type="submit"
+                                    class="p-2 text-white bg-blue-500 rounded hover:bg-blue-700">Filtrer</button>
+                            </div>
+                        </form>
+                    </div>
 
-                        <!-- Bouton d'ajout d'un utilisateur -->
-                        <a href="{{ route('admin.users.create') }}" class="mb-3 font-bold btn btn-success">
-                            <i class="bi bi-person-plus"></i> Ajouter un utilisateur
-                        </a>
-
-                        <!-- Tableau des utilisateurs -->
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover table-bordered">
-                                <thead class="text-white bg-blue-500 table-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nom</th>
-                                        <th>Email</th>
-                                        <th>Actions</th>
+                    <!-- Section des commandes filtrées -->
+                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Commandes</h2>
+                        @if ($commandes->isNotEmpty())
+                            <table class="min-w-full border-collapse bg-gray-50">
+                                <thead>
+                                    <tr class="text-white bg-blue-500">
+                                        <th class="px-4 py-2 border border-blue-400">Numéro de Commande</th>
+                                        <th class="px-4 py-2 border border-blue-400">Utilisateur</th>
+                                        <th class="px-4 py-2 border border-blue-400">Montant Total</th>
+                                        <th class="px-4 py-2 border border-blue-400">Statut</th>
+                                        <th class="px-4 py-2 border border-blue-400">Date de Retrait</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td class="d-flex justify-content-start">
-                                                <!-- Lien pour supprimer un utilisateur -->
-                                                <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                                    method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                                                        <i class="bi bi-trash"></i> Supprimer
-                                                    </button>
-                                                </form>
+                                    @foreach ($commandes as $commande)
+                                        <tr class="hover:bg-blue-50">
+                                            <td class="px-4 py-2 border border-blue-300">{{ $commande->id }}</td>
+                                            <td class="px-4 py-2 border border-blue-300">
+                                                {{ $commande->user->name ?? 'Utilisateur Inconnu' }}</td>
+                                            <td class="px-4 py-2 border border-blue-300">
+                                                {{ number_format($commande->total, 2, ',', ' ') }} F</td>
+                                            <td class="px-4 py-2 border border-blue-300">{{ $commande->statut }}</td>
+                                            <td class="px-4 py-2 border border-blue-300">
+                                                {{ \Carbon\Carbon::parse($commande->date_retrait)->format('d/m/Y') }}
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
+                        @else
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune
+                                commande trouvée pour cette période.</p>
+                        @endif
+                    </div>
 
-                        <!-- Pagination si nécessaire -->
-                        {{-- {{ $users->links() }} --}}
+                    <!-- Section des paiements filtrés -->
+                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Paiements</h2>
+                        @if ($payments->isNotEmpty())
+                            <table class="min-w-full border-collapse bg-gray-50">
+                                <thead>
+                                    <tr class="text-white bg-green-500">
+                                        <th class="px-4 py-2 border border-green-400">Numéro de Facture</th>
+                                        <th class="px-4 py-2 border border-green-400">Utilisateur</th>
+                                        <th class="px-4 py-2 border border-green-400">Montant</th>
+                                        <th class="px-4 py-2 border border-green-400">Méthode de Paiement</th>
+                                        <th class="px-4 py-2 border border-green-400">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($payments as $payment)
+                                        <tr class="hover:bg-green-50">
+                                            <td class="px-4 py-2 border border-green-300">{{ $payment->commande_id }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ $payment->user->name ?? 'Utilisateur Inconnu' }}</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ number_format($payment->amount, 2, ',', ' ') }} F</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ $payment->payment_method ?? 'Non spécifié' }}</td>
+                                            <td class="px-4 py-2 border border-green-300">
+                                                {{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <!-- Affichage du total des paiements -->
+                            <div class="p-4 mt-4 text-lg font-semibold text-right bg-gray-100">
+                                <p>Total des paiements : <span
+                                        class="font-bold">{{ number_format($montant_total_paiements, 2, ',', ' ') }}
+                                        F</span></p>
+                            </div>
+                        @else
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucun
+                                paiement enregistré pour cette période.</p>
+                        @endif
                     </div>
 
 
+                    <!-- Section des notes filtrées -->
+                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
+                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Retraits / Notes</h2>
+                        @if ($notes->isNotEmpty())
+                            <table class="min-w-full border-collapse bg-gray-50">
+                                <thead>
+                                    <tr class="text-white bg-yellow-500">
+                                        <th class="px-4 py-2 border border-yellow-400">Numéro de Facture</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Utilisateur</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Note</th>
+                                        <th class="px-4 py-2 border border-yellow-400">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($notes as $note)
+                                        <tr class="hover:bg-yellow-50">
+                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->commande_id }}
+                                            </td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ $note->user->name ?? 'Utilisateur Inconnu' }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">{{ $note->note }}</td>
+                                            <td class="px-4 py-2 border border-yellow-300">
+                                                {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note
+                                enregistrée pour cette période.</p>
+                        @endif
+                    </div>
 
-
+                    <!-- Section du Montant Total -->
+                    <div class="p-6 bg-white rounded-lg shadow-md">
+                        <h2 class="text-xl font-semibold text-gray-700">Montant Total des Commandes</h2>
+                        <p class="text-lg">{{ number_format($montant_total, 2, ',', ' ') }} F</p>
+                    </div>
 
                 </div>
+
             </div>
+
 
 
 

@@ -207,7 +207,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Date de début</label>
                                 <input type="date" name="date_debut" value="{{ request('date_debut') }}"
-                                    class="px-3 py-2 border rounded-lg">
+                                    class="px-3 py-2 border rounded-lg" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Date de fin</label>

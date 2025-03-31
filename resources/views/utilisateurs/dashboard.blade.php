@@ -271,8 +271,8 @@
                         <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Boîte postale :</strong> 0272
                             BP 81</p>
                         <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Téléphone :</strong> (+229) 97
-                            89 36 99 /
-                            99 10 73 96 / 44 67 50</p>
+                            89 36 99 / 99 10 70 93 / 96 44 67 50
+                        </p>
                         <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Localisation :</strong> Zogbo
                             - Rép. Bénin</p>
                     </div>

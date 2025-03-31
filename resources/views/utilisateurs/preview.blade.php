@@ -158,7 +158,7 @@
                 <h1>CICA NOBLESSE PRESSING</h1>
                 <p>Bureau situé à côté du dépôt de ciment Zogbo (annexe Godomey).</p>
                 <p>0272 BP 81</p>
-                <p>Tél. (+229) 97 89 36 99 / 99 10 73 96 / 44 67 50</p>
+                <p>Tél. (+229) 97 89 36 99 / 99 10 70 93 / 96 44 67 50</p>
                 <p>Zogbo - Rép. Bénin</p>
                 <p>RC 13-A-17728 | IFU : 2201300990000</p>
             </div>

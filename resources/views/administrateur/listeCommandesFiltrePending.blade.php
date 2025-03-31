@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Laundgram</title>
     <link rel="shortcut icon" href="{{ asset('images/laundgram.png') }}" type="image/x-icon">
 
+
+    <title>Laundgram</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('dashboard-assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
@@ -23,8 +23,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard-assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-
 
 
 </head>
@@ -39,9 +37,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
-                href="
-                {{-- {{ route('acceuil') }} --}}
-                ">
+                href="{{ route('administration') }}">
 
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
             </a>
@@ -52,9 +48,7 @@
             <nav class="text-white bg-gray-800 sidebar">
                 <!-- Nav Item - Tableau de Bord -->
                 <li class="nav-item">
-                    <a class="nav-link" href="
-                    {{ route('administration') }}
-                    ">
+                    <a class="nav-link" href="{{ route('administration') }}">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span class="font-weight-bold">TABLEAU DE BORD</span>
                     </a>
@@ -65,41 +59,32 @@
 
                 <!-- Nav Item - Accueil -->
                 <li class="nav-item">
-                    <a class="nav-link"
-                        href="
-
-                    {{ route('administration') }}
-
-                    ">
-                        <i class="fas fa-fw fa-home"></i>
+                    <a class="nav-link" href="{{ route('administration') }}">
+                        <i class="text-white fas fa-fw fa-home"></i>
                         <span class="font-weight-bold">ACCUEIL</span>
                     </a>
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="nav-item ">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
                     </a>
                 </li>
 
+
                 <!-- Nav Item - Commandes -->
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="
-
-                    {{ route('commandesAdmin') }}
-
-                    ">
+                <li class=" nav-item">
+                    <a class="nav-link" href="{{ route('commandes') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
                     </a>
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
+                <li class=" nav-item">
+                    <a class="nav-link" href="{{ route('listeCommandes') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -107,7 +92,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
+                    <a class="bg-yellow-500 nav-link" href="{{ route('pending') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -116,32 +101,31 @@
 
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('comptabilite') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
                 </li>
+
+
                 <!-- Nav Item - Rappels -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="
-
-                    {{ route('rappelsAdmin') }}
-
-                    ">
+                    <a class="nav-link" href="{{ route('rappels') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RETRAITS</span>
                     </a>
                 </li>
 
-                <!-- Nav Item - Rappels -->
+
+                <!-- Nav Item - Utilisateurs -->
                 <li class="nav-item ">
                     <a class="nav-link"
                         href="
 
-                    {{ route('utilisateursAdmin') }}
+                                    {{ route('utilisateursAdmin') }}
 
-                    ">
+                                    ">
                         <i class="fas fa-fw fa-users"></i>
                         <span class="font-weight-bold">UTILISATEURS</span>
                     </a>
@@ -149,9 +133,7 @@
 
                 <!-- Nav Item - Profil -->
                 {{-- <li class="nav-item ">
-                    <a class="nav-link" href="
-                    {{ route('profilAdmin') }}
-                    ">
+                    <a class="nav-link" href="{{ route('profil') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
@@ -194,7 +176,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <h3 class="text-xl font-bold text-gray-800">Administration </h3>
+                    <h3 class="text-xl font-bold text-gray-800">Commandes </h3>
                     <!-- Topbar Navbar -->
                     <ul class="ml-auto navbar-nav">
 
@@ -239,7 +221,14 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="flex flex-col gap-3 container-fluid">
+                <div class="container-fluid">
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -250,51 +239,117 @@
                         </div>
                     @endif
 
-                    <div class="container p-4 mt-4 rounded-lg shadow">
-                        <h1>Ajouter un nouvel utilisateur</h1>
-
-                        <!-- Afficher les messages de validation ou de succès -->
-
-                        <form action="{{ route('admin.users.store') }}" method="POST">
-                            @csrf <!-- Protection contre les attaques CSRF -->
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nom</label>
-                                <input type="text" name="name" class="form-control"
-                                    value="{{ old('name') }}" required>
+                    <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures En Attente</h2>
+                    <!-- Formulaire de filtre -->
+                    <form method="GET" action="{{ route('commandes.filtrerPending') }}"
+                        class="p-4 mb-6 bg-white rounded-lg shadow">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                    class="px-3 py-2 border rounded-lg" required>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control"
-                                    value="{{ old('email') }}" required>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <input type="date" name="date_fin"
+                                    value="{{ request('date_fin', today()->toDateString()) }}"
+                                    class="px-3 py-2 border rounded-lg">
                             </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" name="password" class="form-control" required>
+                            <div class="self-end">
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Filtrer
+                                </button>
                             </div>
+                        </div>
+                    </form>
 
-                            <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Confirmer le mot de
-                                    passe</label>
-                                <input type="password" name="password_confirmation" class="form-control" required>
-                            </div>
-
-                            <button type="submit" class="btn btn-success">Créer l'utilisateur</button>
-                        </form>
+                    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+                        <table class="w-full border border-collapse table-auto">
+                            <thead class="text-white bg-blue-600">
+                                <tr>
+                                    <th class="px-4 py-3 text-left border border-blue-400">N° Commande</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Nom du Client</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Numéro de Téléphone</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Date de Retrait</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Heure de Retrait</th>
+                                    <!-- Nouvelle colonne -->
+                                    <th class="px-4 py-3 text-left border border-blue-400">Montant de la Facture</th>
+                                    <th class="px-4 py-3 text-left border border-blue-400">Statut</th>
+                                    <!-- Nouvelle colonne -->
+                                    <th class="px-4 py-3 text-left border border-blue-400">Utilisateur</th>
+                                    <th class="px-4 py-3 text-center border border-blue-400">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $total = 0; @endphp
+                                @foreach ($commandes as $commande)
+                                    @php $total += $commande->total; @endphp
+                                    <tr class="hover:bg-blue-50">
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->numero }}</td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->client }}</td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->numero_whatsapp }}
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->date_retrait }}
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->heure_retrait }}
+                                        </td> <!-- Nouvelle colonne -->
+                                        <td class="px-4 py-3 border border-blue-300">
+                                            {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->statut }}</td>
+                                        <!-- Nouvelle colonne -->
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->user->name }}</td>
+                                        <td class="px-4 py-3 text-center border border-blue-300">
+                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                                class="p-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">
+                                                Voir
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <!-- Ligne Total -->
+                                <tr class="font-bold bg-gray-100">
+                                    <td colspan="5" class="px-4 py-3 text-right border border-blue-400">Total :
+                                    </td>
+                                    <td class="px-4 py-3 border border-blue-400">
+                                        {{ number_format($total, 2, ',', ' ') }} FCFA</td>
+                                    <td colspan="3" class="border border-blue-400"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
+                    <div class="flex items-center justify-between my-6">
+                        <a href="{{ route('pending') }}"
+                            class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-green-700">
+                            Retour
+                        </a>
 
+                        <div class="text-gray-600">
+                            <p><strong>{{ $commandes->count() }}</strong> factures affichées</p>
+                        </div>
+
+                        <a href="{{ route('listeCommandesPending.print') }}?date_debut={{ request('date_debut') }}&date_fin={{ request('date_fin') }}"
+                            target="_blank"
+                            class="px-4 py-2 m-6 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
+                            🖨️ Imprimer la liste
+                        </a>
+                    </div>
                 </div>
+                <!-- /.container-fluid -->
+
+
+
+
+
+
+
             </div>
-
-
-
-
+            <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="mt-56 bg-white sticky-footer">
+            <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
                     <div class="my-auto text-center copyright">
                         Copyrignt © <span class="text-yellow-500"
@@ -341,6 +396,23 @@
     </a>
 
 
+
+    <script>
+        function addObjectField() {
+            const container = document.getElementById('objects-container');
+            const div = document.createElement('div');
+            div.classList.add('flex', 'gap-4', 'mb-2');
+            div.innerHTML = `
+            <select name="objets[0][id]" class="w-full p-2 mt-1 border rounded-md">
+@foreach ($objets as $objet)
+                                                <option value="{{ $objet->id }}">{{ $objet->nom }}</option>
+                                            @endforeach
+            </select>
+            <input type="number" class="w-20 p-2 mt-1 border rounded-md" name="objets[0][quantite]" placeholder="Qté" min="1" required>
+          `;
+            container.appendChild(div);
+        }
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

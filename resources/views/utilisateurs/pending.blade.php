@@ -239,7 +239,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Date de début</label>
                                     <input type="date" name="date_debut" value="{{ request('date_debut') }}"
-                                        class="px-3 py-2 border rounded-lg">
+                                        class="px-3 py-2 border rounded-lg" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Date de fin</label>
@@ -292,15 +292,21 @@
                                                     <th
                                                         class="px-4 py-3 text-sm font-semibold text-center text-white uppercase">
                                                         Actions</th>
+                                                    <!-- Nouvelle colonne Rappeler -->
+                                                    <th
+                                                        class="px-4 py-3 text-sm font-semibold text-center text-white uppercase">
+                                                        Rappeler</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 @foreach ($commandes->where('date_retrait', today()->toDateString()) as $commande)
                                                     <tr class="transition-colors hover:bg-blue-50">
                                                         <td class="px-4 py-3 text-sm font-medium text-gray-900">
-                                                            {{ $commande->numero }}</td>
+                                                            {{ $commande->numero }}
+                                                        </td>
                                                         <td class="px-4 py-3 text-sm text-gray-600">
-                                                            {{ $commande->client }}</td>
+                                                            {{ $commande->client }}
+                                                        </td>
                                                         <td class="px-4 py-3 text-sm text-gray-600">
                                                             {{ \Carbon\Carbon::parse($commande->heure_retrait)->format('H:i') }}
                                                         </td>
@@ -310,11 +316,11 @@
                                                         <td class="px-4 py-3">
                                                             <span
                                                                 class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                            {{ $commande->statut === 'Validée'
-                                                                ? 'bg-green-100 text-green-800'
-                                                                : ($commande->statut === 'Non retirée'
-                                                                    ? 'bg-red-100 text-red-800'
-                                                                    : 'bg-gray-100 text-gray-800') }}">
+                                                                {{ $commande->statut === 'Validée'
+                                                                    ? 'bg-green-100 text-green-800'
+                                                                    : ($commande->statut === 'Non retirée'
+                                                                        ? 'bg-red-100 text-red-800'
+                                                                        : 'bg-gray-100 text-gray-800') }}">
                                                                 {{ $commande->statut }}
                                                             </span>
                                                         </td>
@@ -330,6 +336,27 @@
                                                                 Voir Plus
                                                             </a>
                                                         </td>
+                                                        <!-- Nouvelle colonne Rappeler -->
+                                                        <td class="px-4 py-3 text-center">
+                                                            @php
+                                                                // Récupération du numéro WhatsApp du client (à adapter selon ton modèle)
+                                                                $whatsappNumber = $commande->numero_whatsapp; // ou $commande->client->whatsapp
+
+                                                                // Préparation du message, bien encodé pour l'URL
+$message = urlencode(
+    "Bonjour 👋, votre commande de lavage d'habits doit être retirée aujourd'hui. N'oubliez pas de passer la chercher 😊!",
+                                                                );
+                                                            @endphp
+                                                            @if ($whatsappNumber)
+                                                                <a href="https://api.whatsapp.com/send?phone={{ $whatsappNumber }}&text={{ $message }}"
+                                                                    target="_blank"
+                                                                    class="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700">
+                                                                    Rappeler
+                                                                </a>
+                                                            @else
+                                                                <span class="text-gray-500">Pas de Numéro</span>
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -338,15 +365,16 @@
                                 @endif
                             </div>
 
-
-                            <!-- Bouton "Retrait" -->
-                            {{-- <div class="flex justify-end mt-4">
-                                <a href="{{ route('commandes.retraitPending') }}"
-                                    class="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">
+                            <!-- Bouton "Retrait" (commenté dans le code d'origine) -->
+                            {{--
+                            <div class="flex justify-end mt-4">
+                                <a href="{{ route('commandes.retraitPending') }}" class="px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">
                                     ➕ Effectuer un Retrait
                                 </a>
-                            </div> --}}
+                            </div>
+                            --}}
                         </div>
+
 
                     </div>
                 </div>

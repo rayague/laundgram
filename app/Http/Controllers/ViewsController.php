@@ -66,11 +66,11 @@ class ViewsController extends Controller
     // }
 
 
-    // public function creations()
-    // {
-    //     // Logique spécifique pour la page des créations (si nécessaire)
-    //     return view('administrateur.creationObjets '); // Retourne la vue 'creations.blade.php'
-    // }
+    public function creations()
+    {
+        // Logique spécifique pour la page des créations (si nécessaire)
+        return view('administrateur.creationObjets '); // Retourne la vue 'creations.blade.php'
+    }
 
     public function profil()
     {

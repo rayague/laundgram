@@ -16,6 +16,52 @@ use Illuminate\Container\Attributes\Auth;
 class AdminController extends Controller
 {
 
+
+    // Concernant les objets
+
+
+    // Afficher le formulaire d'édition d'un objet
+    public function editObjets($id)
+    {
+        $objet = Objets::findOrFail($id); // Récupérer l'objet par son ID
+        return view('administrateur.modifierObjets', compact('objet'));
+    }
+
+    // Mettre à jour un objet
+    public function updateObjets(Request $request, $id)
+    {
+        $objet = Objets::findOrFail($id); // Récupérer l'objet par son ID
+
+        // Valider les données du formulaire
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prix_unitaire' => 'required|numeric',
+        ]);
+
+        // Mettre à jour l'objet
+        $objet->update($validatedData);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('objets.index')->with('success', 'Objet mis à jour avec succès.');
+    }
+
+    // Supprimer un objet
+    public function destroyObjets($id)
+    {
+        $objet = Objets::findOrFail($id); // Récupérer l'objet par son ID
+        $objet->delete(); // Supprimer l'objet
+
+        // Rediriger avec un message de succès
+        return redirect()->route('creations')->with('success', 'Objet supprimé avec succès.');
+    }
+
+
+
+    //________________________Fin de la gestion des objets _______________________________________
+
+
+
+
     public function index()
     {
         $users = User::all(); // Récupérer tous les utilisateurs

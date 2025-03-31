@@ -217,6 +217,29 @@
                     @endif
 
                     <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures En Attente</h2>
+                    <!-- Formulaire de filtre -->
+                    <form method="GET" action="{{ route('commandes.filtrerPending') }}"
+                        class="p-4 mb-6 bg-white rounded-lg shadow">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                    class="px-3 py-2 border rounded-lg" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <input type="date" name="date_fin"
+                                    value="{{ request('date_fin', today()->toDateString()) }}"
+                                    class="px-3 py-2 border rounded-lg">
+                            </div>
+                            <div class="self-end">
+                                <button type="submit"
+                                    class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Filtrer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
                     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
                         <table class="w-full border border-collapse table-auto">

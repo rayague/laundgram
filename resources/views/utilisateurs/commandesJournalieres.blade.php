@@ -214,6 +214,33 @@
 
                     <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures Journalières</h2>
 
+                    <!-- Filtre par date -->
+                    <div class="mb-6">
+                        <form action="{{ route('commandes.journalieres') }}" method="GET"
+                            class="flex flex-col gap-4 md:flex-row md:items-center md:space-x-4">
+                            <div class="flex flex-col gap-2 md:flex-row md:items-center">
+                                <label for="start_date" class="font-semibold text-gray-600">Du :</label>
+                                <input type="date" name="start_date" id="start_date"
+                                    value="{{ old('start_date', request('start_date')) }}" required
+                                    class="px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    max="{{ now()->toDateString() }}">
+                            </div>
+
+                            <div class="flex flex-col gap-2 md:flex-row md:items-center">
+                                <label for="end_date" class="font-semibold text-gray-600">Au :</label>
+                                <input type="date" name="end_date" id="end_date"
+                                    value="{{ old('end_date', request('end_date') ?? now()->toDateString()) }}"
+                                    class="px-4 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    max="{{ now()->toDateString() }}">
+                            </div>
+
+                            <button type="submit"
+                                class="self-start px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                Filtrer
+                            </button>
+                        </form>
+                    </div>
+
 
                     @if ($commandes->isEmpty())
                         <div class="p-6 mx-auto text-center rounded-lg shadow-sm bg-red-50">

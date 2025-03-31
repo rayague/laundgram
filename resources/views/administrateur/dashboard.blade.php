@@ -40,7 +40,7 @@
             <!-- Sidebar - Brand -->
             <a class="font-bold sidebar-brand d-flex align-items-center justify-content-center"
                 href="
-                {{-- {{ route('acceuil') }} --}}
+                {{ route('administration') }}
                 ">
 
                 <div class="mx-3 sidebar-brand-text">Laundgram</div>
@@ -90,7 +90,8 @@
 
                 <!-- Nav Item - Commandes -->
                 <li class="nav-item">
-                    <a class="nav-link" href="
+                    <a class="nav-link"
+                        href="
 
                     {{ route('commandesAdmin') }}
 
@@ -147,14 +148,14 @@
 
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="
                     {{ route('profilAdmin') }}
                     ">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
@@ -275,28 +276,27 @@
 
                     <!-- Détails de l'agence de pressing -->
                     <div class="flex flex-col gap-4 p-5 mt-4 rounded-lg shadow-md agence-info bg-green-50">
-                        <h5 class="text-2xl font-bold text-green-600">Détails de l'agence de
-                            pressing</h5>
+                        <h5 class="text-2xl font-bold text-green-600">Détails de l'agence de pressing</h5>
                         <p class="p-3 mt-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Nom de l'agence
                                 :</strong>
-                            ETS N'KPA PRESSING LA
-                            NETTETE</p>
+                            CICA NOBLESSE PRESSING</p>
                         <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Service :</strong> Nettoyage
-                            et
-                            lavage à sec</p>
+                            et lavage à sec</p>
                         <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>RCCM :</strong>
-                            RB/COT/17A34380 |
-                            <strong>IFU
-                                :</strong> 12012001555601
+                            RC 13-A-17728 | <strong>IFU :</strong> 2201300990000
                         </p>
-                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Téléphone :</strong> 95784635
-                            (Accueil) | 65588538
-                            (Direction)</p>
-                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Agence :</strong> AGLA - Près
-                            de
-                            l'Eglise Catholique
-                            St Pierre et Paul</p>
+                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Adresse :</strong> Bureau
+                            situé à côté du dépôt de
+                            ciment Zogbo (annexe Godomey)</p>
+                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Boîte postale :</strong> 0272
+                            BP 81</p>
+                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Téléphone :</strong> (+229) 97
+                            89 36 99 / 99 10 70 93 / 96 44 67 50
+                        </p>
+                        <p class="p-3 text-sm text-gray-700 bg-gray-200 rounded"><strong>Localisation :</strong> Zogbo
+                            - Rép. Bénin</p>
                     </div>
+
                 </div>
 
             </div>

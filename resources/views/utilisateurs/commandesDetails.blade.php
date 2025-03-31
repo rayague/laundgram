@@ -483,8 +483,9 @@
                             <select name="payment_method" id="payment_method"
                                 class="w-48 p-2 bg-white border rounded-md">
                                 <option value="">Choisir</option>
-                                <option value="Momo">Momo</option>
-                                <option value="Espèce">Espèce</option>
+                                <option value="Avance">Avance</option>
+                                <option value="Retrait">Retrait</option>
+                                <option value="Avance & Retrait">Retrait Et Retrait</option>
                             </select>
                             <button type="submit"
                                 class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">

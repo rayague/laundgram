@@ -409,7 +409,7 @@ class CommandeController extends Controller
         $pdf = Pdf::loadView('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
 
         // Télécharger ou afficher dans le navigateur
-        return $pdf->download('liste_commandes.pdf'); // Pour télécharger
+        return $pdf->stream('liste_commandes.pdf'); // Pour télécharger
         // return $pdf->stream('liste_commandes.pdf'); // Pour afficher directement
     }
 
@@ -489,6 +489,44 @@ class CommandeController extends Controller
         return $pdf->stream('liste_commandes_retraits.pdf'); // Pour afficher directement
         // return $pdf->download('liste_commandes_pending.pdf'); // Pour télécharger
     }
+
+    public function ComptabiliteFiltrer(Request $request)
+    {
+        // Récupérer l'ID de l'utilisateur connecté
+        $userId = Auth::id();
+
+        // Récupérer la période demandée dans la requête
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        // Récupérer les commandes de l'utilisateur filtrées par la période
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'retirée')
+            ->get();
+
+        // Calculer le montant total des commandes dans la période
+        $montant_total = $commandes->sum('total');
+
+        // Récupérer les paiements et les notes de l'utilisateur
+        $payments = CommandePayment::where('user_id', $userId)
+            ->whereBetween('created_at', [$date_debut, $date_fin]) // Filtrer les paiements dans la période
+            ->get();
+
+        $notes = Note::where('user_id', $userId)
+            ->whereBetween('created_at', [$date_debut, $date_fin]) // Filtrer les notes dans la période
+            ->get();
+
+        $montant_total_paiements = $payments->sum('amount'); // Calcul du total des montants
+        // Récupérer les objets associés à l'utilisateur
+        $objets = Objets::all();
+
+
+
+        // Passer les données à la vue
+        return view('utilisateurs.comptabiliteFiltreRetraits', compact('commandes', 'payments', 'notes', 'userId', 'date_debut', 'date_fin', 'montant_total', 'objets', 'montant_total_paiements'));
+    }
+
 
 
 

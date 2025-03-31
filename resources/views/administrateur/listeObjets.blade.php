@@ -80,7 +80,8 @@
 
                 <!-- Nav Item - Commandes -->
                 <li class="nav-item">
-                    <a class="nav-link" href="
+                    <a class="nav-link"
+                        href="
 
                     {{ route('commandesAdmin') }}
 
@@ -135,12 +136,12 @@
                 </li>
 
                 <!-- Nav Item - Profil -->
-                <li class="nav-item ">
+                {{-- <li class="nav-item ">
                     <a class="nav-link" href="{{ route('profilAdmin') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span class="font-weight-bold">PROFIL</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <!-- Nav Item - Déconnexion -->
                 <li class="nav-item hover:bg-red-500">
@@ -240,46 +241,56 @@
                     @endif
 
                     <div class="p-8 bg-white rounded-lg shadow-lg">
-
                         <h2 class="mb-6 text-2xl font-bold text-gray-800">Liste des objets créés</h2>
 
-                        <!-- Vérifier si la liste d'objets est vide -->
                         @if ($objets->isEmpty())
                             <p>Aucun objet n'a été créé.</p>
                         @else
                             <table class="min-w-full bg-white border border-gray-300 rounded-lg table-auto">
                                 <thead class="bg-blue-500">
                                     <tr>
-                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Nom de
-                                            l'objet</th>
-
-                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Prix unitaire
-                                        </th>
-                                        <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Date de
-                                            création</th>
-                                            <th class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">Actions</th>
+                                        <th
+                                            class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">
+                                            Nom de l'objet</th>
+                                        <th
+                                            class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">
+                                            Prix unitaire</th>
+                                        <th
+                                            class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">
+                                            Date de création</th>
+                                        <th
+                                            class="px-4 py-2 text-lg font-bold text-left text-gray-100 border border-1">
+                                            Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($objets as $objet)
                                         <tr>
-                                            <td class="px-4 py-2 border border-gray-800 border-1">{{ $objet->nom }}</td>
+                                            <td class="px-4 py-2 border border-gray-800 border-1">{{ $objet->nom }}
+                                            </td>
                                             <td class="px-4 py-2 border border-gray-800 border-1">
                                                 {{ number_format($objet->prix_unitaire, 2) }} Fcfa</td>
                                             <td class="px-4 py-2 border border-gray-800 border-1">
                                                 {{ $objet->created_at->format('d/m/Y H:i') }}</td>
                                             <td class="flex flex-col gap-4 px-4 py-2 border border-gray-800 border-1">
-                                                <a class="btn btn-warning" href="">Modifier</a>
-                                                <button class="btn btn-danger">Supprimer</button>
-                                            </td>
+                                                <a class="btn btn-warning"
+                                                    href="{{ route('objets.edit', $objet->id) }}">Modifier</a>
 
+                                                <form action="{{ route('objets.destroy', $objet->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet objet ?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @endif
-
                     </div>
+
                 </div>
 
 
