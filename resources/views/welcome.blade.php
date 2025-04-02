@@ -5,13 +5,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laundgram</title>
+    <!-- TITRE POUR LE SEO -->
+    <title>Laundgram - Service de lavage professionnel par Ray Ague</title>
+
+    <!-- DESCRIPTION LONGUE POUR GOOGLE -->
+    <meta name="description"
+        content="Laundgram est un service de lavage professionnel, rapide et efficace, conçu pour faciliter l'entretien de vos vêtements. Développé par Ray Ague, Laundgram garantit une propreté impeccable avec un service fiable et accessible en ligne. Essayez notre service dès aujourd'hui !">
+
+    <!-- MOTS-CLÉS POUR GOOGLE -->
+    <meta name="keywords"
+        content="Lavage, pressing, blanchisserie, nettoyage, vêtements, service de lavage, lavage professionnel, Ray Ague, Laundgram, lessive écologique">
+
+    <!-- NOM DE L'AUTEUR -->
+    <meta name="author" content="Ray Ague">
+
+    <!-- GOOGLE INDEXATION -->
+    <meta name="robots" content="index, follow"> <!-- Autorise Google à explorer et référencer le site -->
+
+    <!-- OPEN GRAPH POUR FACEBOOK ET WHATSAPP -->
+    <meta property="og:title" content="Laundgram - Service de lavage par Ray Ague">
+    <meta property="og:description"
+        content="Besoin d'un service de lavage rapide et efficace ? Laundgram, développé par Ray Ague, est la solution parfaite !">
+    <meta property="og:image" content="{{ asset('images/laundgram.png') }}">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:type" content="website">
+
+    <!-- TWITTER CARD POUR LE PARTAGE SUR TWITTER -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Laundgram - Lavage Professionnel">
+    <meta name="twitter:description"
+        content="Ray Ague présente Laundgram : un service de lavage rapide et fiable pour tous vos vêtements.">
+    <meta name="twitter:image" content="{{ asset('images/laundgram.png') }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset('images/laundgram.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('images/laundgram.png') }}" type="image/x-icon">
 
 
     <!-- Autres éléments dans le head -->
@@ -64,7 +96,7 @@
     <p class="my-8 text-5xl font-black text-center text-white">Découvrez les fonctionnalités de <span
             class="text-yellow-500">Laundgram</span></p>
     <div
-        class="container grid flex-wrap items-center gap-2 px-2 pt-6 mx-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        class="container grid flex-wrap items-center gap-2 px-2 pt-6 mx-auto mb-24 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
         <!-- Div 1: Accueil et Réception des Commandes -->
         {{-- <div class="grid items-center gap-4 mb-2 md:grid-cols-2 lg:grid-cols-4"> --}}
@@ -128,10 +160,10 @@
     </div>
 
     <footer
-        class="absolute flex justify-center w-full pt-8 mx-auto text-sm font-black text-center text-white bottom-3 ">
-        Copyrignt © <span class="italic text-yellow-500">Laundgram </span> <a href="https://portfolio-cnkp.vercel.app"
-            target="_blank">Ray
-            Ague.</a> 2025
+        class="fixed bottom-0 flex justify-center w-full p-4 mx-auto mt-8 text-sm font-black text-center text-white bg-yellow-500 backdrop-blur-md brightness-90 ">
+        Copyrignt ©&nbsp;<a class="italic text-white" href="/">Laundgram&nbsp;</a> <a
+            href="https://portfolio-cnkp.vercel.app" target="_blank"> Ray
+            Ague&nbsp;.&nbsp;</a> 2025
 
     </footer>
 
