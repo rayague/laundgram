@@ -127,9 +127,11 @@
         {{-- </div> --}}
     </div>
 
-    <footer class="absolute flex justify-center w-full pt-8 mx-auto text-sm font-black text-center text-white bottom-3 ">
-        Copyrignt © <span class="italic text-yellow-500">Laundgram</span> Ray
-        Ague.
+    <footer
+        class="absolute flex justify-center w-full pt-8 mx-auto text-sm font-black text-center text-white bottom-3 ">
+        Copyrignt © <span class="italic text-yellow-500">Laundgram </span> <a href="https://portfolio-cnkp.vercel.app"
+            target="_blank">Ray
+            Ague.</a> 2025
 
     </footer>
 
