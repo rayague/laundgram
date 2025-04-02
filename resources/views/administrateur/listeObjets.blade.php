@@ -239,6 +239,11 @@
                             </ul>
                         </div>
                     @endif
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     <div class="p-8 bg-white rounded-lg shadow-lg">
                         <h2 class="mb-6 text-2xl font-bold text-gray-800">Liste des objets créés</h2>
@@ -277,11 +282,11 @@
                                                     href="{{ route('objets.edit', $objet->id) }}">Modifier</a>
 
                                                 <form action="{{ route('objets.destroy', $objet->id) }}"
-                                                    method="POST"
+                                                    class="btn btn-danger" method="POST"
                                                     onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet objet ?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                    <button type="submit">Supprimer</button>
                                                 </form>
                                             </td>
                                         </tr>

@@ -66,7 +66,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="bg-yellow-500 nav-item">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -116,7 +116,7 @@
                 </li>
 
                 <!-- Nav Item - Utilisateurs -->
-                <li class="bg-yellow-500 nav-item ">
+                <li class=" nav-item">
                     <a class="nav-link"
                         href="
 
@@ -222,7 +222,7 @@
                 <!-- Bouton pour voir la liste des commandes -->
                 <div class="mt-4 ml-3">
                     <a href="
-                    {{ route('listeCommandes') }}
+                    {{ route('listeCommandesAdmin') }}
                     "
                         class="px-6 py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600">
                         Voir la liste des commandes
@@ -250,7 +250,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('commandes.store') }}" method="POST" id="orderForm"
+                        <form action="{{ route('commandesAdmin.store') }}" method="POST" id="orderForm"
                             class="space-y-6">
                             @csrf
 

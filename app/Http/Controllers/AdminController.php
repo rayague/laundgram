@@ -11,11 +11,10 @@ use Illuminate\Support\Carbon;
 use App\Models\CommandePayment;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-
 
     // Concernant les objets
 
@@ -42,7 +41,7 @@ class AdminController extends Controller
         $objet->update($validatedData);
 
         // Rediriger avec un message de succès
-        return redirect()->route('objets.index')->with('success', 'Objet mis à jour avec succès.');
+        return redirect()->route('objets.show')->with('success', 'Objet mis à jour avec succès.');
     }
 
     // Supprimer un objet
@@ -52,12 +51,15 @@ class AdminController extends Controller
         $objet->delete(); // Supprimer l'objet
 
         // Rediriger avec un message de succès
-        return redirect()->route('creations')->with('success', 'Objet supprimé avec succès.');
+        return redirect()->route('objets.show')->with('success', 'Objet supprimé avec succès.');
     }
 
 
 
     //________________________Fin de la gestion des objets _______________________________________
+
+
+
 
 
 
@@ -85,7 +87,7 @@ class AdminController extends Controller
         $user->delete();  // Supprimer l'utilisateur
 
         // Rediriger vers la liste des utilisateurs avec un message de succès
-        return redirect()->route('utilisateurs')->with('success', 'Utilisateur supprimé avec succès');
+        return redirect()->route('objets.show')->with('success', 'Utilisateur supprimé avec succès');
     }
 
     public function store(Request $request)
@@ -168,13 +170,11 @@ class AdminController extends Controller
     }
 
 
-    public function historiques()
-    {
-        // Logique spécifique pour la page des historiques (si nécessaire)
-        return view('administrateur.historiques'); // Retourne la vue 'historiques.blade.php'
-    }
 
-    public function detailsRetrait($id)
+
+    // il faut trier par utilisateur
+
+    public function detailsRetraitAdmin($id)
     {
         // Récupère le retrait avec ses relations
         // $retrait = Retrait::with(['commande.objets', 'user'])->findOrFail($id);
@@ -182,6 +182,11 @@ class AdminController extends Controller
         // Retourne la vue avec le retrait
         return view('administrateur.detailsRetraits', );
     }
+
+
+
+
+    // il faut trier par utilisateur
 
     public function enAttente()
     {
@@ -196,21 +201,25 @@ class AdminController extends Controller
             ->whereDate('date_retrait', $today)
             ->get();
 
-        // Passer les commandes à la vue 'utilisateurs.pending'
-        return view('administrateur.pending', compact('commandes'));
+        // Passer les commandes à la vue 'administrateur.pending'
+        return view('administrateur.enAttente', compact('commandes'));
     }
+
+
+
+    // il faut trier par utilisateur
 
     public function comptabilite()
     {
         // Récupérer l'ID de l'utilisateur connecté
         $userId = Auth::id();
 
-        // Vérifier si la commande existe et si l'utilisateur connecté a accès
-        $commande = Commande::where('user_id', $userId)->get(); // Filtrer les commandes par l'utilisateur connecté
+        // Récupérer les commandes de l'utilisateur connecté
+        $commandes = Commande::where('user_id', $userId)->get();
 
-        // Si la commande n'existe pas pour cet utilisateur, on redirige ou on renvoie une erreur
-        if ($commande->isEmpty()) {
-            return redirect()->route('home')->with('error', 'Aucune commande trouvée pour cet utilisateur.');
+        // Si aucune commande n'est trouvée pour cet utilisateur
+        if ($commandes->isEmpty()) {
+            return redirect()->route('comptabiliteAdmin')->with('error', 'Aucune commande trouvée pour cet utilisateur.');
         }
 
         // Récupérer les paiements associés à cet utilisateur
@@ -220,23 +229,25 @@ class AdminController extends Controller
         $notes = Note::where('user_id', $userId)->get();
 
         // Retourner la vue avec les données
-        return view('administrateur.comptabilite', compact('commande', 'payments', 'notes', 'userId'));
+        return view('administrateur.comptabilite', compact('commandes', 'payments', 'notes', 'userId'));
     }
 
 
 
 
-    public function rappels($commandeId = null)
+    // il faut trier par utilisateur
+
+    public function rappelsAdmin($commandeId = null)
     {
         // Récupérer l'ID de l'utilisateur connecté
         $userId = Auth::id();
 
         if ($commandeId) {
-            // Vérifier que la commande est validée et appartient à l'utilisateur connecté
+            // Récupérer la commande validée pour l'utilisateur connecté
             $commandes = Commande::where('id', $commandeId)
-                ->where('statut', 'validée') // Statut validé
-                ->where('user_id', $userId) // Vérifier que l'utilisateur est bien celui connecté
-                ->with('objets') // Charger la relation objets si nécessaire
+                ->where('statut', 'validée')
+                ->where('user_id', $userId)
+                ->with('objets') // Charger la relation objets
                 ->get();
 
             // Récupérer les notes associées à cette commande
@@ -245,7 +256,7 @@ class AdminController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
-            // Récupérer les commandes validées pour l'utilisateur connecté
+            // Récupérer toutes les commandes validées pour l'utilisateur connecté
             $commandes = Commande::where('statut', 'validée')
                 ->where('user_id', $userId)
                 ->get();
@@ -257,15 +268,22 @@ class AdminController extends Controller
         }
 
         // Retourner la vue avec les données
-        return view('administrateur.rappels', compact('commandes', 'notes'));
+        return view('administrateur.retraits', compact('commandes', 'notes'));
     }
 
 
-    public function pageRetrait(Commande $commande)
+
+
+    // il faut trier par utilisateur
+
+    public function pageRetrait()
     {
-        return view('administrateur.faireRetrait', [
-            'commande' => $commande
-        ]);
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        // Récupérer uniquement les commandes du client connecté
+        $commandes = Commande::where('client_id', $user->id)->get();
+
+        return view('administrateur.faireRetrait', compact('commandes'));
     }
 
 
@@ -292,8 +310,8 @@ class AdminController extends Controller
 
 
 
-    //Tout ce qui se trouve dans le controller Facture
 
+    // ---------------------------------- Tout ce qui se trouve dans le controller Facture -----------------------------------------------------------------------//
 
     public function print($id)
     {
@@ -314,8 +332,8 @@ class AdminController extends Controller
 
 
 
-        // Générer le PDF en utilisant la vue 'utilisateurs.factures'
-        $pdf = Pdf::loadView('utilisateurs.preview', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount', 'notes'));
+        // Générer le PDF en utilisant la vue 'administrateur.factures'
+        $pdf = Pdf::loadView('administrateur.preview', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount', 'notes'));
 
         // Retourner le PDF pour affichage inline
         return $pdf->stream('facture_' . $commande->numero . '.pdf');
@@ -332,8 +350,8 @@ class AdminController extends Controller
         $remiseReduction = $commande->remise_reduction ?? 0;
         $discountAmount = ($originalTotal * $remiseReduction) / 100;
 
-        // Générer le PDF en utilisant la vue 'utilisateurs.factures'
-        return Pdf::loadView('utilisateurs.factures', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount'));
+        // Générer le PDF en utilisant la vue 'administrateur.factures'
+        return Pdf::loadView('administrateur.factures', compact('commande', 'originalTotal', 'remiseReduction', 'discountAmount'));
     }
 
     public function stream($id)
@@ -345,7 +363,7 @@ class AdminController extends Controller
     public function download($id)
     {
         $pdf = $this->generatePdf($id);
-        return $pdf->download('facture_' . $id . '.pdf');
+        return $pdf->stream('facture_' . $id . '.pdf');
     }
 
     // La méthode print initiale peut rediriger vers la page de prévisualisation
@@ -355,6 +373,10 @@ class AdminController extends Controller
     //     $commande = Commande::findOrFail($id);
     //     return view('factures.preview', compact('commande'));
     // }
+
+
+
+    // il faut trier par utilisateur
 
     public function storeNote(Request $request, $commande_id)
     {
@@ -391,6 +413,7 @@ class AdminController extends Controller
 
 
 
+    // ---------------------------------- Fin de tout ce qui se trouve dans le controller Facture -----------------------------------------------------------------------//
 
 
 
@@ -412,40 +435,50 @@ class AdminController extends Controller
 
 
 
-    // Tout ce qui est dans le controller CommandeController
 
-    // public function create()
+
+    // ---------------------------------- Tout ce qui se trouve dans le controller Commande Controller -----------------------------------------------------------------------//
+
+
+    public function commandesAdmin()
+    {
+        // Récupérer les objets disponibles
+        $objets = Objets::all();
+
+        // Générer un numéro de commande unique
+        $annee = Carbon::now()->year;
+        $prefixe = "Facture-" . $annee . "-";
+
+        // Trouver le dernier numéro de commande
+        $dernierNumero = Commande::where('numero', 'like', $prefixe . '%')
+            ->latest('created_at')
+            ->first();
+
+        // Générer le prochain numéro de commande
+        if ($dernierNumero) {
+            $dernierNum = (int) substr($dernierNumero->numero, -3);
+            $nouveauNum = str_pad($dernierNum + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nouveauNum = '001';
+        }
+
+        // Combiné pour avoir le numéro complet de la commande
+        $numeroCommande = $prefixe . $nouveauNum;
+
+        // Passer la variable $numeroCommande et les objets à la vue
+        return view('administrateur.commandes', compact('objets', 'numeroCommande'));
+    }
+
+
+    // public function commandesAdmin()
     // {
-    //     // Récupérer les objets disponibles
-    //     $objets = Objets::all();
 
-    //     // Générer un numéro de commande unique
-    //     $annee = Carbon::now()->year;
-    //     $prefixe = "ETS-NKPA-" . $annee . "-";
+    //     return view('administrateur.commandes');
 
-    //     // Trouver le dernier numéro de commande
-    //     $dernierNumero = Commande::where('numero', 'like', $prefixe . '%')
-    //         ->latest('created_at')
-    //         ->first();
-
-    //     // Générer le prochain numéro de commande
-    //     if ($dernierNumero) {
-    //         $dernierNum = (int) substr($dernierNumero->numero, -3);
-    //         $nouveauNum = str_pad($dernierNum + 1, 3, '0', STR_PAD_LEFT);
-    //     } else {
-    //         $nouveauNum = '001';
-    //     }
-
-    //     // Combiné pour avoir le numéro complet de la commande
-    //     $numeroCommande = $prefixe . $nouveauNum;
-
-    //     // Passer la variable $numeroCommande et les objets à la vue
-    //     return view('utilisateurs.commandes', compact('objets', 'numeroCommande'));
     // }
 
 
-
-    public function storeCommandes(Request $request)
+    public function storeCommandeAdmin(Request $request)
     {
         // Vérifier si l'utilisateur est authentifié
         if (!Auth::check()) {
@@ -464,7 +497,7 @@ class AdminController extends Controller
             'objets.*.quantite' => 'required|integer|min:1',
             'objets.*.description' => 'required|string',
             'avance_client' => 'nullable|numeric|min:0',
-            'remise_reduction' => 'nullable|in:0,10,15,20,25,30,35,40,50',
+            'remise_reduction' => 'nullable|in:0,5,10,15,20,25,30',
         ]);
 
         // Générer automatiquement le numéro de facture
@@ -522,6 +555,9 @@ class AdminController extends Controller
         $commande->update([
             'total' => $totalCommande,
             'solde_restant' => $soldeRestant,
+            'original_total' => $originalTotal,
+            'discount_amount' => $discountAmount,
+            'remise_reduction' => $remiseReduction,
         ]);
 
         // Redirection vers la page de détail de la commande en passant les données de réduction
@@ -534,29 +570,6 @@ class AdminController extends Controller
             ]);
     }
 
-
-    // Dans CommandeController.php
-// public function updateFinancial(Request $request, Commande $commande)
-// {
-//     $montantPaye = $request->input('montant_paye');
-
-    //     // Mettre à jour l'avance du client
-//     $commande->avance_client += $montantPaye;
-
-    //     // Recalculer le solde restant
-//     $commande->solde_restant = $commande->total - $commande->avance_client;
-
-    //     // Si le solde restant est inférieur ou égal à zéro, marquer la commande comme payée
-//     if ($commande->solde_restant <= 0) {
-//         $commande->statut = 'Payée';
-//         $commande->solde_restant = 0; // S'assurer que le solde restant ne soit pas négatif
-//     }
-
-    //     // Sauvegarder les modifications
-//     $commande->save();
-
-    //     return redirect()->back()->with('success', 'Le paiement a été mis à jour avec succès.');
-// }
 
     public function updateFinancial(Request $request, Commande $commande)
     {
@@ -616,44 +629,18 @@ class AdminController extends Controller
 
 
 
-
-
-
-    // public function index()
-    // {
-    //     // Récupérer les objets disponibles
-    //     $objets = Objets::all();
-
-    //     // Générer un numéro de commande unique
-    //     $annee = Carbon::now()->year;
-    //     $prefixe = "ETS-" . $annee . "-";
-
-    //     // Trouver le dernier numéro de commande
-    //     $dernierNumero = Commande::where('numero', 'like', $prefixe . '%')
-    //         ->latest('created_at')
-    //         ->first();
-
-    //     // Générer le prochain numéro de commande
-    //     if ($dernierNumero) {
-    //         $dernierNum = (int) substr($dernierNumero->numero, -3);
-    //         $nouveauNum = str_pad($dernierNum + 1, 3, '0', STR_PAD_LEFT);
-    //     } else {
-    //         $nouveauNum = '001';
-    //     }
-
-    //     // Combiné pour avoir le numéro complet de la commande
-    //     $numeroCommande = $prefixe . $nouveauNum;
-
-    //     // Passer la variable $numeroCommande et les objets à la vue
-    //     return view('administrateur.commandes', compact('objets', 'numeroCommande'));
-    // }
+    // il faut trier par utilisateur
 
     public function listeCommandes()
     {
-        $commandes = Commande::all();  // Ou avec la pagination : Commande::paginate(10);
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $user->id)->get(); // Filtrer par utilisateur
         $objets = Objets::all();
+
         return view('administrateur.listeCommandes', compact('commandes', 'objets'));
     }
+
 
     public function show($id)
     {
@@ -736,7 +723,7 @@ class AdminController extends Controller
             'reste_a_payer' => $resteAPayer,
         ]);
 
-        return redirect()->route('commandes.show', $commande->id)
+        return redirect()->route('commandesAdmin.show', $commande->id)
             ->with('success', 'Montant additionnel enregistré. Le solde a été mis à jour.');
     }
 
@@ -744,16 +731,23 @@ class AdminController extends Controller
     // Méthode pour afficher les commandes journalières
     public function journalieres(Request $request)
     {
-        // Récupérer la date envoyée dans la requête, ou la date du jour par défaut
-        $date = $request->input('date', now()->toDateString());
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date'
+        ]);
 
-        // Filtrer les commandes selon la date de dépôt ou de retrait
-        $commandes = Commande::whereDate('date_depot', $date)
-            ->orWhereDate('date_retrait', $date)
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $user->id) // Filtrer par utilisateur
+            ->whereBetween('date_depot', [$validated['start_date'], $validated['end_date']])
+            ->orderBy('date_depot')
             ->get();
 
-        // Retourner la vue avec les commandes filtrées
-        return view('administrateur.commandesJournalieres', compact('commandes', 'date'));
+        return view('administrateur.commandesJournalieres', [
+            'commandes' => $commandes,
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date']
+        ]);
     }
 
     public function valider($id)
@@ -769,6 +763,164 @@ class AdminController extends Controller
         // Rediriger vers la page précédente avec un message de succès
         return redirect()->back()->with('success', 'La facture a été validée avec succès.');
     }
+
+
+
+    // Assurez-vous que la méthode printListeCommandes récupère bien les dates
+    // public function printListeCommandes(Request $request)
+    // {
+    //     $start_date = $request->input('start_date');
+    //     $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
+
+    //     $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
+    //         ->orderBy('date_retrait')
+    //         ->get();
+
+    //     return view('administrateur.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+    // }
+
+
+
+    // il faut trier par utilisateur
+
+    public function printListeCommandes(Request $request)
+    {
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
+
+        $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
+            ->orderBy('date_retrait')
+            ->get();
+
+        // Générer le PDF
+        $pdf = Pdf::loadView('administrateur.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+
+        // Télécharger ou afficher dans le navigateur
+        return $pdf->stream('liste_commandes.pdf'); // Pour télécharger
+        // return $pdf->stream('liste_commandes.pdf'); // Pour afficher directement
+    }
+
+
+    // il faut trier par utilisateur
+
+    public function printListeCommandesPending(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
+
+        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'non retirée')
+            ->orderBy('date_retrait')
+            ->get();
+
+        // Générer le PDF
+        $pdf = Pdf::loadView('administrateur.previewListePending', compact('commandes', 'date_debut', 'date_fin'));
+
+        // Télécharger ou afficher dans le navigateur
+        return $pdf->stream('liste_commandes_pending.pdf'); // Pour afficher directement
+        // return $pdf->download('liste_commandes_pending.pdf'); // Pour télécharger
+    }
+
+
+
+
+
+
+
+
+
+    // il faut trier par utilisateur
+
+    public function filtrerPending(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $user->id) // Filtrer par utilisateur
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->get();
+
+        $montant_total = $commandes->sum('total');
+        $objets = Objets::all();
+
+        return view('administrateur.listeCommandesFiltrePending', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
+    }
+
+    public function retraitsFiltrer(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $user->id) // Filtrer par utilisateur
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'retirée')
+            ->get();
+
+        $montant_total = $commandes->sum('total');
+        $objets = Objets::all();
+
+        return view('administrateur.listeCommandesFiltreRetraits', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
+    }
+
+    public function printListeCommandesRetraits(Request $request)
+    {
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
+
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $user->id) // Filtrer par utilisateur
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'non retirée')
+            ->orderBy('date_retrait')
+            ->get();
+
+        $pdf = Pdf::loadView('administrateur.previewListeRetraits', compact('commandes', 'date_debut', 'date_fin'));
+
+        return $pdf->stream('liste_commandes_retraits.pdf');
+    }
+
+    public function ComptabiliteFiltrer(Request $request)
+    {
+        $userId = Auth::id();
+
+        $date_debut = $request->input('date_debut');
+        $date_fin = $request->input('date_fin', today()->toDateString());
+
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->where('statut', 'retirée')
+            ->get();
+
+        $montant_total = $commandes->sum('total');
+
+        $payments = CommandePayment::where('user_id', $userId)
+            ->whereBetween('created_at', [$date_debut, $date_fin])
+            ->get();
+
+        $notes = Note::where('user_id', $userId)
+            ->whereBetween('created_at', [$date_debut, $date_fin])
+            ->get();
+
+        $montant_total_paiements = $payments->sum('amount');
+        $objets = Objets::all();
+
+        return view('administrateur.comptabiliteFiltreRetraits', compact('commandes', 'payments', 'notes', 'userId', 'date_debut', 'date_fin', 'montant_total', 'objets', 'montant_total_paiements'));
+    }
+
+
+    // ---------------------------------- Fin de tout ce qui se trouve dans le controller Commande Controller -----------------------------------------------------------------------//
+
+
+
+
+
+
+
 
 
 

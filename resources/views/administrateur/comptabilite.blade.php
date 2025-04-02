@@ -77,7 +77,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="bg-yellow-500 nav-item">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -246,7 +246,7 @@
                     @endif
 
                     <!-- Formulaire de filtre -->
-                    <form method="GET" action="{{ route('commandes.filtrerComptabilite') }}"
+                    <form method="GET" action="{{ route('commandesAdmin.filtrerComptabilite') }}"
                         class="p-4 mb-6 bg-white rounded-lg shadow">
                         <div class="flex items-center space-x-4">
                             <div>

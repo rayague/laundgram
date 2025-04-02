@@ -117,7 +117,7 @@
                 </li>
 
                 <!-- Nav Item - Utilisateurs -->
-                <li class="bg-yellow-500 nav-item ">
+                <li class="nav-item ">
                     <a class="nav-link"
                         href="
 
@@ -242,7 +242,7 @@
 
                     <!-- Filtre par date -->
                     <div class="mb-6">
-                        <form action="{{ route('commandes.journalieres') }}" method="GET"
+                        <form action="{{ route('commandesAdmin.journalieres') }}" method="GET"
                             class="flex flex-col gap-4 md:flex-row md:items-center md:space-x-4">
                             <div class="flex flex-col gap-2 md:flex-row md:items-center">
                                 <label for="start_date" class="font-semibold text-gray-600">Du :</label>
@@ -294,7 +294,7 @@
                                             {{ $commande->user->name }} </td>
                                         <td class="px-4 py-3 text-center border border-blue-300">
                                             <!-- Boutons d'action (par exemple, Voir, Éditer, Supprimer) -->
-                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                            <a href="{{ route('commandesAdmin.show', $commande->id) }}"
                                                 class="p-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">
                                                 Voir
                                             </a>
@@ -310,7 +310,7 @@
 
                     <div class="flex items-center justify-between my-6">
                         <!-- Bouton d'impression -->
-                        <a href="{{ route('commandes') }}"
+                        <a href="{{ route('commandesAdmin') }}"
                             class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-green-700">
                             Créer une nouvelle commande
                         </a>

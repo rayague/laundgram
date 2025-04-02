@@ -242,7 +242,7 @@
                     <h2 class="mb-6 text-2xl font-semibold text-gray-800">Faire un retrait</h2>
 
                     <!-- Affichage du numéro de la facture et du nom -->
-                    <form action="{{ route('notes.store', ['commande' => $commande->id]) }}" method="POST">
+                    <form action="{{ route('notesAdmin.store', ['commande' => $commande->id]) }}" method="POST">
                         @csrf
                         <!-- Affichage du numéro de la facture et du nom -->
                         <div class="mb-4">
@@ -283,7 +283,7 @@
 
                 <!-- Boutons de navigation -->
                 <div class="flex gap-4 mt-8 ml-4">
-                    <a href="{{ route('listeCommandes') }}"
+                    <a href="{{ route('listeCommandesAdmin') }}"
                         class="p-2 text-white rounded-md bg-sky-500 hover:bg-sky-600">
                         Retour à la liste des commandes
                     </a>

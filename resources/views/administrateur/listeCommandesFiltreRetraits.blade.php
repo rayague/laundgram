@@ -76,7 +76,7 @@
 
                 <!-- Nav Item - Commandes -->
                 <li class=" nav-item">
-                    <a class="nav-link" href="{{ route('commandes') }}">
+                    <a class="nav-link" href="{{ route('commandesAdmin') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
                     </a>
@@ -84,7 +84,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class=" nav-item">
-                    <a class="nav-link" href="{{ route('listeCommandes') }}">
+                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -92,7 +92,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class=" nav-link" href="{{ route('pending') }}">
+                    <a class=" nav-link" href="{{ route('pendingAdmin') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -102,7 +102,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('comptabilite') }}">
+                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -111,7 +111,7 @@
 
                 <!-- Nav Item - Rappels -->
                 <li class="nav-item ">
-                    <a class="bg-yellow-500 nav-link" href="{{ route('rappels') }}">
+                    <a class="bg-yellow-500 nav-link" href="{{ route('rappelsAdmin') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RETRAITS</span>
                     </a>
@@ -242,7 +242,7 @@
                     <h2 class="mb-4 text-2xl font-bold text-blue-700">Liste des Factures déjà retirées</h2>
 
                     <!-- Formulaire de filtre -->
-                    <form method="GET" action="{{ route('commandes.filtrerRetrait') }}"
+                    <form method="GET" action="{{ route('commandesAdmin.filtrerRetrait') }}"
                         class="p-4 mb-6 bg-white rounded-lg shadow">
                         <div class="flex items-center space-x-4">
                             <div>
@@ -302,7 +302,7 @@
                                         <!-- Nouvelle colonne -->
                                         <td class="px-4 py-3 border border-blue-300">{{ $commande->user->name }}</td>
                                         <td class="px-4 py-3 text-center border border-blue-300">
-                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                            <a href="{{ route('commandesAdmin.show', $commande->id) }}"
                                                 class="p-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">
                                                 Voir
                                             </a>
@@ -322,7 +322,7 @@
                     </div>
 
                     <div class="flex items-center justify-between my-6">
-                        <a href="{{ route('rappels') }}"
+                        <a href="{{ route('rappelsAdmin') }}"
                             class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-green-700">
                             Retour
                         </a>
@@ -331,7 +331,7 @@
                             <p><strong>{{ $commandes->count() }}</strong> factures affichées</p>
                         </div>
 
-                        <a href="{{ route('listeCommandesRetraits.print') }}?date_debut={{ request('date_debut') }}&date_fin={{ request('date_fin') }}"
+                        <a href="{{ route('listeCommandesRetraitsAdmin.print') }}?date_debut={{ request('date_debut') }}&date_fin={{ request('date_fin') }}"
                             target="_blank"
                             class="px-4 py-2 m-6 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
                             🖨️ Imprimer la liste

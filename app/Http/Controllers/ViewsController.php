@@ -31,7 +31,7 @@ class ViewsController extends Controller
 
         // Générer un numéro de commande unique
         $annee = Carbon::now()->year;
-        $prefixe = "ETS-NKPA-" . $annee . "-";
+        $prefixe = "Facture-" . $annee . "-";
 
         // Trouver le dernier numéro de commande
         $dernierNumero = Commande::where('numero', 'like', $prefixe . '%')

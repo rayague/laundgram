@@ -66,7 +66,7 @@
 
                 <!-- Nav Item - Commandes -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('commandes') }}">
+                    <a class="nav-link" href="{{ route('commandesAdmin') }}">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                         <span class="font-weight-bold">COMMANDES</span>
                     </a>
@@ -83,7 +83,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('listeCommandes') }}">
+                    <a class="nav-link" href="{{ route('listeCommandesAdmin') }}">
                         <i class="fas fa-fw fa-list"></i>
                         <span class="font-weight-bold">LISTE DES COMMANDES</span>
                     </a>
@@ -91,7 +91,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('pending') }}">
+                    <a class="nav-link" href="{{ route('pendingAdmin') }}">
                         <i class="fas fa-fw fa-clock"></i>
                         <span class="font-weight-bold">EN ATTENTE</span>
                     </a>
@@ -101,7 +101,7 @@
 
                 <!-- Nav Item - Profil -->
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{ route('comptabilite') }}">
+                    <a class="nav-link" href="{{ route('comptabiliteAdmin') }}">
                         <i class="fas fa-fw fa-coins"></i>
                         <span class="font-weight-bold">COMPTABILITE</span>
                     </a>
@@ -110,7 +110,7 @@
 
                 <!-- Nav Item - Rappels -->
                 <li class="bg-yellow-500 nav-item">
-                    <a class="nav-link" href="{{ route('rappels') }}">
+                    <a class="nav-link" href="{{ route('rappelsAdmin') }}">
                         <i class="fas fa-fw fa-bell"></i>
                         <span class="font-weight-bold">RETRAITS</span>
                     </a>

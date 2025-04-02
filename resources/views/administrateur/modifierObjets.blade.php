@@ -269,6 +269,19 @@
                         </form>
                     </div>
 
+                    <div class="flex items-center justify-between">
+                        <button type="submit"
+                            class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-blue-500 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Créer
+                        </button>
+                        <a href="
+                        {{ route('objets.show') }}
+                        "
+                            class="px-6 py-2 font-semibold text-white transition-all duration-200 bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            Voir la liste des objets
+                        </a>
+                    </div>
+
                 </div>
 
 

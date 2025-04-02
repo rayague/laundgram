@@ -258,7 +258,7 @@
                     <h1 class="mb-6 text-3xl font-bold text-gray-800">Commandes en attente pour aujourd'hui</h1>
                     <div class="space-y-8">
                         <!-- Formulaire de filtre -->
-                        <form method="GET" action="{{ route('commandes.filtrerPending') }}"
+                        <form method="GET" action="{{ route('commandesAdmin.filtrerPending') }}"
                             class="p-4 mb-6 bg-white rounded-lg shadow">
                             <div class="flex items-center space-x-4">
                                 <div>
@@ -344,7 +344,7 @@
                                                             </span>
                                                         </td>
                                                         <td class="px-4 py-3 text-center">
-                                                            <a href="{{ route('commandes.show', $commande->id) }}"
+                                                            <a href="{{ route('commandesAdmin.show', $commande->id) }}"
                                                                 class="text-blue-600 transition-colors hover:text-blue-900">
                                                                 <svg class="inline w-5 h-5" fill="none"
                                                                     stroke="currentColor" viewBox="0 0 24 24">

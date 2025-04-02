@@ -70,7 +70,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="bg-yellow-500 nav-item">
+                <li class=" nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -486,7 +486,7 @@
                     <!-- Formulaire de mise à jour des entrées d'argent -->
                     <div class="p-4 mt-8 bg-gray-200 rounded">
                         <h3 class="mb-4 text-xl font-semibold">Mettre à jour les entrées d'argent</h3>
-                        <form action="{{ route('commande.updateFinancial', $commande->id) }}" method="POST"
+                        <form action="{{ route('commandeAdmin.updateFinancial', $commande->id) }}" method="POST"
                             class="flex items-center gap-4">
                             @csrf
                             @method('PUT')
@@ -526,7 +526,7 @@
 
 
                                         <!-- Affichage du numéro de la facture et du nom -->
-                                        <form action="{{ route('notes.store', ['commande' => $commande->id]) }}"
+                                        <form action="{{ route('notesAdmin.store', ['commande' => $commande->id]) }}"
                                             method="POST">
                                             @csrf
                                             <!-- Affichage du numéro de la facture et du nom -->
@@ -584,13 +584,13 @@
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-blue-500 rounded-md hover:bg-blue-600">
                             <i class="mr-2 fas fa-hand-holding-usd"></i> Faire un retrait
                         </button>
-                        <a href="{{ route('factures.print', ['commande' => $commande->id]) }}"
+                        <a href="{{ route('facturesAdmin.print', ['commande' => $commande->id]) }}"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-yellow-500 rounded-md hover:bg-yellow-600"
                             target="_blank">
                             <i class="mr-2 fas fa-print"></i> Imprimer
                         </a>
 
-                        <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('factures.download', ['id' => $commande->id])) }}"
+                        <a href="https://api.whatsapp.com/send?phone={{ $commande->numero_whatsapp }}&text={{ urlencode('Bonjour, voici votre facture : ' . route('facturesAdmin.download', ['id' => $commande->id])) }}"
                             class="flex items-center justify-center w-full p-2 text-center text-white bg-green-500 rounded-md hover:bg-green-600"
                             target="_blank">
                             <i class="mr-2 fab fa-whatsapp"></i> Envoyer par WhatsApp
@@ -605,11 +605,11 @@
                 </div>
                 <!-- Boutons de navigation -->
                 <div class="flex flex-row items-center justify-between gap-4 mx-4 my-10">
-                    <a href="{{ route('listeCommandes') }}"
+                    <a href="{{ route('listeCommandesAdmin') }}"
                         class="p-2 text-white rounded-md bg-sky-500 hover:bg-sky-600">
                         Retour à la liste des commandes
                     </a>
-                    <form action="{{ route('commandes.valider', $commande->id) }}" method="POST"
+                    <form action="{{ route('commandesAdmin.valider', $commande->id) }}" method="POST"
                         onsubmit="return confirm('Voulez-vous vraiment valider cette facture ?');">
                         @csrf
                         @method('PUT')

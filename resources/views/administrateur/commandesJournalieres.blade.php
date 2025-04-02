@@ -66,7 +66,7 @@
                 </li>
 
                 <!-- Nav Item - Création d'Objets -->
-                <li class="bg-yellow-500 nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('creationObjets') }}">
                         <i class="fas fa-fw fa-plus-square"></i>
                         <span class="font-weight-bold">CRÉER OBJETS & PRIX</span>
@@ -232,7 +232,7 @@
 
                     <!-- Filtre par date -->
                     <div class="mb-6">
-                        <form action="{{ route('commandes.journalieres') }}" method="GET"
+                        <form action="{{ route('commandesAdmin.journalieres') }}" method="GET"
                             class="flex flex-col gap-4 md:flex-row md:items-center md:space-x-4">
                             <div class="flex flex-col gap-2 md:flex-row md:items-center">
                                 <label for="start_date" class="font-semibold text-gray-600">Du :</label>
@@ -340,7 +340,7 @@
                                                 </td>
                                                 <td
                                                     class="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-                                                    <a href="{{ route('commandes.show', $commande->id) }}"
+                                                    <a href="{{ route('commandesAdmin.show', $commande->id) }}"
                                                         class="inline-flex items-center px-3 py-1.5 bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition-colors">
                                                         <svg class="w-4 h-4 mr-1" fill="none"
                                                             stroke="currentColor" viewBox="0 0 24 24">
@@ -364,7 +364,7 @@
                     {{-- </div> --}}
 
                     <div class="flex items-center justify-between w-full my-6">
-                        <a href="{{ route('listeCommandes') }}"
+                        <a href="{{ route('listeCommandesAdmin') }}"
                             class="w-full max-w-md px-4 py-2 font-semibold text-center text-white bg-green-600 rounded-md hover:bg-green-700">
                             Retour
                         </a>
@@ -374,7 +374,7 @@
                             <p><strong>{{ $commandes->count() }}</strong> factures affichées</p>
                         </div>
 
-                        <a href="{{ route('listeCommandes.print') }}?start_date={{ request('start_date') }}&end_date={{ request('end_date') }}"
+                        <a href="{{ route('listeCommandesAdmin.print') }}?start_date={{ request('start_date') }}&end_date={{ request('end_date') }}"
                             target="_blank"
                             class="px-4 py-2 m-6 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">
                             🖨️ Imprimer la liste
