@@ -101,7 +101,7 @@
     </header>
 
     <div id="custom-toast"
-        class="z-50 hidden px-4 py-3 mx-auto text-center text-white delay-75 transform rounded-lg shadow-lg bg-yellow-500/50 top-20 w-10/11">
+        class="z-50 hidden px-4 py-3 mx-auto text-center text-white delay-75 transform rounded-lg shadow-lg cursor-pointer bg-yellow-500/50 top-20 w-10/11">
         ⚠️ Cette application est conçue uniquement pour un usage local. <br />
         📲 Pour en savoir plus ou discuter avec l'auteur, écrivez-lui directement sur
         <a href="https://wa.me/22960932967" target="_blank"
