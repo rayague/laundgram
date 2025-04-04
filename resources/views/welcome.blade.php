@@ -78,10 +78,16 @@
                         Tableau de bord
                     </a>
                 @else
-                    <a href="{{ route('login') }}"
+                    {{-- <a href="{{ route('login') }} id="login-btn""
                         class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                         Connexion
-                    </a>
+                    </a> --}}
+                    <button id="login-btn" type="button"
+                        class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+
+
+                        Connexion
+                    </button>
 
                     {{-- @if (Route::has('register'))
                         <a href="{{ route('register') }}"
@@ -93,6 +99,19 @@
             </nav>
         @endif
     </header>
+
+    <div id="custom-toast"
+        class="z-50 hidden px-4 py-3 mx-auto text-center text-white delay-75 transform -translate-x-1/2 rounded-lg shadow-lg bg-yellow-500/50 top-20 w-10/11">
+        ⚠️ Cette application est conçue uniquement pour un usage local. <br />
+        📲 Pour en savoir plus ou discuter avec l'auteur, écrivez-lui directement sur
+        <a href="https://wa.me/22960932967" target="_blank"
+            class="font-semibold text-white underline hover:text-gray-200">
+            WhatsApp
+        </a> 💬.
+    </div>
+
+
+
     <p class="my-8 text-5xl font-black text-center text-white">Découvrez les fonctionnalités de <span
             class="text-yellow-500">Laundgram</span></p>
     <div
@@ -166,7 +185,24 @@
             Ague&nbsp;.&nbsp;</a> 2025
 
     </footer>
+    <script>
+        function showToast() {
+            const toast = document.getElementById('custom-toast');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 15000); // Cache le toast après 8 secondes
+        }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('login-btn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', (e) => {
+                    showToast();
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

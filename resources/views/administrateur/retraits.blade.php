@@ -268,7 +268,7 @@
                                         {{ number_format($commande->total, 2, ',', ' ') }} FCFA
                                     </p>
                                     <div class="text-center">
-                                        <a href="{{ route('commandes.show', $commande->id) }}"
+                                        <a href="{{ route('commandesAdmin.show', $commande->id) }}"
                                             class="inline-block px-6 py-2 text-white transition duration-200 bg-blue-500 rounded-md hover:bg-blue-600">
                                             Voir les détails
                                         </a>

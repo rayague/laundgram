@@ -101,7 +101,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/factures/{id}/download_administration', [AdminController::class, 'download'])->name('facturesAdmin.download');
 
 
-    Route::put('/commandes/{id}/valider_administration', [AdminController::class, 'valider'])->name('commandes.valider');
+    Route::put('/commandes/{id}/valider_administration', [AdminController::class, 'valider'])->name('commandesAdmin.valider');
 
 
     Route::get('/liste_des_commandes_administration', [AdminController::class, 'listeCommandes'])->name('listeCommandesAdmin');
@@ -206,6 +206,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/Comptabilite/commandes/filtrer', [CommandeController::class, 'ComptabiliteFiltrer'])->name('commandes.filtrerComptabilite');
     Route::get('/commandes/retrait', [CommandeController::class, 'retraitPending'])->name('commandes.retraitPending');
     Route::get('/impression_liste_commandes_retiree', [AdminController::class, 'printListeCommandesRetraits'])->name('listeCommandesRetraits.print');
+    Route::get('/impression_liste_commandes_en_attente', [CommandeController::class, 'printListeCommandesPending'])->name('listeCommandesPending.print');
+
 
 
 

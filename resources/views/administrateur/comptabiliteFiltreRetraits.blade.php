@@ -274,46 +274,14 @@
                                     <input type="date" name="date_fin" id="date_fin"
                                         value="{{ $date_fin ?? '' }}" class="p-2 border border-gray-300 rounded">
                                 </div>
-                                <button type="submit"
-                                    class="p-2 text-white bg-blue-500 rounded hover:bg-blue-700">Filtrer</button>
+                                <div class="self-end">
+                                    <button type="submit"
+                                        class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                        Filtrer
+                                    </button>
+                                </div>
                             </div>
                         </form>
-                    </div>
-
-                    <!-- Section des commandes filtrées -->
-                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
-                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Commandes</h2>
-                        @if ($commandes->isNotEmpty())
-                            <table class="min-w-full border-collapse bg-gray-50">
-                                <thead>
-                                    <tr class="text-white bg-blue-500">
-                                        <th class="px-4 py-2 border border-blue-400">Numéro de Commande</th>
-                                        <th class="px-4 py-2 border border-blue-400">Utilisateur</th>
-                                        <th class="px-4 py-2 border border-blue-400">Montant Total</th>
-                                        <th class="px-4 py-2 border border-blue-400">Statut</th>
-                                        <th class="px-4 py-2 border border-blue-400">Date de Retrait</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($commandes as $commande)
-                                        <tr class="hover:bg-blue-50">
-                                            <td class="px-4 py-2 border border-blue-300">{{ $commande->id }}</td>
-                                            <td class="px-4 py-2 border border-blue-300">
-                                                {{ $commande->user->name ?? 'Utilisateur Inconnu' }}</td>
-                                            <td class="px-4 py-2 border border-blue-300">
-                                                {{ number_format($commande->total, 2, ',', ' ') }} F</td>
-                                            <td class="px-4 py-2 border border-blue-300">{{ $commande->statut }}</td>
-                                            <td class="px-4 py-2 border border-blue-300">
-                                                {{ \Carbon\Carbon::parse($commande->date_retrait)->format('d/m/Y') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune
-                                commande trouvée pour cette période.</p>
-                        @endif
                     </div>
 
                     <!-- Section des paiements filtrés -->

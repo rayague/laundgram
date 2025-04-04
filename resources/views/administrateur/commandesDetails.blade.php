@@ -551,8 +551,8 @@
                                             <!-- Champ de saisie pour l'utilisateur -->
                                             <div class="mb-4">
                                                 <label for="note"
-                                                    class="block text-sm font-medium text-gray-700">Montant à
-                                                    retirer</label>
+                                                    class="block text-sm font-medium text-gray-700">Libellé du
+                                                    retrait</label>
                                                 <textarea rows="4" class="w-full p-2 mt-1 border border-gray-300 rounded-md" required name="note"
                                                     id="note"></textarea>
 

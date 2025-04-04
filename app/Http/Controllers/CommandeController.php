@@ -253,10 +253,14 @@ class CommandeController extends Controller
 
     public function listeCommandes()
     {
-        $commandes = Commande::all();  // Ou avec la pagination : Commande::paginate(10);
+        $userId = Auth::id(); // Récupérer l'ID de l'utilisateur connecté
+
+        $commandes = Commande::where('user_id', $userId)->get(); // Filtrer par utilisateur
         $objets = Objets::all();
+
         return view('utilisateurs.listeCommandes', compact('commandes', 'objets'));
     }
+
 
     public function show($id)
     {
@@ -301,6 +305,48 @@ class CommandeController extends Controller
 
 
 
+    // public function completerPaiement(Request $request, Commande $commande)
+    // {
+    //     // Validation : on s'assure que l'utilisateur fournit un montant additionnel positif
+    //     $request->validate([
+    //         'montant_additionnel' => 'required|numeric|min:0'
+    //     ]);
+
+    //     $montantAdditionnel = $request->input('montant_additionnel');
+
+    //     // Mettre à jour le montant remis : on ajoute le montant additionnel à la valeur existante
+    //     $nouveauMontantRemis = $commande->montant_remis + $montantAdditionnel;
+    //     $commande->update([
+    //         'montant_remis' => $nouveauMontantRemis,
+    //     ]);
+
+    //     // Recharger la commande avec ses objets et retraits
+    //     $commande->load('objets', 'retraits');
+
+    //     // Recalculer le coût total de la commande
+    //     $totalCommande = $commande->objecsts->sum(function ($objet) {
+    //         return $objet->prix_unitaire * $objet->pivot->quantite;
+    //     });
+
+    //     // Recalculer le total des retraits déjà effectués
+    //     $totalRetraits = $commande->retraits->sum('cout');
+
+    //     // Calculer les indicateurs financiers
+    //     $soldeRestant = $nouveauMontantRemis - $totalRetraits;
+    //     $resteAPayer = max(0, $totalCommande - $nouveauMontantRemis);
+
+    //     // Mettre à jour la commande avec les nouveaux indicateurs financiers
+    //     $commande->update([
+    //         'cout_total_commande' => $totalCommande,
+    //         'total_retraits' => $totalRetraits,
+    //         'solde_restant' => $soldeRestant,
+    //         'reste_a_payer' => $resteAPayer,
+    //     ]);
+
+    //     return redirect()->route('commandes.show', $commande->id)
+    //         ->with('success', 'Montant additionnel enregistré. Le solde a été mis à jour.');
+    // }
+
     public function completerPaiement(Request $request, Commande $commande)
     {
         // Validation : on s'assure que l'utilisateur fournit un montant additionnel positif
@@ -314,13 +360,14 @@ class CommandeController extends Controller
         $nouveauMontantRemis = $commande->montant_remis + $montantAdditionnel;
         $commande->update([
             'montant_remis' => $nouveauMontantRemis,
+            'user_id' => Auth::id(), // Stocker l'utilisateur qui effectue l'opération
         ]);
 
         // Recharger la commande avec ses objets et retraits
         $commande->load('objets', 'retraits');
 
         // Recalculer le coût total de la commande
-        $totalCommande = $commande->objecsts->sum(function ($objet) {
+        $totalCommande = $commande->objets->sum(function ($objet) {
             return $objet->prix_unitaire * $objet->pivot->quantite;
         });
 
@@ -347,15 +394,15 @@ class CommandeController extends Controller
     // Méthode pour afficher les commandes journalières
     public function journalieres(Request $request)
     {
+        $userId = Auth::id(); // Récupérer l'ID de l'utilisateur connecté
+
         $validated = $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date'
         ]);
 
-        $commandes = Commande::whereBetween('date_depot', [
-            $validated['start_date'],
-            $validated['end_date']
-        ])
+        $commandes = Commande::where('user_id', $userId) // Filtrer par utilisateur
+            ->whereBetween('date_depot', [$validated['start_date'], $validated['end_date']])
             ->orderBy('date_depot')
             ->get();
 
@@ -444,10 +491,14 @@ class CommandeController extends Controller
 
     public function filtrerPending(Request $request)
     {
+        $userId = Auth::id(); // Récupérer l'ID de l'utilisateur connecté
         $date_debut = $request->input('date_debut');
         $date_fin = $request->input('date_fin', today()->toDateString());
 
-        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])->get();
+        $commandes = Commande::where('user_id', $userId) // Filtrer par utilisateur
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
+            ->get();
+
         $montant_total = $commandes->sum('total');
 
         // Si $objets est nécessaire, ajoute-le ici (remplace par la bonne requête)
@@ -456,14 +507,18 @@ class CommandeController extends Controller
         return view('utilisateurs.listeCommandesFiltrePending', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
     }
 
+
     public function retraitsFiltrer(Request $request)
     {
+        $userId = Auth::id(); // Récupérer l'ID de l'utilisateur connecté
         $date_debut = $request->input('date_debut');
         $date_fin = $request->input('date_fin', today()->toDateString());
 
-        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+        $commandes = Commande::where('user_id', $userId) // Filtrer par utilisateur
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
             ->where('statut', 'retirée')
             ->get();
+
         $montant_total = $commandes->sum('total');
 
         // Si $objets est nécessaire, ajoute-le ici (remplace par la bonne requête)
@@ -471,6 +526,7 @@ class CommandeController extends Controller
 
         return view('utilisateurs.listeCommandesFiltreRetraits', compact('commandes', 'date_debut', 'date_fin', 'montant_total', 'objets'));
     }
+
 
     public function printListeCommandesRetraits(Request $request)
     {
