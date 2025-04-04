@@ -71,6 +71,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/impression_liste_commandes_en_attente_administration', [AdminController::class, 'printListeCommandesPending'])->name('listeCommandesPendingAdmin.print');
     Route::get('/impression_liste_commandes_retiree_administration', [AdminController::class, 'printListeCommandesRetraits'])->name('listeCommandesRetraitsAdmin.print');
     Route::get('/impression_liste_commandes_comptabilite_administration', [AdminController::class, 'printListeCommandesComptabilite'])->name('listeCommandesComptabiliteAdmin.print');
+    Route::put('/commande/{commande}/update-financial_admin', [AdminController::class, 'updateFinancial'])->name('commandeAdmin.updateFinancial');
+
 
 
 
@@ -112,7 +114,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/journalieres_administration', [AdminController::class, 'journalieres'])->name('commandesAdmin.journalieres');
     Route::get('/factures/{commande}/imprimer_administration', [AdminController::class, 'print'])->name('facturesAdmin.print');
-    Route::put('/commande/{commande}/update-financial_administration', [AdminController::class, 'updateFinancialAdmin'])->name('commandeAdmin.updateFinancial');
+    // Route::put('/commande/{commande}/update-financial_administration', [AdminController::class, 'updateFinancialAdmin'])->name('commandeAdmin.updateFinancial');
 
     Route::post('store', [AdminController::class, 'storeCommandeAdmin'])->name('commandesAdmin.store');
 

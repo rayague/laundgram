@@ -497,7 +497,7 @@
                                 min="0" value="0.00" class="w-32 p-2 border rounded-md" required>
                             <!-- Optionnel : Champ pour la méthode de paiement -->
                             <select name="payment_method" id="payment_method"
-                                class="w-48 p-2 bg-white border rounded-md">
+                                class="w-48 p-2 bg-white border rounded-md" required>
                                 <option value="">Choisir</option>
                                 <option value="Avance">Avance</option>
                                 <option value="Retrait">Retrait</option>
