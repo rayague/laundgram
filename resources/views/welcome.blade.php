@@ -78,16 +78,19 @@
                         Tableau de bord
                     </a>
                 @else
-                    <a href="{{ route('login') }} id="login-btn""
-                        class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                    {{-- <a href="{{ route('login') }}"
+                        class="rounded-md bg-yellow-500 p-2 text-black
+                        ring-1 ring-transparent transition hover:text-black/70 focus:outline-none
+                        focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80
+                        dark:focus-visible:ring-white">
                         Connexion
-                    </a>
-                    {{-- <button id="login-btn" type="button"
+                    </a> --}}
+                    <button id="login-btn" type="button"
                         class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
 
 
                         Connexion
-                    </button> --}}
+                    </button>
 
                     {{-- @if (Route::has('register'))
                         <a href="{{ route('register') }}"
@@ -100,7 +103,7 @@
         @endif
     </header>
 
-    {{-- <div id="custom-toast"
+    <div id="custom-toast"
         class="z-50 hidden px-4 py-3 mx-auto text-center text-white delay-75 transform rounded-lg shadow-lg cursor-pointer bg-yellow-500/50 top-20 w-10/11">
         ⚠️ Cette application est conçue uniquement pour un usage local. <br />
         📲 Pour en savoir plus ou discuter avec l'auteur, écrivez-lui directement sur
@@ -108,7 +111,7 @@
             class="font-semibold text-white underline hover:text-gray-200">
             WhatsApp
         </a> 💬.
-    </div> --}}
+    </div>
 
 
 

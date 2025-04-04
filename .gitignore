@@ -1,3 +1,4 @@
+/resources/views/welcome.blade.php
 /.phpunit.cache
 /node_modules
 /public/build
@@ -21,4 +22,3 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-/resources/views/welcome.blade.php
