@@ -785,15 +785,20 @@ class AdminController extends Controller
 
     public function printListeCommandes(Request $request)
     {
+        $userId = Auth::id(); // 🔐 Utilisateur connecté
+
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
 
-        $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
-            ->orderBy('date_retrait')
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_depot', [$start_date, $end_date]) // 👈 ici !
+            ->orderBy('date_depot')
             ->get();
 
+        $totalMontant = $commandes->sum('total');
+
         // Générer le PDF
-        $pdf = Pdf::loadView('administrateur.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+        $pdf = Pdf::loadView('administrateur.previewListeCommandes', compact('commandes', 'start_date', 'end_date', 'totalMontant'));
 
         // Télécharger ou afficher dans le navigateur
         return $pdf->stream('liste_commandes.pdf'); // Pour télécharger
@@ -805,10 +810,13 @@ class AdminController extends Controller
 
     public function printListeCommandesPending(Request $request)
     {
+        $userId = Auth::id();
+
         $date_debut = $request->input('date_debut');
         $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
 
-        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
             ->where('statut', 'non retirée')
             ->orderBy('date_retrait')
             ->get();

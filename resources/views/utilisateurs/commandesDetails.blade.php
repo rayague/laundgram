@@ -478,14 +478,13 @@
                                 Nouvelle avance :
                             </label>
                             <input type="number" name="montant_paye" id="montant_paye" step="0.01"
-                                min="0" value="0.00" class="w-32 p-2 border rounded-md" required>
+                                min="0" class="w-32 p-2 border rounded-md" required placeholder="montant">
                             <!-- Optionnel : Champ pour la méthode de paiement -->
                             <select name="payment_method" id="payment_method"
                                 class="w-48 p-2 bg-white border rounded-md">
                                 <option value="">Choisir</option>
                                 <option value="Avance">Avance</option>
                                 <option value="Retrait">Retrait</option>
-                                <option value="Avance & Retrait">Retrait Et Retrait</option>
                             </select>
                             <button type="submit"
                                 class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">

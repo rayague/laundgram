@@ -266,6 +266,19 @@
                             </button>
                         </form>
                     </div>
+                    <div class="mb-6">
+                        <form method="GET" action="{{ route('commandes.recherche') }}" class="mb-4">
+                            <div class="flex items-center gap-2">
+                                <input type="text" name="client" placeholder="Rechercher un client..."
+                                    class="px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    value="{{ request('client') }}">
+                                <button type="submit"
+                                    class="px-4 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700">
+                                    Rechercher
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="overflow-x-auto bg-white rounded-lg shadow-md">
                         <table class="w-full border border-collapse table-auto">
                             <thead class="text-white bg-blue-600">
@@ -280,7 +293,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($commandes as $commande)
+                                @forelse ($commandes as $commande)
                                     <tr class="hover:bg-blue-50">
                                         <td class="px-4 py-3 border border-blue-300">{{ $commande->numero }}</td>
                                         <td class="px-4 py-3 border border-blue-300">{{ $commande->client }}</td>
@@ -289,22 +302,27 @@
                                         <td class="px-4 py-3 border border-blue-300">{{ $commande->date_retrait }}
                                         </td>
                                         <td class="px-4 py-3 border border-blue-300">
-                                            {{ number_format($commande->total, 2, ',', ' ') }} FCFA</td>
-                                        <td class="px-4 py-3 border border-blue-300">
-                                            {{ $commande->user->name }} </td>
+                                            {{ number_format($commande->total, 2, ',', ' ') }} FCFA
+                                        </td>
+                                        <td class="px-4 py-3 border border-blue-300">{{ $commande->user->name }}</td>
                                         <td class="px-4 py-3 text-center border border-blue-300">
-                                            <!-- Boutons d'action (par exemple, Voir, Éditer, Supprimer) -->
-                                            <a href="{{ route('commandesAdmin.show', $commande->id) }}"
+                                            <a href="{{ route('commandes.show', $commande->id) }}"
                                                 class="p-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">
                                                 Voir
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="px-4 py-6 text-center text-gray-500">
+                                            Aucune facture enregistrée aujourd’hui.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
-
                     </div>
+
 
 
 

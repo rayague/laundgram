@@ -255,7 +255,10 @@ class CommandeController extends Controller
     {
         $userId = Auth::id(); // Récupérer l'ID de l'utilisateur connecté
 
-        $commandes = Commande::where('user_id', $userId)->get(); // Filtrer par utilisateur
+        $commandes = Commande::where('user_id', $userId)
+            ->whereDate('created_at', Carbon::today()) // Filtrer par date du jour
+            ->get();
+
         $objets = Objets::all();
 
         return view('utilisateurs.listeCommandes', compact('commandes', 'objets'));
@@ -443,43 +446,46 @@ class CommandeController extends Controller
     //     return view('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
     // }
 
+
     public function printListeCommandes(Request $request)
     {
+        $userId = Auth::id(); // 🔐 Utilisateur connecté
+
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date') ?? now()->format('Y-m-d');
 
-        $commandes = Commande::whereBetween('date_retrait', [$start_date, $end_date])
-            ->orderBy('date_retrait')
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_depot', [$start_date, $end_date]) // 👈 ici !
+            ->orderBy('date_depot')
             ->get();
 
-        // Générer le PDF
-        $pdf = Pdf::loadView('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date'));
+        $totalMontant = $commandes->sum('total');
 
-        // Télécharger ou afficher dans le navigateur
-        return $pdf->stream('liste_commandes.pdf'); // Pour télécharger
-        // return $pdf->stream('liste_commandes.pdf'); // Pour afficher directement
+
+
+        $pdf = Pdf::loadView('utilisateurs.previewListeCommandes', compact('commandes', 'start_date', 'end_date', 'totalMontant'));
+
+        return $pdf->stream('liste_commandes.pdf');
     }
-
 
 
     public function printListeCommandesPending(Request $request)
     {
+        $userId = Auth::id();
+
         $date_debut = $request->input('date_debut');
         $date_fin = $request->input('date_fin') ?? now()->format('Y-m-d');
 
-        $commandes = Commande::whereBetween('date_retrait', [$date_debut, $date_fin])
+        $commandes = Commande::where('user_id', $userId)
+            ->whereBetween('date_retrait', [$date_debut, $date_fin])
             ->where('statut', 'non retirée')
             ->orderBy('date_retrait')
             ->get();
 
-        // Générer le PDF
         $pdf = Pdf::loadView('utilisateurs.previewListePending', compact('commandes', 'date_debut', 'date_fin'));
 
-        // Télécharger ou afficher dans le navigateur
-        return $pdf->stream('liste_commandes_pending.pdf'); // Pour afficher directement
-        // return $pdf->download('liste_commandes_pending.pdf'); // Pour télécharger
+        return $pdf->stream('liste_commandes_pending.pdf');
     }
-
 
 
 
@@ -584,6 +590,27 @@ class CommandeController extends Controller
     }
 
 
+
+    public function recherche(Request $request)
+    {
+        $userId = Auth::id(); // Filtrer par utilisateur connecté
+
+        $recherche = $request->input('client');
+
+        $commandes = Commande::where('user_id', $userId)
+            ->where('client', 'like', '%' . $recherche . '%')
+            ->get();
+
+        $objets = Objets::all();
+
+        // Vérifie si aucun résultat
+        $message = null;
+        if ($commandes->isEmpty()) {
+            $message = "Aucun client trouvé avec ce nom.";
+        }
+
+        return view('utilisateurs.listeCommandes', compact('commandes', 'objets', 'message'));
+    }
 
 
 

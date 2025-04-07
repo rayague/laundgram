@@ -82,15 +82,14 @@
         }
 
         .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 0.8em;
-            padding: 1rem;
+            margin-top: 2rem;
+            text-align: left;
+            font-size: 0.85em;
+            padding-top: 1rem;
             border-top: 2px solid #eee;
+            page-break-inside: avoid;
         }
+
 
         @media print {
             body {
@@ -165,6 +164,8 @@
                 <th>Agent</th>
             </tr>
         </thead>
+
+
         <tbody>
             @foreach ($commandes as $commande)
                 <tr>
@@ -182,6 +183,14 @@
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td style="font-weight: bold; border-top: 2px solid #000;">
+                    Total : {{ number_format($totalMontant, 2, ',', ' ') }} FCFA
+                </td>
+            </tr>
+        </tfoot>
     </table>
 
     <!-- Total -->
@@ -189,25 +198,33 @@
         Nombre total de commandes : <strong>{{ $commandes->count() }}</strong>
     </div>
 
-    <div class="container footer">
-        <h2>Conditions Générales de Pressing</h2>
-        <ul>
-            <li><strong>1.</strong> 10 Frs par jour pour frais de magasinage seront perçus à partir du 10<sup>ème</sup>
-                jour après dépôt.</li>
-            <li><strong>2.</strong> Après deux (02) mois, la maison n'est plus responsable des pertes ou avaries
-                (<strong>60 jours</strong>).</li>
-            <li><strong>3.</strong> En cas de dommages causés aux effets, la responsabilité du pressing est limitée à :
-                <ul class="sub-list">
-                    <li>Huit (8) fois le prix du blanchissage pour tout effet non griffé.</li>
-                    <li>Dix (10) fois pour les linges griffés.</li>
-                    <li>Une (1) fois le prix du blanchissage pour les draps.</li>
-                </ul>
-            </li>
-            <li><strong>4.</strong> Les synthétiques, boucles, boutons, fermetures, broderies de fil sur Bazin ne sont
-                pas pris en compte.</li>
-            <li><strong>5.</strong> Les effets dépourvus d'étiquetage d'entretien ne sont pas garantis.</li>
-        </ul>
+
+    <div style="page-break-inside: avoid; margin-top: 2rem;">
+        <!-- Ton bloc footer ici -->
+        <div class="container footer">
+            <h2>Conditions Générales de Pressing</h2>
+            <ul>
+                <li><strong>1.</strong> 10 Frs par jour pour frais de magasinage seront perçus à partir du
+                    10<sup>ème</sup>
+                    jour après dépôt.</li>
+                <li><strong>2.</strong> Après deux (02) mois, la maison n'est plus responsable des pertes ou avaries
+                    (<strong>60 jours</strong>).</li>
+                <li><strong>3.</strong> En cas de dommages causés aux effets, la responsabilité du pressing est limitée
+                    à :
+                    <ul class="sub-list">
+                        <li>Huit (8) fois le prix du blanchissage pour tout effet non griffé.</li>
+                        <li>Dix (10) fois pour les linges griffés.</li>
+                        <li>Une (1) fois le prix du blanchissage pour les draps.</li>
+                    </ul>
+                </li>
+                <li><strong>4.</strong> Les synthétiques, boucles, boutons, fermetures, broderies de fil sur Bazin ne
+                    sont
+                    pas pris en compte.</li>
+                <li><strong>5.</strong> Les effets dépourvus d'étiquetage d'entretien ne sont pas garantis.</li>
+            </ul>
+        </div>
     </div>
+
 </body>
 
 </html>

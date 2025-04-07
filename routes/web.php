@@ -186,6 +186,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
 
     // Users routes
+    Route::get('/commandes/recherche', [CommandeController::class, 'recherche'])->name('commandes.recherche');
+
     route::get('/commandes', [ViewsController::class, 'commandes'])->name('commandes');
     route::get('/rappels', [ViewsController::class, 'rappels'])->name('rappels');
     Route::get('/details_retraits/{id}', [ViewsController::class, 'detailsRetrait'])->name('retrait.details');
@@ -209,6 +211,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/commandes/retrait', [CommandeController::class, 'retraitPending'])->name('commandes.retraitPending');
     Route::get('/impression_liste_commandes_retiree', [AdminController::class, 'printListeCommandesRetraits'])->name('listeCommandesRetraits.print');
     Route::get('/impression_liste_commandes_en_attente', [CommandeController::class, 'printListeCommandesPending'])->name('listeCommandesPending.print');
+    Route::get('/impression_liste_commandes', [CommandeController::class, 'printListeCommandes'])->name('listeCommandes.print');
+
 
 
 
