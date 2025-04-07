@@ -78,19 +78,19 @@
                         Tableau de bord
                     </a>
                 @else
-                    {{-- <a href="{{ route('login') }}"
+                    <a href="{{ route('login') }}"
                         class="rounded-md bg-yellow-500 p-2 text-black
                         ring-1 ring-transparent transition hover:text-black/70 focus:outline-none
                         focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80
                         dark:focus-visible:ring-white">
                         Connexion
-                    </a> --}}
-                    <button id="login-btn" type="button"
+                    </a>
+                    {{-- <button id="login-btn" type="button"
                         class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
 
 
                         Connexion
-                    </button>
+                    </button> --}}
 
                     {{-- @if (Route::has('register'))
                         <a href="{{ route('register') }}"
@@ -183,7 +183,7 @@
 
     <footer
         class="fixed bottom-0 flex justify-center w-full p-4 mx-auto mt-8 text-sm font-black text-center text-white bg-yellow-500 backdrop-blur-md brightness-90 ">
-        Copyrignt ©&nbsp;<a class="italic text-white" href="/">Laundgram&nbsp;</a> <a
+        Copyright ©&nbsp;<a class="italic text-white" href="/">Laundgram&nbsp;</a> <a
             href="https://portfolio-cnkp.vercel.app" target="_blank"> Ray
             Ague&nbsp;.&nbsp;</a> 2025
 
