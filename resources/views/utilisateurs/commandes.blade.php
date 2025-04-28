@@ -404,7 +404,7 @@
                                                 <input type="number" name="avance_client"
                                                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                                     placeholder="1500.00" step="0.01">
-                                                <span class="absolute text-gray-500 right-3 top-3">TND</span>
+                                                <span class="absolute text-gray-500 right-3 top-3">FCFA</span>
                                             </div>
                                         </div>
 
@@ -577,7 +577,7 @@
             });
 
             document.getElementById('total-display').textContent =
-                `Total : ${total.toFixed(2)} TND`;
+                `Total : ${total.toFixed(2)} FCFA`;
         }
 
         function addObjectField() {
@@ -678,9 +678,9 @@
 
             // 4) Déléguation des événements
             container.addEventListener('input', e => e.target.matches('input[type="number"]') &&
-        updateTotalPrice());
+                updateTotalPrice());
             container.addEventListener('change', e => e.target.matches('select[name*="[id]"]') &&
-            updateTotalPrice());
+                updateTotalPrice());
             container.addEventListener('click', e => {
                 if (e.target.tagName === 'BUTTON') {
                     e.target.closest('.flex').remove();
