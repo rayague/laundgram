@@ -251,43 +251,7 @@
                         </div>
                     </form>
 
-                    <!-- Section des paiements -->
-                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
-                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Paiements</h2>
-                        @if ($payments->isNotEmpty())
-                            <table class="min-w-full border-collapse bg-gray-50">
-                                <thead>
-                                    <tr class="text-white bg-green-500">
-                                        <th class="px-4 py-2 border border-green-400">Numéro de Facture</th>
-                                        <th class="px-4 py-2 border border-green-400">Utilisateur</th>
-                                        <th class="px-4 py-2 border border-green-400">Montant</th>
-                                        <th class="px-4 py-2 border border-green-400">Action</th>
-                                        <th class="px-4 py-2 border border-green-400">Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($payments as $payment)
-                                        <tr class="hover:bg-green-50">
-                                            <td class="px-4 py-2 border border-green-300">{{ $payment->commande_id }}
-                                            </td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ $payment->user->name ?? 'Utilisateur Inconnu' }}</td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ number_format($payment->amount, 2, ',', ' ') }} F</td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ $payment->payment_method ?? 'Non spécifié' }}</td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y H:i') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucun
-                                paiement enregistré pour cet utilisateur.</p>
-                        @endif
-                    </div>
+
 
                     <!-- Section des notes -->
                     <div class="p-6 bg-white rounded-lg shadow-md">

@@ -112,63 +112,87 @@ class ViewsController extends Controller
 
     public function comptabilite()
     {
-        // Récupérer l'ID de l'utilisateur connecté
+        // 1) Récupérer l’ID de l’utilisateur connecté
         $userId = Auth::id();
 
-        // Vérifier si la commande existe et si l'utilisateur connecté a accès
-        $commande = Commande::where('user_id', $userId)->get(); // Filtrer les commandes par l'utilisateur connecté
+        // 2) Définir la date d’aujourd’hui
+        $today = Carbon::today()->toDateString();
 
-        // Si la commande n'existe pas pour cet utilisateur, on redirige ou on renvoie une erreur
-        if ($commande->isEmpty()) {
-            return redirect()->route('dashboard')->with('error', 'Aucune commande trouvée pour cet utilisateur.');
+        // 3) Charger les commandes de l’utilisateur créées aujourd’hui
+        $commandes = Commande::where('user_id', $userId)
+            ->whereDate('created_at', $today)
+            ->get();
+
+        // 4) Si aucune commande aujourd’hui, on peut le signaler
+        if ($commandes->isEmpty()) {
+            return redirect()->route('dashboard')
+                ->with('error', 'Pas de commande pour aujourd’hui.');
         }
 
-        // Récupérer les paiements associés à cet utilisateur
-        $payments = CommandePayment::where('user_id', $userId)->get();
+        // 5) Charger les paiements de l’utilisateur réalisés aujourd’hui
+        $payments = CommandePayment::where('user_id', $userId)
+            ->whereDate('created_at', $today)
+            ->get();
 
-        // Récupérer les notes associées à cet utilisateur
-        $notes = Note::where('user_id', $userId)->get();
+        // 6) Charger les notes de l’utilisateur créées aujourd’hui
+        $notes = Note::where('user_id', $userId)
+            ->whereDate('created_at', $today)
+            ->get();
 
-        // Retourner la vue avec les données
-        return view('utilisateurs.comptabilite', compact('commande', 'payments', 'notes', 'userId'));
+        // 7) Retourner la vue avec les données
+        return view('utilisateurs.comptabilite', compact(
+            'commandes',
+            'payments',
+            'notes',
+            'userId'
+        ));
     }
+
 
 
 
 
     public function rappels($commandeId = null)
     {
-        // Récupérer l'ID de l'utilisateur connecté
+        // Récupérer l’ID de l’utilisateur connecté
         $userId = Auth::id();
 
+        // Date d’aujourd’hui
+        $today = Carbon::today()->toDateString();
+
         if ($commandeId) {
-            // Vérifier que la commande est validée et appartient à l'utilisateur connecté
+            // On ne charge la commande que si elle est validée, appartient à l'utilisateur
+            // ET si sa date_retrait est aujourd'hui
             $commandes = Commande::where('id', $commandeId)
-                ->where('statut', 'validée') // Statut validé
-                ->where('user_id', $userId) // Vérifier que l'utilisateur est bien celui connecté
-                ->with('objets') // Charger la relation objets si nécessaire
+                ->where('user_id', $userId)
+                ->where('statut', 'validée')
+                ->whereDate('date_retrait', $today)
+                ->with('objets')
                 ->get();
 
-            // Récupérer les notes associées à cette commande
+            // Notes associées à cette commande, créées aujourd’hui
             $notes = Note::where('commande_id', $commandeId)
-                ->with('user') // Récupérer l'utilisateur associé à la note
+                ->whereDate('created_at', $today)
+                ->with('user')
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
-            // Récupérer les commandes validées pour l'utilisateur connecté
-            $commandes = Commande::where('statut', 'validée')
-                ->where('user_id', $userId)
+            // Toutes les commandes validées pour cet utilisateur dont le retrait est aujourd’hui
+            $commandes = Commande::where('user_id', $userId)
+                ->where('statut', 'validée')
+                ->whereDate('date_retrait', $today)
                 ->get();
 
-            // Récupérer toutes les notes de l'utilisateur connecté
+            // Toutes les notes de l’utilisateur créées aujourd’hui
             $notes = Note::where('user_id', $userId)
+                ->whereDate('created_at', $today)
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
 
-        // Retourner la vue avec les données
         return view('utilisateurs.rappels', compact('commandes', 'notes'));
     }
+
 
 
     public function pageRetrait(Commande $commande)

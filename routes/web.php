@@ -187,6 +187,8 @@ Route::middleware('auth')->group(function () {
 
     // Users routes
     Route::get('/commandes/recherche', [CommandeController::class, 'recherche'])->name('commandes.recherche');
+    Route::get('/commandes_retirees/recherche', [CommandeController::class, 'rechercheRetrait'])->name('commandesRetrait.recherche');
+
 
     route::get('/commandes', [ViewsController::class, 'commandes'])->name('commandes');
     route::get('/rappels', [ViewsController::class, 'rappels'])->name('rappels');

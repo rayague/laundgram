@@ -230,8 +230,8 @@
                     <!-- Section du filtre de la période -->
                     <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
                         <h2 class="mb-4 text-2xl font-semibold text-gray-700">Filtrer par Période</h2>
-                        <form method="GET" action="{{ route('commandes.filtrerComptabilite') }}">
-                            <div class="flex space-x-4">
+                        <form method="GET" action="{{ route('commandes.filtrerComptabilite') }}" class="">
+                            <div class="flex flex-row items-center space-x-4">
                                 <div>
                                     <label for="date_debut" class="block text-gray-700">Date de Début</label>
                                     <input type="date" name="date_debut" id="date_debut"
@@ -249,53 +249,6 @@
                         </form>
                     </div>
 
-                    <!-- Section des paiements filtrés -->
-                    <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
-                        <h2 class="mb-4 text-2xl font-semibold text-gray-700">Historique des Paiements</h2>
-
-                        @if ($payments->isNotEmpty())
-                            <table class="min-w-full border-collapse bg-gray-50">
-                                <thead>
-                                    <tr class="text-white bg-green-500">
-                                        <th class="px-4 py-2 border border-green-400">Numéro de Facture</th>
-                                        <th class="px-4 py-2 border border-green-400">Utilisateur</th>
-                                        <th class="px-4 py-2 border border-green-400">Montant</th>
-                                        <th class="px-4 py-2 border border-green-400">Action</th>
-                                        <th class="px-4 py-2 border border-green-400">
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'date']) }}"
-                                                class="underline">
-                                                Date de Paiement ⬍
-                                            </a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($payments->sortByDesc('created_at') as $payment)
-                                        <tr class="hover:bg-green-50">
-                                            <td class="px-4 py-2 border border-green-300">{{ $payment->commande_id }}
-                                            </td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ $payment->user->name ?? 'Utilisateur Inconnu' }}
-                                            </td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ number_format($payment->amount, 2, ',', ' ') }} F
-                                            </td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ $payment->payment_method ?? 'Non spécifié' }}
-                                            </td>
-                                            <td class="px-4 py-2 border border-green-300">
-                                                {{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y H:i') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">
-                                Aucun paiement trouvé pour cette période.
-                            </p>
-                        @endif
-                    </div>
 
                     <!-- Section des paiements filtrés -->
                     <div class="p-6 mb-8 bg-white rounded-lg shadow-md">
@@ -375,12 +328,6 @@
                             <p class="p-3 text-lg font-black text-center text-white bg-orange-400 rounded">Aucune note
                                 enregistrée pour cette période.</p>
                         @endif
-                    </div>
-
-                    <!-- Section du Montant Total -->
-                    <div class="p-6 bg-white rounded-lg shadow-md">
-                        <h2 class="text-xl font-semibold text-gray-700">Montant Total des Commandes</h2>
-                        <p class="text-lg">{{ number_format($montant_total, 2, ',', ' ') }} F</p>
                     </div>
 
                 </div>
