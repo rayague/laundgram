@@ -557,7 +557,7 @@
         updateTotalPrice();
     </script> --}}
 
-    <script>
+    {{-- <script>
         // Récupération du HTML des options (Blade l'a déjà rendu correctement)
         const objetOptionsHTML = document.querySelector('select[name="objets[0][id]"]').innerHTML;
 
@@ -627,7 +627,103 @@
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', updateTotalPrice);
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1) Récupère le container des objets et le select initial
+            const container = document.getElementById('objets-container');
+            const originalSelect = container.querySelector('select[name="objets[0][id]"]');
+            if (!originalSelect) {
+                console.error('Select initial introuvable');
+                return;
+            }
+            const optionsHTML = originalSelect.innerHTML;
+
+            // 2) Calcul du total
+            function updateTotalPrice() {
+                let total = 0;
+                container.querySelectorAll('.flex').forEach(row => {
+                    const select = row.querySelector('select');
+                    const qtyInput = row.querySelector('input[type="number"]');
+                    const prixHidden = row.querySelector('input[type="hidden"][name*="[prix]"]');
+                    const unitPrice = parseFloat(select.selectedOptions[0].dataset.price) || 0;
+                    const qty = parseInt(qtyInput.value, 10) || 1;
+                    const lineTotal = unitPrice * qty;
+                    prixHidden.value = lineTotal.toFixed(2);
+                    total += lineTotal;
+                });
+                document.getElementById('total-display').textContent =
+                    `Total : ${total.toFixed(2)} TND`;
+            }
+
+            // 3) Ajout d'une nouvelle ligne d’objet
+            function addObjectField() {
+                const index = container.children.length;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex gap-4 mb-2';
+                wrapper.innerHTML = `
+              <select name="objets[${index}][id]" class="flex-1 px-4 py-2.5 border rounded-lg" required>
+                ${optionsHTML}
+              </select>
+              <input type="hidden" name="objets[${index}][prix]" value="0">
+              <input type="number" name="objets[${index}][quantite]"
+                     class="w-20 px-3 py-2.5 border rounded-lg text-center"
+                     value="1" min="1" required>
+              <input type="text" name="objets[${index}][description]"
+                     class="flex-1 px-4 py-2.5 border rounded-lg"
+                     placeholder="Description détaillée">
+              <button type="button" class="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-600">
+                Supprimer
+              </button>
+            `;
+                container.appendChild(wrapper);
+                updateTotalPrice();
+            }
+
+            // 4) Déléguation des événements (quantité, sélection et suppression)
+            container.addEventListener('input', e => e.target.matches('input[type="number"]') &&
+        updateTotalPrice());
+            container.addEventListener('change', e => e.target.matches('select[name*="[id]"]') &&
+            updateTotalPrice());
+            container.addEventListener('click', e => {
+                if (e.target.tagName === 'BUTTON') {
+                    e.target.closest('.flex').remove();
+                    updateTotalPrice();
+                }
+            });
+
+            // 5) Liaison du bouton “+ Ajouter un article”
+            const addBtn = document.getElementById('add-object-btn');
+            if (addBtn) addBtn.addEventListener('click', addObjectField);
+            else console.error('Bouton + Ajouter un article introuvable');
+
+            // 6) Initialisation du total
+            updateTotalPrice();
+
+            // 7) Gestion du bouton de soumission et du modal
+            const submitButton = document.getElementById('submitButton');
+            const confirmationPopup = document.getElementById('confirmationPopup');
+            if (!submitButton || !confirmationPopup) {
+                console.error('submitButton ou confirmationPopup introuvable');
+            } else {
+                submitButton.addEventListener('click', () => {
+                    confirmationPopup.classList.remove('hidden');
+                });
+            }
+        });
+
+        // Fonctions globales pour piloter la popup
+        function cancelOrder() {
+            document.getElementById('confirmationPopup').classList.add('hidden');
+        }
+
+        function confirmOrder() {
+            document.getElementById('confirmationPopup').classList.add('hidden');
+            document.getElementById('orderForm').submit();
+        }
     </script>
+
 
 
     <script>
