@@ -221,29 +221,47 @@
                     <h1 class="mb-8 text-3xl font-bold text-center text-gray-800">
                         Commandes validées pour aujourd'hui
                     </h1>
-                    <!-- Formulaire de filtre -->
-                    <form method="GET" action="{{ route('commandes.filtrerRetrait') }}"
-                        class="p-4 mb-6 bg-white rounded-lg shadow">
-                        <div class="flex items-center space-x-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Date de début</label>
-                                <input type="date" name="date_debut" value="{{ request('date_debut') }}"
-                                    class="px-3 py-2 border rounded-lg" required>
+
+
+                    <div class="p-4 mb-6 space-y-6 bg-white rounded-lg shadow">
+
+                        <form method="GET" action="{{ route('commandes.filtrerRetrait') }}">
+                            <div class="flex items-center space-x-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de début</label>
+                                    <input type="date" name="date_debut" value="{{ request('date_debut') }}"
+                                        class="px-3 py-2 border rounded-lg" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Date de fin</label>
+                                    <input type="date" name="date_fin"
+                                        value="{{ request('date_fin', today()->toDateString()) }}"
+                                        class="px-3 py-2 border rounded-lg">
+                                </div>
+                                <div class="self-end">
+                                    <button type="submit"
+                                        class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                        Filtrer
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Date de fin</label>
-                                <input type="date" name="date_fin"
-                                    value="{{ request('date_fin', today()->toDateString()) }}"
-                                    class="px-3 py-2 border rounded-lg">
-                            </div>
-                            <div class="self-end">
-                                <button type="submit"
-                                    class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-                                    Filtrer
-                                </button>
-                            </div>
+                        </form>
+
+
+                        <div class="mb-6">
+                            <form method="GET" action="{{ route('commandesRetrait.recherche') }}" class="mb-4">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" name="client" placeholder="Rechercher un client..."
+                                        class="px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        value="{{ request('client') }}" required>
+                                    <button type="submit"
+                                        class="px-4 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700">
+                                        Rechercher
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
 
                     @if ($commandes->isEmpty())
                         <div class="p-6 text-center text-gray-600 bg-gray-100 rounded-lg shadow">

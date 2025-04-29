@@ -925,6 +925,63 @@ class AdminController extends Controller
 
 
 
+    public function recherche(Request $request)
+    {
+        $userId = Auth::id();
+
+        // on récupère la chaîne tapée
+        // (si vous gardez name="client", remplacez 'search' par 'client' ici)
+        $search = $request->input('client');
+
+        // on commence la requête : commandes de l'utilisateur
+        $commandes = Commande::where('user_id', $userId)
+            // si search n'est pas vide, on ajoute le filtre multi-colonnes
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('client', 'like', "%{$search}%")
+                        ->orWhere('numero_whatsapp', 'like', "%{$search}%")
+                        ->orWhere('numero', 'like', "%{$search}%");
+                });
+            })
+            ->get();
+
+        $objets = Objets::all();
+
+        $message = $commandes->isEmpty()
+            ? "Aucun résultat pour « {$search} »."
+            : null;
+
+        return view('utilisateurs.listeCommandes', compact('commandes', 'objets', 'message', 'search'));
+    }
+
+    public function rechercheRetrait(Request $request)
+    {
+        $userId = Auth::id();
+
+        // on récupère la chaîne tapée
+        // (si vous gardez name="client", remplacez 'search' par 'client' ici)
+        $search = $request->input('client');
+
+        // on commence la requête : commandes de l'utilisateur
+        $commandes = Commande::where('user_id', $userId)
+            // si search n'est pas vide, on ajoute le filtre multi-colonnes
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('client', 'like', "%{$search}%")
+                        ->orWhere('numero_whatsapp', 'like', "%{$search}%")
+                        ->orWhere('numero', 'like', "%{$search}%");
+                });
+            })
+            ->get();
+
+        $objets = Objets::all();
+
+        $message = $commandes->isEmpty()
+            ? "Aucun résultat pour « {$search} »."
+            : null;
+
+        return view('utilisateurs.rappelsRecherche', compact('commandes', 'objets', 'message', 'search'));
+    }
 
 
 
