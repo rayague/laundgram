@@ -251,7 +251,7 @@
                             <div class="flex items-center gap-2">
                                 <input type="text" name="client" placeholder="Rechercher un client..."
                                     class="px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    value="{{ request('client') }}">
+                                    value="{{ request('client') }}" required>
                                 <button type="submit"
                                     class="px-4 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700">
                                     Rechercher

@@ -127,8 +127,9 @@ class CommandeController extends Controller
             'remise_reduction' => $remiseReduction,
         ]);
 
+        // listeCommandes
         // Redirection vers la page de détail de la commande en passant les données de réduction
-        return redirect()->route('listeCommandes', $commande->id)
+        return redirect()->route('commandes.show', $commande->id)
             ->with('success', 'Commande validée avec succès!')
             ->with([
                 'originalTotal' => $originalTotal,
@@ -593,24 +594,33 @@ class CommandeController extends Controller
 
     public function recherche(Request $request)
     {
-        $userId = Auth::id(); // Filtrer par utilisateur connecté
+        $userId = Auth::id();
 
-        $recherche = $request->input('client');
+        // on récupère la chaîne tapée
+        // (si vous gardez name="client", remplacez 'search' par 'client' ici)
+        $search = $request->input('client');
 
+        // on commence la requête : commandes de l'utilisateur
         $commandes = Commande::where('user_id', $userId)
-            ->where('client', 'like', '%' . $recherche . '%')
+            // si search n'est pas vide, on ajoute le filtre multi-colonnes
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('client', 'like', "%{$search}%")
+                        ->orWhere('numero_whatsapp', 'like', "%{$search}%")
+                        ->orWhere('numero', 'like', "%{$search}%");
+                });
+            })
             ->get();
 
         $objets = Objets::all();
 
-        // Vérifie si aucun résultat
-        $message = null;
-        if ($commandes->isEmpty()) {
-            $message = "Aucun client trouvé avec ce nom.";
-        }
+        $message = $commandes->isEmpty()
+            ? "Aucun résultat pour « {$search} »."
+            : null;
 
-        return view('utilisateurs.listeCommandes', compact('commandes', 'objets', 'message'));
+        return view('utilisateurs.listeCommandes', compact('commandes', 'objets', 'message', 'search'));
     }
+
 
 
 
