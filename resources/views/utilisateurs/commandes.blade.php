@@ -403,7 +403,7 @@
                                             <div class="relative mt-1">
                                                 <input type="number" name="avance_client"
                                                     class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                                    placeholder="1500.00" step="0.01">
+                                                    placeholder="00.00" step="0.01">
                                                 <span class="absolute text-gray-500 right-3 top-3">FCFA</span>
                                             </div>
                                         </div>
@@ -629,7 +629,7 @@
         document.addEventListener('DOMContentLoaded', updateTotalPrice);
     </script> --}}
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // 1) Récupère le container des objets et le select initial
             const container = document.getElementById('objets-container');
@@ -683,9 +683,9 @@
 
             // 4) Déléguation des événements (quantité, sélection et suppression)
             container.addEventListener('input', e => e.target.matches('input[type="number"]') &&
-        updateTotalPrice());
+                updateTotalPrice());
             container.addEventListener('change', e => e.target.matches('select[name*="[id]"]') &&
-            updateTotalPrice());
+                updateTotalPrice());
             container.addEventListener('click', e => {
                 if (e.target.tagName === 'BUTTON') {
                     e.target.closest('.flex').remove();
@@ -722,11 +722,11 @@
             document.getElementById('confirmationPopup').classList.add('hidden');
             document.getElementById('orderForm').submit();
         }
-    </script>
+    </script> --}}
 
 
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // 1) Récupère le container et le select initial
             const container = document.getElementById('objets-container');
@@ -792,6 +792,125 @@
             // 6) Init
             updateTotalPrice();
         });
+    </script> --}}
+
+    <script>
+        // Fonction principale de calcul
+        function updateTotalPrice() {
+            let total = 0;
+
+            document.querySelectorAll('#objets-container .flex').forEach(row => {
+                const select = row.querySelector('select');
+                const quantity = row.querySelector('input[type="number"]');
+                const priceInput = row.querySelector('input[type="hidden"][name*="[prix]"]');
+
+                // Correction 1 : Gestion des valeurs non numériques
+                const unitPrice = parseFloat(select.selectedOptions[0].dataset.price) || 0;
+                const qty = parseInt(quantity.value) || 1; // Si valeur vide → 1
+
+                const itemTotal = unitPrice * qty;
+
+                priceInput.value = itemTotal.toFixed(2);
+                total += itemTotal;
+            });
+
+            // Correction 2 : Affichage conditionnel pour éviter NaN
+            document.getElementById('total-display').textContent =
+                `Total : ${!isNaN(total) ? total.toFixed(2) : '0.00'} FCFA`;
+
+            // document.querySelector('input[name="avance_client"]').value = !isNaN(total) ? total.toFixed(2) : '0';
+        }
+
+        // Fonction d'ajout d'objet (version corrigée)
+        function addObjectField() {
+            const container = document.getElementById('objets-container');
+            const index = container.children.length;
+            const template = document.createElement('div');
+            template.className = 'flex gap-4 mb-2';
+
+            // Correction 3 : Clone PROPRE des options avec data-price
+            const originalSelect = document.querySelector('select[name="objets[0][id]"]');
+            const optionsHTML = Array.from(originalSelect.options).map(option =>
+                `<option value="${option.value}" data-price="${option.dataset.price}">
+                    ${option.text}
+                </option>`
+            ).join('');
+
+            template.innerHTML = `
+                <select name="objets[${index}][id]" class="w-full p-2 mt-1 border rounded-md" required>
+                    ${optionsHTML}
+                </select>
+                <input type="number" name="objets[${index}][quantite]"
+                       class="w-20 p-2 mt-1 border rounded-md" value="1" min="1" required>
+                <input type="text" name="objets[${index}][description]"
+                       class="w-full p-2 mt-1 border rounded-md" placeholder="Description" required>
+                <input type="hidden" name="objets[${index}][prix]" value="0">
+                <button type="button" class="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-600">
+                    Supprimer
+                </button>
+            `;
+
+            container.appendChild(template);
+            updateTotalPrice(); // Force le calcul après ajout
+        }
+
+        // Écouteurs d'événements (inchangés mais nécessaires)
+        document.addEventListener('input', e => {
+            if (e.target.matches('select[name*="[id]"], input[type="number"][name*="[quantite]"]')) {
+                updateTotalPrice();
+            }
+        });
+
+        document.getElementById('objets-container').addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON' && e.target.textContent === 'Supprimer') {
+                e.target.closest('.flex').remove();
+                updateTotalPrice();
+            }
+        });
+
+        // 7) Gestion du bouton de soumission et du modal
+        const submitButton = document.getElementById('submitButton');
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        if (!submitButton || !confirmationPopup) {
+            console.error('submitButton ou confirmationPopup introuvable');
+        } else {
+            submitButton.addEventListener('click', () => {
+                confirmationPopup.classList.remove('hidden');
+            });
+        }
+
+        // Fonctions globales pour piloter la popup
+        function cancelOrder() {
+            document.getElementById('confirmationPopup').classList.add('hidden');
+        }
+
+        function confirmOrder() {
+            document.getElementById('confirmationPopup').classList.add('hidden');
+            document.getElementById('orderForm').submit();
+        }
+
+        // Écouteurs unifiés (input pour quantité, change pour select, click pour supprimer)
+        const cont = document.getElementById('objets-container');
+        cont.addEventListener('input', e => {
+            if (e.target.matches('input[type="number"][name*="[quantite]"]')) {
+                updateTotalPrice();
+            }
+        });
+        cont.addEventListener('change', e => {
+            if (e.target.matches('select[name*="[id]"]')) {
+                updateTotalPrice();
+            }
+        });
+        cont.addEventListener('click', e => {
+            if (e.target.tagName === 'BUTTON') {
+                e.target.closest('.flex').remove();
+                updateTotalPrice();
+            }
+        });
+
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', updateTotalPrice);
     </script>
 
 

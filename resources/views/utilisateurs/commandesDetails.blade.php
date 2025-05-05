@@ -374,7 +374,7 @@
                     </div> --}}
 
 
-                    {{-- <div class="p-4 mt-8 bg-gray-200 rounded">
+                    <div class="p-4 mt-8 bg-gray-200 rounded">
                         <h3 class="mb-4 text-xl font-semibold">Bilan Financier</h3>
                         <div class="flex justify-between mb-2">
                             <span>
@@ -459,105 +459,9 @@
                                 @endforeach
                             </ul>
                         </div>
-                    </div> --}}
-
-                    <div class="p-4 mt-8 bg-gray-200 rounded">
-                        <h3 class="mb-4 text-xl font-semibold">Bilan financier</h3>
-
-                        {{-- Montant total hors taxes (HT) --}}
-                        <div class="flex justify-between mb-2">
-                            <span>
-                                <span class="status-indicator bg-green"></span>
-                                <strong>Montant total HT :</strong>
-                            </span>
-                            <span>{{ number_format($originalTotal, 2, ',', ' ') }} FCFA</span>
-                        </div>
-
-                        @if ($remiseReduction > 0)
-                            {{-- Montant de la remise commerciale --}}
-                            <div class="flex justify-between mb-2">
-                                <span>
-                                    <span class="status-indicator bg-yellow"></span>
-                                    <strong>Remise commerciale ({{ $remiseReduction }} %) :</strong>
-                                </span>
-                                <span>{{ number_format($discountAmount, 2, ',', ' ') }} FCFA</span>
-                            </div>
-                            {{-- Base après remise --}}
-                            <div class="flex justify-between mb-2">
-                                <span><strong>Base après remise :</strong></span>
-                                <span class="p-1 text-white bg-green-500 rounded">
-                                    {{ number_format($originalTotal - $discountAmount, 2, ',', ' ') }} FCFA
-                                </span>
-                            </div>
-                        @else
-                            <div class="flex justify-between mb-2">
-                                <span>
-                                    <span class="status-indicator bg-gray"></span>
-                                    <strong>Remise commerciale :</strong>
-                                </span>
-                                <span class="p-1 text-white bg-green-500 rounded">Aucune remise</span>
-                            </div>
-                        @endif
-
-                        {{-- (Optionnel) TVA et TTC si vous gérez la taxe --}}
-                        @isset($tauxTva)
-                            <div class="flex justify-between mb-2">
-                                <span><strong>TVA ({{ $tauxTva }} %) :</strong></span>
-                                <span>{{ number_format($tvaAmount, 2, ',', ' ') }} FCFA</span>
-                            </div>
-                            <div class="flex justify-between mb-2">
-                                <span><strong>Montant total TTC :</strong></span>
-                                <span>{{ number_format($totalTTC, 2, ',', ' ') }} FCFA</span>
-                            </div>
-                        @endisset
-
-                        {{-- Encaissements reçus --}}
-                        <div class="flex justify-between mb-2">
-                            <span>
-                                <span class="status-indicator bg-green"></span>
-                                <strong>Encaissements reçus :</strong>
-                            </span>
-                            <span>{{ number_format($commande->avance_client, 2, ',', ' ') }} FCFA</span>
-                        </div>
-
-                        {{-- Solde restant dû --}}
-                        <div class="flex justify-between mb-2">
-                            <span>
-                                <span class="status-indicator bg-red"></span>
-                                <strong>Solde restant dû :</strong>
-                            </span>
-                            <span>{{ number_format($commande->solde_restant, 2, ',', ' ') }} FCFA</span>
-                        </div>
-
-                        {{-- Statut de règlement --}}
-                        <div class="flex justify-between mb-2">
-                            <span>
-                                <span
-                                    class="status-indicator {{ $commande->statut === 'Payé' ? 'bg-green' : 'bg-gray' }}"></span>
-                                <strong>Statut de règlement :</strong>
-                            </span>
-                            <span
-                                class="{{ $commande->statut === 'Payé' ? 'bg-green-500' : 'bg-gray-500' }} rounded p-2 text-white">
-                                {{ $commande->statut }}
-                            </span>
-                        </div>
-
-                        {{-- Historique des paiements reçus --}}
-                        <div class="mt-4">
-                            <h4 class="text-lg font-semibold">Historique des paiements :</h4>
-                            <ul>
-                                @foreach ($commande->payments as $i => $payment)
-                                    <li
-                                        class="flex items-center justify-between p-2 my-2 text-white bg-blue-500 rounded">
-                                        <span>Paiement {{ $i + 1 }} ({{ $payment->payment_method ?? '—' }})
-                                            :</span>
-                                        <span>{{ number_format($payment->amount, 2, ',', ' ') }} FCFA le
-                                            {{ $payment->created_at->format('d/m/Y H:i') }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
                     </div>
+
+
 
 
 
