@@ -123,11 +123,11 @@ class ViewsController extends Controller
             ->whereDate('created_at', $today)
             ->get();
 
-        // 4) Si aucune commande aujourd’hui, on peut le signaler
-        if ($commandes->isEmpty()) {
-            return redirect()->route('dashboard')
-                ->with('error', 'Pas de commande pour aujourd’hui.');
-        }
+        // // 4) Si aucune commande aujourd’hui, on peut le signaler
+        // if ($commandes->isEmpty()) {
+        //     return view('utilisateurs.comptabilite')
+        //         ->with('error', 'Pas de commande pour aujourd’hui.');
+        // }
 
         // 5) Charger les paiements de l’utilisateur réalisés aujourd’hui
         $payments = CommandePayment::where('user_id', $userId)
