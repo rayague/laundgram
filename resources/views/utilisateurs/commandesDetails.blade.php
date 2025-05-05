@@ -393,7 +393,7 @@
                                 <span>{{ number_format($discountAmount, 2, ',', ' ') }} FCFA</span>
                             </div>
                             <div class="flex justify-between mb-2">
-                                <span><strong>Calcul :</strong></span>
+                                <span><strong>Calcul de la réduction :</strong></span>
                                 <span class="p-1 text-white bg-green-500 rounded">
                                     {{ number_format($originalTotal, 2, ',', ' ') }} FCFA x {{ $remiseReduction }}% =
                                     {{ number_format($discountAmount, 2, ',', ' ') }} FCFA
