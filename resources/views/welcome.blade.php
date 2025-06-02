@@ -86,7 +86,7 @@
     Connexion
 </a> --}}
 <button id="login-btn" type="button"
-    class="rounded-md bg-yellow-500  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hove[...">
+    class="rounded-md bg-yellow-500 text-white cursor-pointer  p-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hove[...">
     Connexion
 </button>
 
