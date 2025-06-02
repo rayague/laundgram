@@ -105,7 +105,7 @@
         class="z-50 hidden px-4 py-3 mx-auto text-center text-white delay-75 transform rounded-lg shadow-lg cursor-pointer bg-yellow-500/50 top-20 w-10/11">
         ⚠️ Cette application est conçue uniquement pour un usage local. <br />
         📲 Pour en savoir plus ou discuter avec l'auteur, écrivez-lui directement sur
-        <a href="https://wa.me/22960932967" target="_blank"
+        <a href="https://wa.me/2290160932967" target="_blank"
             class="font-semibold text-white underline hover:text-gray-200">
             WhatsApp
         </a> 💬.
@@ -179,13 +179,14 @@
         {{-- </div> --}}
     </div>
 
-    <footer
-        class="fixed bottom-0 flex justify-center w-full p-4 mx-auto mt-8 text-sm font-black text-center text-white bg-yellow-500 backdrop-blur-md brightness-90 ">
-        Copyright ©&nbsp;<a class="italic text-white" href="/">Laundgram&nbsp;</a> <a
-            href="https://portfolio-cnkp.vercel.app" target="_blank"> Ray
-            Ague&nbsp;.&nbsp;</a> 2025
-
-    </footer>
+<footer
+    class="fixed bottom-0 left-0 w-full mx-auto mt-8 bg-yellow-500 backdrop-blur-md brightness-90 flex flex-col items-center justify-center p-2 text-xs font-black text-center text-white
+    sm:flex-row sm:justify-center sm:text-sm sm:p-4">
+    <div>
+        Copyright ©&nbsp;<a class="italic text-white" href="/">Laundgram&nbsp;</a>
+        <a href="https://portfolio-cnkp.vercel.app" target="_blank">Ray Ague&nbsp;.&nbsp;</a>2025
+    </div>
+</footer>
     <script>
         function showToast() {
             const toast = document.getElementById('custom-toast');
